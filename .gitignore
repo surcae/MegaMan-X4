@@ -2,7 +2,7 @@
 *.db
 
 # ipch (IntelliSense subfiles)
-**/*.ipch
+*.ipch
 
 # suo (Debug Break Points Stack)
 *.suo
