@@ -1,0 +1,21 @@
+# DB
+*.db
+
+# ipch (IntelliSense subfiles)
+**/*.ipch
+
+# suo (Debug Break Points Stack)
+*.suo
+
+# log
+*.log
+
+# ilk
+*.ilk
+
+# tmp
+*.tmp
+
+*.lastcodeanalysissucceeded
+*.exe
+*.pdb
