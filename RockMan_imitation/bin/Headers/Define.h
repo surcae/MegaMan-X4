@@ -1,7 +1,4 @@
 #pragma once
-
-#include <string>
-
 extern HWND g_hWnd;
 using namespace std;
 

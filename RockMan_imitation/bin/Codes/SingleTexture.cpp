@@ -8,6 +8,7 @@ CSingleTexture::CSingleTexture()
 }
 CSingleTexture::~CSingleTexture()
 {
+	Release();
 }
 
 const TEXINFO* CSingleTexture::GetTexture(const TCHAR* pStateKey /*=nullptr*/,
@@ -51,6 +52,7 @@ void CSingleTexture::Release(void) {
 	}
 	else
 	{
-		MessageBox(g_hWnd, L"There is no Texture Pointer on your member(=nullptr)", L"Error!", MB_ICONERROR);
+		MessageBox(g_hWnd, L"There is no Texture Pointer on your member(=nullptr)",
+			L"Error!", MB_ICONERROR);
 	}
 }

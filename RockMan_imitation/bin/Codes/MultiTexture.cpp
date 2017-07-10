@@ -1,17 +1,25 @@
 #include "stdafx.h"
 #include "MultiTexture.h"
 
+CMultiTexture::CMultiTexture()
+{
+}
+CMultiTexture::~CMultiTexture()
+{
+	Release();
+}
 
-HRESULT CMultiTexture::InsertTexture()
+
+const TEXINFO * CMultiTexture::GetTexture(const TCHAR * pStateKey, const int & iCnt)
+{
+	return nullptr;
+}
+
+HRESULT CMultiTexture::InsertTexture(const TCHAR * pFileName, const TCHAR * pStateKey, const int & iCnt)
 {
 	return S_OK;
 }
 
-CMultiTexture::CMultiTexture()
-{
-}
-
-
-CMultiTexture::~CMultiTexture()
+void CMultiTexture::Release(void)
 {
 }

@@ -19,6 +19,13 @@
 // TODO: reference additional headers your program requires here
 #include "Include.h"
 #include <list>
+#include <vector>
 #include <map>
-#include "d3d9.h"
-#include "d3dx9.h"
+#include <d3d9.h>
+#include <d3dx9.h>
+
+// Sounds Files...
+#include <MMSystem.h>
+#include <dsound.h>
+#pragma comment (lib, "dsound.lib")
+#pragma comment (lib, "winmm.lib")

@@ -1,16 +1,13 @@
 #pragma once
-#include "Include.h"
-class CStage;
-
 class CMainGame
 {
 private:
-	CStage* m_pStage;
+	int StartTick = GetTickCount();
 public:
 	HRESULT Initialize(void);
-	HRESULT Progress(void);
+	HRESULT Update(void);
 	HRESULT Render(void);
-
+	HRESULT Release(void);
 public:
 	CMainGame();
 	~CMainGame();

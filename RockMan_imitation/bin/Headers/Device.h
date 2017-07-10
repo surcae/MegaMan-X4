@@ -11,8 +11,7 @@ public:
 	{
 		return m_pDevice;
 	}
-	HRESULT InitDevice(bool isFull/*0:FullScreen 1:Window Mode*/, HWND hWnd,
-		const int& iWinCX, const int& iWinCY);
+	HRESULT InitDevice(HWND hWnd);
 	void Release();
 public:
 	void RenderBegin(); // Start Render

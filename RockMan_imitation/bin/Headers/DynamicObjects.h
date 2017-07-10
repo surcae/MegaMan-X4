@@ -1,4 +1,5 @@
 #pragma once
+/* Push that you want to add activities on this cpp */
 #include "Obj.h"
 class CDynamicObjects :
 	public CObj

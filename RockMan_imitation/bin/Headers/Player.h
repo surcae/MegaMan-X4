@@ -5,7 +5,7 @@ class CPlayer :
 {
 public:
 	virtual HRESULT Initialize();
-	virtual HRESULT Progress();
+	virtual HRESULT Progress(); // Updates
 	virtual HRESULT Render();
 	virtual HRESULT Release();
 public:
