@@ -1,5 +1,5 @@
 # RockMan
-RockManX4 imitation<p>
+RockManX4 imitation == MegaManX4 imitation<p>
 
 Coding Tool: Visual Studio 2017 Community<p>
 Needs: DirectX SDK (June 2010)<p>
