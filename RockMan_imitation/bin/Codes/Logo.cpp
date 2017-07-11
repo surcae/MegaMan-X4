@@ -5,35 +5,41 @@
 
 CLogo::CLogo()
 {
+	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/TopBackGrounds.png",
+		TEXTYPE_SINGLE, this->m_LogoObjKey)))
+	{
+		TEXTURE_ERROR_MSG(BackGround);
+		return;
+	}
+	this->m_pTexInfo = GET_SINGLE(CTextureMgr)->GetTexture(this->m_LogoObjKey);
 }
 CLogo::~CLogo()
 {
 }
 
 HRESULT CLogo::Initialize() {
-	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/TopBackGrounds.png",
-		TEXTYPE_SINGLE, this->m_LogoObjKey)))
-	{
-		TEXTURE_ERROR_MSG(BackGround);
+	if (!m_pTexInfo)
 		return E_FAIL;
-	}
-
-	const TEXINFO* pTexInfo = GET_SINGLE(CTextureMgr)->GetTexture(this->m_LogoObjKey);
-	if (!pTexInfo)
-		return E_FAIL;
-	m_vCenter = D3DXVECTOR2(pTexInfo->ImageInfo.Width / 2.f,
-		pTexInfo->ImageInfo.Height / 2.f);
 	
+	D3DXMATRIX matTrans;
+	D3DXMatrixTranslation(&matTrans, m_vPos.x, m_vPos.y, m_vPos.z);
+	m_matWorld = matTrans;
+
+	m_vCenter = D3DXVECTOR3(m_pTexInfo->ImageInfo.Width / 2.f,
+		m_pTexInfo->ImageInfo.Height / 2.f, 0.f);
+
 	return S_OK;
 };
 HRESULT CLogo::Progress() {
+	// TODO: If you pressed any key, call CSceneMgr that change Stage 
 	return S_OK; 
 };
 HRESULT CLogo::Render() { 
-	/*Local_Sprite->SetTransform(&m_matWorld);
-	Local_Sprite->Draw(pTexInfo->pTexture, NULL,
-		&m_Info.vCenter, NULL, D3DCOLOR_ARGB(255, 0, 255, 255));
-	GET_SINGLE(CDevice)->GetSprite();*/
+	m_pMember_Sprite->SetTransform(&m_matWorld);
+	m_pMember_Sprite->Draw(m_pTexInfo->pTexture, NULL,
+		&m_vCenter, NULL, D3DCOLOR_ARGB(255, 0, 255, 255));
 	return S_OK;
 };
-HRESULT CLogo::Release() { return S_OK; };
+HRESULT CLogo::Release() {
+	return S_OK;
+};

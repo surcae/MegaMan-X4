@@ -15,7 +15,7 @@ CTextureMgr::~CTextureMgr()
 const TEXINFO* CTextureMgr::GetTexture(const TCHAR* pObjKey, const TCHAR* pStateKey, const int& iCnt){
 map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
 	if (iter == m_MapTexture.end()) return NULL; // Not found
-	else { iter->second->GetTexture(pStateKey, iCnt); }
+	else return iter->second->GetTexture(pStateKey, iCnt); 
 
 	return nullptr; // Not Success == error
 }

@@ -109,6 +109,7 @@ void CDevice::Release()
 
 void CDevice::RenderBegin()
 {
+	// Z > 0 (Most Backend Place) , Z < 0 (Most adjacent Place)
 	m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL,
 		/*0xff0000ff*/D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f/*Plate*/, 0);
 	m_pDevice->BeginScene();

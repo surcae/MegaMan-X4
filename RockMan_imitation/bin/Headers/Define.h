@@ -2,5 +2,5 @@
 extern HWND g_hWnd;
 using namespace std;
 
-const int iWinSizeX = 1080;
-const int iWinSizeY = 640;
+const int iWinSizeX = 800;
+const int iWinSizeY = 600;
