@@ -4,12 +4,12 @@
 class CObj
 {
 private:
-	OBJ_NUM MyObjNumber;
+	OBJ_NUM SortObjNum;
 protected:
-	INFO m_Info;
+	OBJINFO m_Info;
 public:
 	OBJ_NUM GetSortID() {
-		return this->MyObjNumber;
+		return this->SortObjNum;
 	}
 public:
 	virtual HRESULT Initialize()PURE;

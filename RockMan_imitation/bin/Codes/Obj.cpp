@@ -3,10 +3,8 @@
 
 CObj::CObj()
 {
-	ZeroMemory(&m_Info, sizeof(INFO));
+	ZeroMemory(&m_Info, sizeof(OBJINFO));
 }
-
-
 CObj::~CObj()
 {
 }

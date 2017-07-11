@@ -11,15 +11,17 @@ CTextureMgr::~CTextureMgr()
 {
 	Release();
 }
-const TEXINFO * CTextureMgr::GetTexture(const TCHAR* pObjKey, const TCHAR* pStateKey, const int & iCnt){
+
+const TEXINFO* CTextureMgr::GetTexture(const TCHAR* pObjKey, const TCHAR* pStateKey, const int& iCnt){
 map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
 	if (iter == m_MapTexture.end()) return NULL; // Not found
-	else { iter->second->GetTexture(pObjKey, iCnt); }
+	else { iter->second->GetTexture(pStateKey, iCnt); }
 
 	return nullptr; // Not Success == error
 }
 
-HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TEX_TYPE type, const TCHAR* pStateKey /*=NULL*/, const int &cnt /*=0*/)
+HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TEX_TYPE type,
+	const TCHAR* pObjKey, const TCHAR* pStateKey /*=NULL*/, const int &cnt /*=0*/)
 {
 	map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pFileName);
 	if (iter == m_MapTexture.end()) 
@@ -34,8 +36,17 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TEX_TYPE type, 
 			pTexture = new CMultiTexture();
 			break;
 		}
+		if (FAILED(pTexture->InsertTexture(pFileName, pStateKey, cnt)))
+		{
+			return E_FAIL;
+		}
+
+		m_MapTexture.insert(make_pair(pObjKey, pTexture));
 	}
-	
-	iter->second->InsertTexture(pFileName, pStateKey, cnt);
+	else
+	{
+		// if m_MapTexture has Already exist texture file...
+		MessageBox(g_hWnd, L"Already inserted files!", L"Overlapped", MB_OK);
+	}
 	return S_OK;
 }

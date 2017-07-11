@@ -10,7 +10,7 @@ CStage_One::~CStage_One()
 }
 
 HRESULT CStage_One::Initialize(void) {
-
+	
 
 
 

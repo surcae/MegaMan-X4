@@ -17,7 +17,6 @@ const TEXINFO* CSingleTexture::GetTexture(const TCHAR* pStateKey /*=nullptr*/,
 }
 HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName, const TCHAR* pStateKey,
 	const int& cnt) {
-
 	// Make a new TextureInfo Struct data.
 	m_pTexInfo = new TEXINFO;
 	ZeroMemory(m_pTexInfo, sizeof(TEXINFO));
@@ -40,6 +39,7 @@ HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName, const TCHAR* pStat
 	{
 		return E_FAIL;
 	}
+
 	return S_OK;
 }
 

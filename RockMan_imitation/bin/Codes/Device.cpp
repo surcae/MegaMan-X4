@@ -12,6 +12,9 @@ CDevice::~CDevice()
 
 HRESULT CDevice::InitDevice(HWND hWnd)
 {
+	/*                */
+	/* 3D Device Init */
+	/*                */
 	m_p3D = Direct3DCreate9(D3D_SDK_VERSION);
 
 	// Struct that has GPU Performance
@@ -65,9 +68,30 @@ HRESULT CDevice::InitDevice(HWND hWnd)
 		return E_FAIL;
 	}
 
+	/*              */
+	/* Sprites Init */
+	/*              */
 	if (FAILED(D3DXCreateSprite(m_pDevice, &m_pSprite)))
 	{
 		MessageBox(g_hWnd, L"Error", L"Cannot create Sprite!", MB_OK);
+		return E_FAIL;
+	}
+
+	/*           */
+	/* Font Init */
+	/*           */
+	D3DXFONT_DESC FontInfo;
+	ZeroMemory(&FontInfo, sizeof(FontInfo));
+
+	FontInfo.Height = 20;
+	FontInfo.Width = 10;
+	FontInfo.Weight = FW_HEAVY;
+	FontInfo.CharSet = HANGEUL_CHARSET;
+	lstrcpy(FontInfo.FaceName, L"Consolas");
+
+	if (FAILED(D3DXCreateFontIndirect(m_pDevice, &FontInfo, &m_pFont)))
+	{
+		MessageBox(hWnd, L"Failed Create Font!", L"Create Error", MB_OK);
 		return E_FAIL;
 	}
 	return S_OK;
@@ -86,7 +110,7 @@ void CDevice::Release()
 void CDevice::RenderBegin()
 {
 	m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL,
-		/*0xff0000ff*/D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f/*Plate, Æò¸é*/, 0);
+		/*0xff0000ff*/D3DCOLOR_ARGB(255, 0, 255, 0), 1.0f/*Plate*/, 0);
 	m_pDevice->BeginScene();
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 }

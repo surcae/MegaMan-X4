@@ -1,15 +1,31 @@
 #pragma once
 class CDevice
 {
-	DECLARE_SINGLETON(CDevice) // CDevice is a Singleton instance.
+	DECLARE_SINGLETON(CDevice)
 private:
+	// A Struct for Device performance
 	LPDIRECT3D9 m_p3D;
+
+	// Device Struct
 	LPDIRECT3DDEVICE9 m_pDevice;
-	LPD3DXSPRITE m_pSprite;// print 2D Image Pointer Type
+
+	// Image Print Struct (Sprite)
+	LPD3DXSPRITE m_pSprite;
+
+	// Font Print Struct on Screen
+	LPD3DXFONT m_pFont;
 public:
 	LPDIRECT3DDEVICE9 GetDevice()
 	{
 		return m_pDevice;
+	}
+	LPD3DXSPRITE GetSprite()
+	{
+		return m_pSprite;
+	}
+	LPD3DXFONT GetFont()
+	{
+		return m_pFont;
 	}
 	HRESULT InitDevice(HWND hWnd);
 	void Release();
