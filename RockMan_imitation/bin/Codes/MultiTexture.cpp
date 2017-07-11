@@ -12,6 +12,7 @@ CMultiTexture::~CMultiTexture()
 const TEXINFO* CMultiTexture::GetTexture(const TCHAR * pStateKey, const int & iCnt)
 {
 	map<const TCHAR*, vector<TEXINFO*>>::iterator iter = this->m_MapTexture.find(pStateKey);
+	
 	return nullptr;
 }
 
@@ -22,5 +23,11 @@ HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName, const TCHAR * pStat
 
 void CMultiTexture::Release(void)
 {
-	int *pPointer, *pPointer2;
+	for (map<const TCHAR*, vector<TEXINFO*>>::iterator iter = m_MapTexture.begin(); iter != m_MapTexture.end(); ++iter)
+	{
+		for (vector<TEXINFO*>::iterator sub_iter = iter->second.begin();sub_iter != iter->second.end(); ++sub_iter)
+		{
+
+		}
+	}
 }
