@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SingleTexture.h"
 #include "Device.h"
-
+#include <Windows.h>
 
 CSingleTexture::CSingleTexture()
 {

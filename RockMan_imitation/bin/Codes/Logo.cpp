@@ -2,6 +2,7 @@
 #include "Device.h"
 #include "Logo.h"
 #include "TextureMgr.h"
+#include "KeyMgr.h"
 
 CLogo::CLogo()
 {
@@ -31,13 +32,14 @@ HRESULT CLogo::Initialize() {
 	return S_OK;
 };
 HRESULT CLogo::Progress() {
-	// TODO: If you pressed any key, call CSceneMgr that change Stage 
+	// TODO: If you pressed any key, call CSceneMgr that change Stage
 	return S_OK; 
 };
 HRESULT CLogo::Render() { 
+	const D3DXVECTOR3* pPosition = &D3DXVECTOR3((FLOAT)iWinSizeX / 2.f, (FLOAT)iWinSizeY / 2.f, 0.f);
 	m_pMember_Sprite->SetTransform(&m_matWorld);
 	m_pMember_Sprite->Draw(m_pTexInfo->pTexture, NULL,
-		&m_vCenter, NULL, D3DCOLOR_ARGB(255, 0, 255, 255));
+		&m_vCenter, pPosition, D3DCOLOR_ARGB(255, 0, 255, 255));
 	return S_OK;
 };
 HRESULT CLogo::Release() {

@@ -91,6 +91,9 @@
     <Filter Include="3.Manager\CollisionMgr">
       <UniqueIdentifier>{0e950c6e-bdd6-4685-962d-2ea6677727b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3.Manager\KeyMgr">
+      <UniqueIdentifier>{ded9488d-83bd-4dde-bef8-84d7c8cfed23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -183,6 +186,9 @@
     <ClInclude Include="..\bin\Headers\Factory.h">
       <Filter>96.DesignPatterns\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\KeyMgr.h">
+      <Filter>3.Manager\KeyMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -247,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\SoundMgr.cpp">
       <Filter>3.Manager\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\KeyMgr.cpp">
+      <Filter>3.Manager\KeyMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
