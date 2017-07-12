@@ -11,7 +11,7 @@ public:
 	virtual HRESULT InsertTexture(const TCHAR *pFileName,
 		const TCHAR *pStateKey = NULL, const int& iCnt = 0);
 	virtual void Release(void);
-	void Release(const TCHAR *pStateKey);
+	HRESULT Release(const TCHAR *pStateKey);
 	BOOLEAN CheckOverlapState(const TCHAR *pStateKey);
 public:
 	CMultiTexture();

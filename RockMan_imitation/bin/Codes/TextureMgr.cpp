@@ -81,7 +81,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 				lstrcat(Message, pStateKey);
 				if (IDOK == MessageBox(g_hWnd, Message, L"Caution", MB_OKCANCEL))
 				{
-					if (FAILED(pMultiTexture->()))
+					if (FAILED(pMultiTexture->Release(pStateKey)))
 					{
 						return E_FAIL;
 					}

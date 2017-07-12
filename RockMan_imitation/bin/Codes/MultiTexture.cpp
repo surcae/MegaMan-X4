@@ -16,8 +16,7 @@ const TEXINFO* CMultiTexture::GetTexture(const TCHAR *pStateKey, const int & iCn
 		MessageBox(g_hWnd, L"Cannot find StateKey_Objects!", pStateKey, MB_OK);
 		return iter->second[iCnt];
 	}
-	map<const TCHAR*, vector<TEXINFO*>> a;
-	a[L"hi"];
+	
 	return nullptr; // Failed
 }
 
@@ -58,10 +57,11 @@ HRESULT CMultiTexture::Release(const TCHAR *pStateKey)
 	{
 		for (size_t i = 0; i < finder->second.size(); ++i)
 		{
-			const TEXINFO* temp = finder->second[i];
-			temp->pTexture->Release();
+			finder->second[i]->pTexture->Release();
 			SAFE_DELETE(finder->second[i]);
 		}
 		finder->second.clear();
+		return S_OK;
 	}
+	return S_OK;
 }

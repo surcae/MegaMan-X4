@@ -13,7 +13,7 @@ CSingleTexture::~CSingleTexture()
 
 const TEXINFO* CSingleTexture::GetTexture(const TCHAR* pStateKey /*=nullptr*/,
 	const int& cnt /*=0*/) {
-	return; // Failed
+	return m_pTexInfo; // Failed
 }
 HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName, const TCHAR* pStateKey,
 	const int& cnt) {

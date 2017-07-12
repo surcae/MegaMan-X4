@@ -13,7 +13,7 @@ private:
 	const TCHAR *m_LogoObjKey = L"LogoObj";
 private: // Fast Dotting
 	const LPD3DXSPRITE m_pMember_Sprite = GET_SINGLE(CDevice)->GetSprite();
-	const TEXINFO *m_pTexInfo;
+	const TEXINFO *m_pLogoTexInfo;
 	const D3DXVECTOR3 m_vPosition = D3DXVECTOR3((FLOAT)iWinSizeX / 2.f, (FLOAT)iWinSizeY / 2.f, 0.f);
 public:
 	virtual HRESULT Initialize();
