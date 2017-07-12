@@ -10,3 +10,10 @@ CRenderMgr::CRenderMgr()
 CRenderMgr::~CRenderMgr()
 {
 }
+
+void CRenderMgr::SingleRender()
+{
+}
+void CRenderMgr::MultiRender()
+{
+}

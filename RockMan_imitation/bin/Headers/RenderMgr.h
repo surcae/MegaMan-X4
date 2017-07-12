@@ -10,6 +10,9 @@ Rendering Helper for each Sprite Mode; Single, Multi
 class CRenderMgr
 {
 	DECLARE_SINGLETON(CRenderMgr)
+public:
+	void SingleRender(); // Option 필요함, 일반적으로 렌더(전체) 옵션에 따른 랜더
+	void MultiRender();
 private:
 	CRenderMgr();
 public:

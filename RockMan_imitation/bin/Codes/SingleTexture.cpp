@@ -13,7 +13,7 @@ CSingleTexture::~CSingleTexture()
 
 const TEXINFO* CSingleTexture::GetTexture(const TCHAR* pStateKey /*=nullptr*/,
 	const int& cnt /*=0*/) {
-	return m_pTexInfo;
+	return; // Failed
 }
 HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName, const TCHAR* pStateKey,
 	const int& cnt) {
@@ -22,7 +22,7 @@ HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName, const TCHAR* pStat
 	ZeroMemory(m_pTexInfo, sizeof(TEXINFO));
 
 	//1. Load your image files and insert your image variable.
-	if (FAILED(D3DXGetImageInfoFromFile(pFileName, &m_pTexInfo->ImageInfo))) {
+	if (FAILED(D3DXGetImageInfoFromFile(pFileName, &(m_pTexInfo->ImageInfo)))) {
 		return E_FAIL;
 	}
 
@@ -47,10 +47,11 @@ void CSingleTexture::Release(void) {
 	if (m_pTexInfo)
 	{
 		m_pTexInfo->pTexture->Release();
+		delete &(m_pTexInfo->ImageInfo);
 		m_pTexInfo = nullptr;
 		return;
 	}
-	else
+	else // Release Failed
 	{
 		MessageBox(g_hWnd, L"There is no Texture Pointer on your member(=nullptr)",
 			L"Error!", MB_ICONERROR);
