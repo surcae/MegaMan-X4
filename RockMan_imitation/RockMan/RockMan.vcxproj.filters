@@ -94,6 +94,9 @@
     <Filter Include="3.Manager\KeyMgr">
       <UniqueIdentifier>{ded9488d-83bd-4dde-bef8-84d7c8cfed23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3.Manager\RenderMgr">
+      <UniqueIdentifier>{716be8bd-c540-4a94-a312-7acf0e7e8828}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -189,6 +192,9 @@
     <ClInclude Include="..\bin\Headers\KeyMgr.h">
       <Filter>3.Manager\KeyMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\RenderMgr.h">
+      <Filter>3.Manager\RenderMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -256,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\KeyMgr.cpp">
       <Filter>3.Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\RenderMgr.cpp">
+      <Filter>3.Manager\RenderMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

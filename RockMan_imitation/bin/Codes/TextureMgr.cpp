@@ -6,6 +6,8 @@
 
 CTextureMgr::CTextureMgr()
 {
+	ZeroMemory(&m_MapTexture, sizeof(std::map<const TCHAR*, CTexture*>));
+	ZeroMemory(&m_stFileName, sizeof(std::stack<TCHAR*>));
 }
 CTextureMgr::~CTextureMgr()
 {
@@ -23,25 +25,8 @@ map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
 HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TEX_TYPE type,
 	const TCHAR* pObjKey, const TCHAR* pStateKey /*=NULL*/, const int &cnt /*=0*/)
 {
-	map<const TCHAR*, CTexture*>::iterator iter;
-
-	switch (type)
-	{
-	case TEXTYPE_SINGLE:
-		// iter = m_MapTexture.find(pObj);
-		break;
-	case TEXTYPE_MULTI:
-
-		break;
-	}
-
-
-
-
-
-
-	map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pFileName);
-	if (iter == m_MapTexture.end()) 
+	map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
+	if (iter == m_MapTexture.end())
 	{
 		CTexture* pTexture = nullptr;
 		

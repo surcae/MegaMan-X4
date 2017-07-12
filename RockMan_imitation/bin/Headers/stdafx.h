@@ -21,6 +21,7 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <stack>
 #include <d3d9.h>
 #include <d3dx9.h>
 

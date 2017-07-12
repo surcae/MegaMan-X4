@@ -166,6 +166,7 @@
     <ClInclude Include="..\bin\Headers\Obj.h" />
     <ClInclude Include="..\bin\Headers\ObjSortMgr.h" />
     <ClInclude Include="..\bin\Headers\Player.h" />
+    <ClInclude Include="..\bin\Headers\RenderMgr.h" />
     <ClInclude Include="..\bin\Headers\SceneMgr.h" />
     <ClInclude Include="..\bin\Headers\SingleTexture.h" />
     <ClInclude Include="..\bin\Headers\SmallShip.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="..\bin\Codes\Obj.cpp" />
     <ClCompile Include="..\bin\Codes\ObjSortMgr.cpp" />
     <ClCompile Include="..\bin\Codes\Player.cpp" />
+    <ClCompile Include="..\bin\Codes\RenderMgr.cpp" />
     <ClCompile Include="..\bin\Codes\SceneMgr.cpp" />
     <ClCompile Include="..\bin\Codes\SingleTexture.cpp" />
     <ClCompile Include="..\bin\Codes\SmallShip.cpp" />
