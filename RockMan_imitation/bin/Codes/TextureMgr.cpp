@@ -23,6 +23,23 @@ map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
 HRESULT CTextureMgr::InsertTexture(const TCHAR* pFileName, const TEX_TYPE type,
 	const TCHAR* pObjKey, const TCHAR* pStateKey /*=NULL*/, const int &cnt /*=0*/)
 {
+	map<const TCHAR*, CTexture*>::iterator iter;
+
+	switch (type)
+	{
+	case TEXTYPE_SINGLE:
+		// iter = m_MapTexture.find(pObj);
+		break;
+	case TEXTYPE_MULTI:
+
+		break;
+	}
+
+
+
+
+
+
 	map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pFileName);
 	if (iter == m_MapTexture.end()) 
 	{

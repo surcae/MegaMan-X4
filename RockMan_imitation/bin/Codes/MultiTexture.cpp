@@ -9,11 +9,15 @@ CMultiTexture::~CMultiTexture()
 	Release();
 }
 
-const TEXINFO* CMultiTexture::GetTexture(const TCHAR * pStateKey, const int & iCnt)
+const TEXINFO* CMultiTexture::GetTexture(const TCHAR *pStateKey, const int & iCnt)
 {
 	map<const TCHAR*, vector<TEXINFO*>>::iterator iter = this->m_MapTexture.find(pStateKey);
-	
-	return nullptr;
+	if (iter == m_MapTexture.end()) {
+		MessageBox(g_hWnd, L"Cannot find StateKey_Objects!", pStateKey, MB_OK);
+		return nullptr;
+	}
+
+	return nullptr; // 나중에 수정
 }
 
 HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName, const TCHAR * pStateKey, const int & iCnt)
@@ -27,7 +31,10 @@ void CMultiTexture::Release(void)
 	{
 		for (vector<TEXINFO*>::iterator sub_iter = iter->second.begin();sub_iter != iter->second.end(); ++sub_iter)
 		{
-
+			delete *sub_iter;
+			*sub_iter = nullptr;
 		}
+		iter->second.clear();
 	}
+	m_MapTexture.clear();
 }
