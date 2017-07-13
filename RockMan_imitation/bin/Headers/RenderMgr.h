@@ -1,5 +1,6 @@
 #pragma once
 #include "Include.h"
+#include "Device.h"
 /* UTF-Korean */
 /*
 Rendering Helper for each Sprite Mode; Single, Multi
@@ -10,8 +11,11 @@ Rendering Helper for each Sprite Mode; Single, Multi
 class CRenderMgr
 {
 	DECLARE_SINGLETON(CRenderMgr)
+private:
+	const LPD3DXSPRITE& RenderSprite = GET_SINGLE(CDevice)->GetSprite();
 public:
-	void SingleRender(); // Option 필요함, 일반적으로 렌더(전체) 옵션에 따른 랜더
+	void SingleRender(const TEXINFO*& pTexInfo, D3DXMATRIX& _matWorld,
+		D3DXVECTOR3*& _vCenter, D3DXVECTOR3*& _vPosition); // Option 필요함, 일반적으로 렌더(전체) 옵션에 따른 랜더
 	void MultiRender();
 private:
 	CRenderMgr();

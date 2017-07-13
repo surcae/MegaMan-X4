@@ -11,7 +11,6 @@ HRESULT CObjSortMgr::AddSortedObj(CObj* paramObj)
 
 void CObjSortMgr::RenderObjects()
 {
-
 	for (auto& ref : m_ObjList) {
 		for (list<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
 		{

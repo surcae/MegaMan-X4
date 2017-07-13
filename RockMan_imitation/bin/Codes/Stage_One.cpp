@@ -10,11 +10,6 @@ CStage_One::~CStage_One()
 }
 
 HRESULT CStage_One::Initialize(void) {
-	
-
-
-
-
 	return S_OK;
 }
 HRESULT CStage_One::Progress(void) { return S_OK; }

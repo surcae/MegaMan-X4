@@ -3,6 +3,7 @@
 #include "Logo.h"
 #include "TextureMgr.h"
 #include "KeyMgr.h"
+#include "RenderMgr.h"
 
 CLogo::CLogo()
 {
@@ -44,7 +45,7 @@ HRESULT CLogo::Progress() {
 HRESULT CLogo::Render() { 
 	m_pMember_Sprite->SetTransform(&m_matWorld);
 	m_pMember_Sprite->Draw(m_pLogoTexInfo->pTexture, NULL,
-		&m_vCenter, &m_vPosition, D3DCOLOR_ARGB(255, 0, 255, 255));
+		&m_vCenter, &m_vPosition, D3DCOLOR_ARGB(50, 0, 255, 255));
 	return S_OK;
 };
 HRESULT CLogo::Release() {

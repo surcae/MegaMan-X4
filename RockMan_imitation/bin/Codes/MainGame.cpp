@@ -27,10 +27,7 @@ CMainGame::CMainGame()
 }
 CMainGame::~CMainGame()
 {
-	if (FAILED(Release()))
-	{
-		MessageBox(g_hWnd, L"Release Failed on MainGame", L"Release Error", MB_OK);
-	}
+	Release();
 }
 HRESULT CMainGame::Update(void) {
 	GET_SINGLE(CSceneMgr)->Progress();
@@ -47,8 +44,7 @@ HRESULT CMainGame::Render(void) {
 	return S_OK;
 }
 
-HRESULT CMainGame::Release(void)
+void CMainGame::Release(void)
 {
 	// Nothing
-	return S_OK;
 }
