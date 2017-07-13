@@ -55,12 +55,11 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 		// TODO: delete->reCreate. 모든 텍스쳐를 삭제하고 다시 생성한다.
 		if (type == TEXTYPE_SINGLE)
 		{
-			LPCWSTR Message = L"Replace? Your object was overlapped:";
-			lstrcat(L"temp", pObjKey);
+			WCHAR* Message = nullptr;
+			lstrcat(Message, pObjKey);
 			if (IDOK == MessageBox(g_hWnd, Message, L"Caution", MB_OKCANCEL))
 			{
 				CTexture* pTexture = nullptr;
-
 				iter->second->Release(); // Direct Delete
 				if (FAILED(pTexture->InsertTexture(pFileName, pStateKey, cnt)))
 				{

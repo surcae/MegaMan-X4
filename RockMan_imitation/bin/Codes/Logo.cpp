@@ -18,12 +18,12 @@ HRESULT CLogo::Initialize() {
 		TEXTURE_ERROR_MSG(BackGround);
 		return E_FAIL;
 	}
-	/*if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/TopBackGrounds.png",
+	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/TopBackGrounds.png",
 		TEXTYPE_SINGLE, this->m_LogoObjKey)))
 	{
 		TEXTURE_ERROR_MSG(BackGround);
 		return E_FAIL;
-	}*/
+	}
 
 	this->m_pLogoTexInfo = GET_SINGLE(CTextureMgr)->GetTexture(this->m_LogoObjKey);
 	
