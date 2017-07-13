@@ -4,6 +4,8 @@
 #include "SingleTexture.h"
 #include "MultiTexture.h"
 
+#define MESSAGESIZE 128
+
 CTextureMgr::CTextureMgr()
 {
 	ZeroMemory(&m_stFileName, sizeof(std::stack<TCHAR*>));
@@ -55,12 +57,13 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 		// TODO: delete->reCreate. 모든 텍스쳐를 삭제하고 다시 생성한다.
 		if (type == TEXTYPE_SINGLE)
 		{
-			WCHAR* Message = nullptr;
+			WCHAR Message[MESSAGESIZE] = L"Continue? Your Texture was overlapped:";
 			lstrcat(Message, pObjKey);
 			if (IDOK == MessageBox(g_hWnd, Message, L"Caution", MB_OKCANCEL))
 			{
 				CTexture* pTexture = nullptr;
 				iter->second->Release(); // Direct Delete
+				pTexture = (iter->second);
 				if (FAILED(pTexture->InsertTexture(pFileName, pStateKey, cnt)))
 				{
 					return E_FAIL;
@@ -76,7 +79,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 			CMultiTexture* pMultiTexture = (CMultiTexture*)(iter->second);
 			if (pMultiTexture->CheckOverlapState(pStateKey))
 			{
-				LPWSTR Message = L"Continue? Your Multi_StateKey was overlapped:";
+				WCHAR Message[MESSAGESIZE] = L"Continue? Your Multi_StateKey was overlapped:";
 				lstrcat(Message, pStateKey);
 				if (IDOK == MessageBox(g_hWnd, Message, L"Caution", MB_OKCANCEL))
 				{

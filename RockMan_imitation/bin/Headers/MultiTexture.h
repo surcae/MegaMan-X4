@@ -10,7 +10,7 @@ public:
 public:
 	virtual HRESULT InsertTexture(const TCHAR *pFileName,
 		const TCHAR *pStateKey = NULL, const int& iCnt = 0);
-	virtual void Release(void);
+	virtual HRESULT Release(void);
 	HRESULT Release(const TCHAR *pStateKey);
 	BOOLEAN CheckOverlapState(const TCHAR *pStateKey);
 public:

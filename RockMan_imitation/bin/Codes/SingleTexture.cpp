@@ -43,17 +43,18 @@ HRESULT CSingleTexture::InsertTexture(const TCHAR* pFileName, const TCHAR* pStat
 	return S_OK;
 }
 
-void CSingleTexture::Release(void) {
+HRESULT CSingleTexture::Release(void) {
 	if (m_pTexInfo)
 	{
-		m_pTexInfo->pTexture->Release();
-		delete &(m_pTexInfo->ImageInfo);
+		m_pTexInfo->pTexture->Release();	
+		delete m_pTexInfo;
 		m_pTexInfo = nullptr;
-		return;
+		return S_OK;
 	}
 	else // Release Failed
 	{
 		MessageBox(g_hWnd, L"There is no Texture Pointer on your member(=nullptr)",
 			L"Error!", MB_ICONERROR);
+		return E_FAIL;
 	}
 }

@@ -12,13 +12,7 @@ CLogo::~CLogo()
 }
 
 HRESULT CLogo::Initialize() {
-	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/TopBackGrounds.png",
-		TEXTYPE_SINGLE, this->m_LogoObjKey)))
-	{
-		TEXTURE_ERROR_MSG(BackGround);
-		return E_FAIL;
-	}
-	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/TopBackGrounds.png",
+	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/Logo.png",
 		TEXTYPE_SINGLE, this->m_LogoObjKey)))
 	{
 		TEXTURE_ERROR_MSG(BackGround);
@@ -40,6 +34,10 @@ HRESULT CLogo::Initialize() {
 	return S_OK;
 };
 HRESULT CLogo::Progress() {
+	if (GetAsyncKeyState(VK_RETURN))
+	{
+		// Change Stage
+	}
 	// TODO: If you pressed any key, call CSceneMgr that change Stage
 	return S_OK; 
 };

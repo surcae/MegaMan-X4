@@ -16,7 +16,6 @@ const TEXINFO* CMultiTexture::GetTexture(const TCHAR *pStateKey, const int & iCn
 		MessageBox(g_hWnd, L"Cannot find StateKey_Objects!", pStateKey, MB_OK);
 		return iter->second[iCnt];
 	}
-	
 	return nullptr; // Failed
 }
 
@@ -34,7 +33,7 @@ BOOLEAN CMultiTexture::CheckOverlapState(const TCHAR *pStateKey)
 	else
 		return true;	// Overlapped!!
 }
-void CMultiTexture::Release(void)
+HRESULT CMultiTexture::Release(void)
 {
 	for (map<const TCHAR*, vector<TEXINFO*>>::iterator iter = m_MapTexture.begin(); iter != m_MapTexture.end(); ++iter)
 	{
@@ -46,6 +45,7 @@ void CMultiTexture::Release(void)
 		iter->second.clear();
 	}
 	m_MapTexture.clear();
+	return S_OK;
 }
 
 HRESULT CMultiTexture::Release(const TCHAR *pStateKey)
@@ -63,5 +63,4 @@ HRESULT CMultiTexture::Release(const TCHAR *pStateKey)
 		finder->second.clear();
 		return S_OK;
 	}
-	return S_OK;
 }

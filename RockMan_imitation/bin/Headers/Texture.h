@@ -6,7 +6,7 @@ public:
 		const int& cnt = 0)PURE;
 	virtual HRESULT InsertTexture(const TCHAR* pFileName, const TCHAR* pStateKey = NULL,
 		const int& cnt = 0)PURE;
-	virtual void Release(void)PURE;
+	virtual HRESULT Release(void)PURE;
 public:
 	CTexture();
 	virtual ~CTexture();
