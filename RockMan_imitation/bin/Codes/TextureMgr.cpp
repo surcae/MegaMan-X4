@@ -54,7 +54,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 		// if m_MapTexture has Already exist texture file...
 		// 1. Single
 		// 2. Multi
-		// TODO: delete->reCreate. 모든 텍스쳐를 삭제하고 다시 생성한다.
+		// TODO: delete and reCreate. 모든 텍스쳐를 삭제하고 다시 생성한다.
 		if (type == TEXTYPE_SINGLE)
 		{
 			WCHAR Message[MESSAGESIZE] = L"Continue? Your Texture was overlapped:";
