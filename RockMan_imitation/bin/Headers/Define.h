@@ -1,4 +1,6 @@
 #pragma once
+#define FRAME int
+
 extern HWND g_hWnd;
 using namespace std;
 

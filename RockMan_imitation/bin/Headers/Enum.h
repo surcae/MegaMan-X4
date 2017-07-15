@@ -40,3 +40,9 @@ enum TEX_TYPE
 	TEXTYPE_SINGLE = 0,
 	TEXTYPE_MULTI = 1,
 };
+
+enum SINGLE_RENDER_TYPE
+{
+	E_SINGLE_RENDER_TYPE_STRAIGHT,	// Render full image
+	E_SINGLE_RENDER_TYPE_FLASH,		// Render flash
+};

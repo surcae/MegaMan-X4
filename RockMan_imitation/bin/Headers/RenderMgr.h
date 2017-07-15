@@ -15,11 +15,11 @@ private:
 	const LPD3DXSPRITE& RenderSprite = GET_SINGLE(CDevice)->GetSprite();
 public:
 	void SingleRender(const TEXINFO*& pTexInfo, D3DXMATRIX& _matWorld,
-		D3DXVECTOR3*& _vCenter, D3DXVECTOR3*& _vPosition); // Option 필요함, 일반적으로 렌더(전체) 옵션에 따른 랜더
+		D3DXVECTOR3*& _vCenter, 
+		D3DXVECTOR3*& _vPosition, SINGLE_RENDER_TYPE type, FRAME& _frame); // Option 필요함, 일반적으로 렌더(전체) 옵션에 따른 랜더
 	void MultiRender();
 private:
 	CRenderMgr();
 public:
 	~CRenderMgr();
 };
-
