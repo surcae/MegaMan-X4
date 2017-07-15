@@ -35,6 +35,7 @@ void CRenderMgr::SingleRender(const TEXINFO*& pTexInfo, D3DXMATRIX& _matWorld,
 		RenderSprite->Draw(pTexInfo->pTexture, NULL,
 			_vCenter, _vPosition, D3DCOLOR_ARGB(255, 0, 0, 0));
 		break;
+	// 3. Fade in 4. Fade out
 	}
 }
 void CRenderMgr::MultiRender()

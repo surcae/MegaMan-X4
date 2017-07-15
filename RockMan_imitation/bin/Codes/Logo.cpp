@@ -37,7 +37,10 @@ HRESULT CLogo::Initialize() {
 HRESULT CLogo::Progress() {
 	if (GetAsyncKeyState(VK_RETURN))
 	{
+		// Before change my stage, first you need to call Release();
+		this->Release();
 		// Change Stage
+		
 	}
 	// TODO: If you pressed any key, call CSceneMgr that change Stage
 	return S_OK; 
@@ -49,5 +52,9 @@ HRESULT CLogo::Render() {
 	return S_OK;
 };
 HRESULT CLogo::Release() {
+	// 여기하면서 Release() 각각 호출하는중이었음.
+	// CTextureMgr 싱글턴 호출해서 Release(TEXTURE, TYPE) 해서 릴리즈 해주고 다 릴리즈 해야함.
+	// 다음 스테이지 가기 전에 정말 안 쓰는 메모리는 지워줘야함.
+	//this->m_pLogoTexInfo->ImageInfo
 	return S_OK;
 };
