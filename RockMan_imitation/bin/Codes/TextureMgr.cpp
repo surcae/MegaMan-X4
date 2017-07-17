@@ -11,13 +11,16 @@ void CTextureMgr::Release(CTexture * pTexture, TEX_TYPE& type)
 	// 해당 텍스쳐에 들어가서 Release()를 해주는 고마운 함수(?)
 	if (type == TEXTYPE_SINGLE)
 	{
-		pTexture->GetTexture();
+		pTexture->Release();
+	}
+	else
+	{
+		pTexture->Release();
 	}
 }
 
 CTextureMgr::CTextureMgr()
 {
-	ZeroMemory(&m_stFileName, sizeof(std::stack<TCHAR*>));
 }
 CTextureMgr::~CTextureMgr()
 {
@@ -92,7 +95,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 				lstrcat(Message, pStateKey);
 				if (IDOK == MessageBox(g_hWnd, Message, L"Caution", MB_OKCANCEL))
 				{
-					if (FAILED(pMultiTexture->Release(pStateKey)))
+					if (FAILED(pMultiTexture->Release(pStateKey))) // 멀티 특정 부분만 Release() 한다.
 					{
 						return E_FAIL;
 					}

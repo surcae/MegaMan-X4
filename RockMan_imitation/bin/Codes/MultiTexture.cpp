@@ -33,7 +33,7 @@ BOOLEAN CMultiTexture::CheckOverlapState(const TCHAR *pStateKey)
 	else
 		return true;	// Overlapped!!
 }
-HRESULT CMultiTexture::Release(void)
+HRESULT CMultiTexture::Release(void) // 전체 삭제
 {
 	for (map<const TCHAR*, vector<TEXINFO*>>::iterator iter = m_MapTexture.begin(); iter != m_MapTexture.end(); ++iter)
 	{
