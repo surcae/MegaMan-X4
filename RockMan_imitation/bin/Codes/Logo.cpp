@@ -5,8 +5,11 @@
 #include "KeyMgr.h"
 #include "RenderMgr.h"
 
+int Alpha = 0;
+
 CLogo::CLogo()
 {
+	D3DXMatrixIdentity(&m_matWorld);
 }
 CLogo::~CLogo()
 {
@@ -46,15 +49,20 @@ HRESULT CLogo::Progress() {
 	return S_OK; 
 };
 HRESULT CLogo::Render() { 
+	/*GET_SINGLE(CRenderMgr)->SingleRender(m_pLogoTexInfo, m_matWorld, 
+		m_vCenter, m_vPosition, E_SINGLE_RENDER_TYPE_FADING, NULL);*/
 	m_pMember_Sprite->SetTransform(&m_matWorld);
+	if (Alpha >= 255)
+		Alpha = 255;
+	else
+	{
+		Alpha += 20;
+	}
 	m_pMember_Sprite->Draw(m_pLogoTexInfo->pTexture, NULL,
-		&m_vCenter, &m_vPosition, D3DCOLOR_ARGB(255, 255, 255, 255));
+	&m_vCenter, &m_vPosition, D3DCOLOR_ARGB(Alpha, 255, 255, 255));
+	
 	return S_OK;
 };
 HRESULT CLogo::Release() {
-	// 여기하면서 Release() 각각 호출하는중이었음.
-	// CTextureMgr 싱글턴 호출해서 Release(TEXTURE, TYPE) 해서 릴리즈 해주고 다 릴리즈 해야함.
-	// 다음 스테이지 가기 전에 정말 안 쓰는 메모리는 지워줘야함.
-	//this->m_pLogoTexInfo->ImageInfo
 	return S_OK;
 };

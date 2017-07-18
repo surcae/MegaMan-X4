@@ -16,10 +16,12 @@ class CRenderMgr
 	DECLARE_SINGLETON(CRenderMgr)
 private:
 	const LPD3DXSPRITE& RenderSprite = GET_SINGLE(CDevice)->GetSprite();
+	void EffectsFade(const TEXINFO *rTexInfo, D3DXMATRIX &_matWorld,
+		D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition);
 public:
-	void SingleRender(const TEXINFO*& pTexInfo, D3DXMATRIX& _matWorld,
-		D3DXVECTOR3*& _vCenter, 
-		D3DXVECTOR3*& _vPosition, SINGLE_RENDER_TYPE type, FRAME& _frame); // Option 필요함, 일반적으로 렌더(전체) 옵션에 따른 랜더
+	void SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
+		D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition,
+		SINGLE_RENDER_TYPE type, FRAME _frame);
 	void MultiRender();
 private:
 	CRenderMgr();
