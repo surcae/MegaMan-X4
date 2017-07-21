@@ -2,8 +2,9 @@
 #include "RenderMgr.h"
 
 //Global Variables
-FADE_STATE FadeState = E_FADE_STATE_ToWHITE;
-int FadeAlpha = 255;
+extern FADE_STATE FadeState = E_FADE_STATE_IN;
+extern int FadeAlpha = 0;
+
 
 CRenderMgr::CRenderMgr()
 {
@@ -24,45 +25,57 @@ CRenderMgr::~CRenderMgr()
 void CRenderMgr::EffectsFade(const TEXINFO *rTexInfo, D3DXMATRIX &_matWorld,
 	D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition)
 {
-	if (FadeState == E_FADE_STATE_ToBLACK)  // Fade out Fading in the black
+	if (FadeState == E_FADE_STATE_DONE)
 	{
-		if (FadeAlpha <= 255) 
-			FadeAlpha += 2;
-		
-		if (FadeAlpha >= 255)
-		{
-			FadeAlpha = 255;
-			// Sit for x number of frames and show the loading screen
-			//then fade back in 
-			FadeState = E_FADE_STATE_DONE;
-		}
-		else
-		{
-			// 0 alpha = clear 255 = opaque
-			RenderSprite->SetTransform(&_matWorld);
-			RenderSprite->Draw(rTexInfo->pTexture, NULL, &_vCenter,
-				&_vPosition, D3DCOLOR_ARGB(FadeAlpha, 0, 0, 0));
-		}
+		RenderSprite->SetTransform(&_matWorld);
+		RenderSprite->Draw(rTexInfo->pTexture, NULL, &_vCenter,
+			&_vPosition, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-
-	if (FadeState == E_FADE_STATE_ToWHITE) //Fade back in  but fade out the black 
+	else
 	{
-		if (FadeAlpha >= 0) 
-			FadeAlpha -= 1;
+		if(GetTickCount() - Delta >= 250)
+		{
+			if (FadeState == E_FADE_STATE_IN)  // Fade out Fading in the black
+			{
+				if (FadeAlpha <= 255)
+					FadeAlpha += 3;
 
-		if (FadeAlpha <= 0)
-		{
-			FadeAlpha = 0;
-			//We are faded back in 
-			//done 
-			FadeState = E_FADE_STATE_DONE;
-		}
-		else
-		{
-			// 0 alpha = clear 255 = opaque
-			RenderSprite->SetTransform(&_matWorld);
-			RenderSprite->Draw(rTexInfo->pTexture, NULL, &_vCenter,
-				&_vPosition, D3DCOLOR_ARGB(FadeAlpha, 255, 255, 255));
+				if (FadeAlpha >= 255)
+				{
+					FadeAlpha = 255;
+					// Sit for x number of frames and show the loading screen
+					//then fade back in 
+					FadeState = E_FADE_STATE_DONE;
+				}
+				else
+				{
+					// 0 alpha = clear 255 = opaque
+					RenderSprite->SetTransform(&_matWorld);
+					RenderSprite->Draw(rTexInfo->pTexture, NULL, &_vCenter,
+						&_vPosition, D3DCOLOR_ARGB(FadeAlpha, 255, 255, 255));
+				}
+			}
+			else if (FadeState == E_FADE_STATE_OUT) //Fade back in  but fade out the black 
+			{
+				if (FadeAlpha >= 0)
+					FadeAlpha -= 3;
+
+				if (FadeAlpha <= 0)
+				{
+					FadeAlpha = 0;
+					//We are faded back in 
+					//done 
+					FadeState = E_FADE_STATE_DONE;
+				}
+				else
+				{
+					// 0 alpha = clear 255 = opaque
+					RenderSprite->SetTransform(&_matWorld);
+					RenderSprite->Draw(rTexInfo->pTexture, NULL, &_vCenter,
+						&_vPosition, D3DCOLOR_ARGB(FadeAlpha, 255, 255, 255));
+				}
+			}
+			Delta = GetTickCount();
 		}
 	}
 }

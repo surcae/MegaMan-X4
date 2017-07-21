@@ -15,6 +15,7 @@ class CRenderMgr
 {
 	DECLARE_SINGLETON(CRenderMgr)
 private:
+	unsigned int Delta = GetTickCount();
 	const LPD3DXSPRITE& RenderSprite = GET_SINGLE(CDevice)->GetSprite();
 	void EffectsFade(const TEXINFO *rTexInfo, D3DXMATRIX &_matWorld,
 		D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition);

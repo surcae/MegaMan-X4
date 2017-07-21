@@ -39,13 +39,10 @@ HRESULT CMainGame::Update(void) {
 	return S_OK;
 }
 HRESULT CMainGame::Render(void) {
-	
-	while(GetTickCount() - StartTick >= 500) {
 		GET_SINGLE(CDevice)->RenderBegin();
 		GET_SINGLE(CSceneMgr)->Render();
+		// Fade¿ë ·»´õ Ãß°¡
 		GET_SINGLE(CDevice)->RenderEnd();
-		StartTick = GetTickCount();
-	}
 	return S_OK;
 }
 
