@@ -50,17 +50,7 @@ HRESULT CLogo::Progress() {
 };
 HRESULT CLogo::Render() { 
 	GET_SINGLE(CRenderMgr)->SingleRender(m_pLogoTexInfo, m_matWorld, 
-		m_vCenter, m_vPosition, E_SINGLE_RENDER_TYPE_FADING, NULL);
-	/*m_pMember_Sprite->SetTransform(&m_matWorld);
-	if (Alpha >= 255)
-		Alpha = 255;
-	else
-	{
-		Alpha += 2;
-	}
-	m_pMember_Sprite->Draw(m_pLogoTexInfo->pTexture, NULL,
-	&m_vCenter, &m_vPosition, D3DCOLOR_ARGB(Alpha, 255, 255, 255));*/
-	
+		m_vCenter, m_vPosition, E_SINGLE_RENDER_TYPE_STRAIGHT, NULL);
 	return S_OK;
 };
 HRESULT CLogo::Release() {
