@@ -23,6 +23,8 @@ HRESULT CMainGame::Initialize(void)
 		MessageBox(g_hWnd, L"Scene Initialize Failed!", L"Init Failed", MB_OK);
 		return E_FAIL;
 	}
+
+
 	
 	return S_OK;
 }

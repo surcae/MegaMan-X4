@@ -1,5 +1,8 @@
 #pragma once
 #include "Texture.h"
+
+#define MAX_SIZE 256
+
 class CSingleTexture :
 	public CTexture
 {

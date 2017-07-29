@@ -7,6 +7,8 @@ class CLogo :
 	public CMyScene
 {
 private:
+	BOOL bSelectCharacter = false;
+private:
 	D3DXVECTOR3 m_vPos = D3DXVECTOR3(0.f, 0.f, 0.f);
 	D3DXVECTOR3 m_vCenter = D3DXVECTOR3(0.f, 0.f, 0.f);
 	D3DXVECTOR3 m_vPosition = D3DXVECTOR3((FLOAT)iWinSizeX / 2.f, (FLOAT)iWinSizeY / 2.f, 0.f);
