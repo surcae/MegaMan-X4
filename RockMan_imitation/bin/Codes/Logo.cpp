@@ -23,15 +23,23 @@ HRESULT CLogo::Initialize() {
 	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectRock.png",
 		TEXTYPE_SINGLE, L"SelectRock")))
 	{
-		TEXTURE_ERROR_MSG(BackGround);
+		TEXTURE_ERROR_MSG(SelectRock);
 		return E_FAIL;
 	}
 	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectZero.png",
 		TEXTYPE_SINGLE, L"SelectZero")))
 	{
-		TEXTURE_ERROR_MSG(BackGround);
+		TEXTURE_ERROR_MSG(SelectZero);
 		return E_FAIL;
-	}	
+	}
+	/*if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectImgRock%d.png",
+		TEXTYPE_MULTI, L"SelectImgR", 3)))
+	{
+		TEXTURE_ERROR_MSG(SelectZero);
+		return E_FAIL;
+	}*/
+	
+
 
 	this->m_pLogoTexInfo = GET_SINGLE(CTextureMgr)->GetTexture(L"Selects");
 	
@@ -47,6 +55,7 @@ HRESULT CLogo::Initialize() {
 
 	m_vCenter = D3DXVECTOR3(m_pLogoTexInfo->ImageInfo.Width / 2.f,
 		m_pLogoTexInfo->ImageInfo.Height / 2.f, 0.f);
+
 	return S_OK;
 };
 HRESULT CLogo::Progress() {

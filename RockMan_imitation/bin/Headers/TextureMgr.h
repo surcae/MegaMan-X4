@@ -24,16 +24,17 @@ private:
 	// Memory Buckets for Textures. Your texture will be saved in m_MapTexture.
 	map<const TCHAR*, CTexture*> m_MapTexture;
 
-	// Stock file names in Stack
+	// Stock file names in Stack (파일 이름 중복 확인용)
 	std::stack<const TCHAR*> m_stFileName;
 public:
 	const TEXINFO* GetTexture(const TCHAR* pObjKey,
 		const TCHAR* pStateKey = NULL, const int& iCnt = 0);
-	HRESULT InsertTexture(const TCHAR* pFileName, const TEX_TYPE type, const TCHAR* pObjKey, const TCHAR* pStateKey = NULL, const int& cnt = 0);
+	HRESULT InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
+		const TCHAR *pObjKey, const TCHAR *pStateKey=NULL, const int &cnt=0);
 	size_t Show_FileCounts() {
 		return m_stFileName.size(); // Show how many textures are inserted in m_MapTexture.
 	}
-	virtual void Release() final { // 자체 보관중이 텍스쳐 가방을 삭제시킨다.
+	virtual void Release() final { // 자체 보관중인 텍스쳐 가방을 삭제시킨다.
 		for (map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.begin();
 			iter != m_MapTexture.end(); /*Continue*/) {
 			delete iter->second;

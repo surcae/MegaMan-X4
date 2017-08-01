@@ -13,6 +13,7 @@ public:
 	virtual HRESULT Release(void);
 	HRESULT Release(const TCHAR *pStateKey);
 	BOOLEAN CheckOverlapState(const TCHAR *pStateKey);
+	void SeekStateKey(const TCHAR *pStateKey);
 public:
 	CMultiTexture();
 	virtual ~CMultiTexture();

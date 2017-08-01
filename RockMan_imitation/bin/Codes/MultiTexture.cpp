@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MultiTexture.h"
+#include "Device.h"
 
 CMultiTexture::CMultiTexture()
 {
@@ -21,6 +22,36 @@ const TEXINFO* CMultiTexture::GetTexture(const TCHAR *pStateKey, const int & iCn
 
 HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName, const TCHAR * pStateKey, const int & iCnt)
 {
+	TCHAR szPath[128] = L"";
+	vector<TEXINFO*>	vecTexture;
+
+	for (int i = 0; i < iCnt; ++i)
+	{
+		wsprintf(szPath, pFileName, i);
+
+		TEXINFO* pTexInfo = new TEXINFO;
+		ZeroMemory(pTexInfo, sizeof(TEXINFO));
+
+		//이미지 파일 정보 읽어온다.
+		if (FAILED(D3DXGetImageInfoFromFile(szPath, &pTexInfo->ImageInfo))) {
+			return E_FAIL;
+		}
+
+		if (FAILED(D3DXCreateTextureFromFileEx(GET_SINGLE(CDevice)->GetDevice(),
+			szPath, pTexInfo->ImageInfo.Width, pTexInfo->ImageInfo.Height,
+			pTexInfo->ImageInfo.MipLevels, 0, pTexInfo->ImageInfo.Format,
+			D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT
+			, D3DCOLOR_ARGB(255, 255, 255, 255)
+			, &pTexInfo->ImageInfo
+			, NULL, &pTexInfo->pTexture)))
+		{
+			return E_FAIL;
+		}
+
+		vecTexture.push_back(pTexInfo);
+	}
+
+	m_MapTexture.insert(make_pair(pStateKey, vecTexture));
 
 	return S_OK;
 }
@@ -32,6 +63,10 @@ BOOLEAN CMultiTexture::CheckOverlapState(const TCHAR *pStateKey)
 		return false;	// Overlapped X
 	else
 		return true;	// Overlapped!!
+}
+void CMultiTexture::SeekStateKey(const TCHAR * pStateKey)
+{
+	
 }
 HRESULT CMultiTexture::Release(void) // 전체 삭제
 {
@@ -48,7 +83,7 @@ HRESULT CMultiTexture::Release(void) // 전체 삭제
 	return S_OK;
 }
 
-HRESULT CMultiTexture::Release(const TCHAR *pStateKey)
+HRESULT CMultiTexture::Release(const TCHAR *pStateKey) // 해당 states 삭제
 {
 	map<const TCHAR*, vector<TEXINFO*>>::iterator finder = m_MapTexture.find(pStateKey);
 	if (finder == m_MapTexture.end())
