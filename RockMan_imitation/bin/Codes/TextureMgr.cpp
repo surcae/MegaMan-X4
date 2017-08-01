@@ -60,7 +60,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 		{
 			return E_FAIL;
 		}
-
+		// Ä¿¹Ô Ã¼Å©
 		m_MapTexture.insert(make_pair(pObjKey, pTexture));
 	}
 	else
