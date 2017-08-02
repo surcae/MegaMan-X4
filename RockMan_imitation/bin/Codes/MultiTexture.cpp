@@ -15,25 +15,23 @@ const TEXINFO* CMultiTexture::GetTexture(const TCHAR *pStateKey, const int & iCn
 	map<const TCHAR*, vector<TEXINFO*>>::iterator iter = this->m_MapTexture.find(pStateKey);
 	if (iter == m_MapTexture.end()) {
 		MessageBox(g_hWnd, L"Cannot find StateKey_Objects!", pStateKey, MB_OK);
-		return iter->second[iCnt];
+		return nullptr; // Failed
 	}
-	return nullptr; // Failed
+	return iter->second[iCnt];
 }
 
-HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName, const TCHAR * pStateKey, const int & iCnt)
+HRESULT CMultiTexture::InsertTexture(const TCHAR *pFileName,
+	const TCHAR *pStateKey /*= NULL*/, const int& iCnt /*= 0*/)
 {
 	TCHAR szPath[128] = L"";
 	vector<TEXINFO*>	vecTexture;
-
-	for (int i = 0; i < iCnt; ++i)
+	if (iCnt == 0)
 	{
-		wsprintf(szPath, pFileName, i);
-
 		TEXINFO* pTexInfo = new TEXINFO;
 		ZeroMemory(pTexInfo, sizeof(TEXINFO));
 
 		//이미지 파일 정보 읽어온다.
-		if (FAILED(D3DXGetImageInfoFromFile(szPath, &pTexInfo->ImageInfo))) {
+		if (FAILED(D3DXGetImageInfoFromFile(pFileName, &pTexInfo->ImageInfo))) {
 			return E_FAIL;
 		}
 
@@ -47,12 +45,36 @@ HRESULT CMultiTexture::InsertTexture(const TCHAR* pFileName, const TCHAR * pStat
 		{
 			return E_FAIL;
 		}
-
 		vecTexture.push_back(pTexInfo);
 	}
+	else
+	{
+		for (int i = 0; i < iCnt; ++i)
+		{
+			wsprintf(szPath, pFileName, i);
 
-	m_MapTexture.insert(make_pair(pStateKey, vecTexture));
+			TEXINFO* pTexInfo = new TEXINFO;
+			ZeroMemory(pTexInfo, sizeof(TEXINFO));
 
+			//이미지 파일 정보 읽어온다.
+			if (FAILED(D3DXGetImageInfoFromFile(szPath, &pTexInfo->ImageInfo))) {
+				return E_FAIL;
+			}
+
+			if (FAILED(D3DXCreateTextureFromFileEx(GET_SINGLE(CDevice)->GetDevice(),
+				szPath, pTexInfo->ImageInfo.Width, pTexInfo->ImageInfo.Height,
+				pTexInfo->ImageInfo.MipLevels, 0, pTexInfo->ImageInfo.Format,
+				D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT
+				, D3DCOLOR_ARGB(255, 255, 255, 255)
+				, &pTexInfo->ImageInfo
+				, NULL, &pTexInfo->pTexture)))
+			{
+				return E_FAIL;
+			}
+			vecTexture.push_back(pTexInfo);
+		}
+		m_MapTexture.insert(make_pair(pStateKey, vecTexture));
+	}
 	return S_OK;
 }
 
@@ -64,11 +86,22 @@ BOOLEAN CMultiTexture::CheckOverlapState(const TCHAR *pStateKey)
 	else
 		return true;	// Overlapped!!
 }
-void CMultiTexture::SeekStateKey(const TCHAR * pStateKey)
+
+BOOLEAN CMultiTexture::SeekStateKey(const TCHAR * pStateKey)
 {
-	
+	if (m_MapTexture.find(pStateKey) != m_MapTexture.end())
+	{
+		// 존재
+		return true;
+	}
+	else
+	{
+		// 발견 실패(없음)
+		return false;
+	}
 }
-HRESULT CMultiTexture::Release(void) // 전체 삭제
+
+HRESULT CMultiTexture::Release(void)
 {
 	for (map<const TCHAR*, vector<TEXINFO*>>::iterator iter = m_MapTexture.begin(); iter != m_MapTexture.end(); ++iter)
 	{
@@ -83,11 +116,14 @@ HRESULT CMultiTexture::Release(void) // 전체 삭제
 	return S_OK;
 }
 
-HRESULT CMultiTexture::Release(const TCHAR *pStateKey) // 해당 states 삭제
+HRESULT CMultiTexture::Release(const TCHAR *pStateKey)
 {
 	map<const TCHAR*, vector<TEXINFO*>>::iterator finder = m_MapTexture.find(pStateKey);
 	if (finder == m_MapTexture.end())
+	{
+		MessageBox(g_hWnd, L"Cannot find StateKey_Objects!", pStateKey, MB_OK);
 		return E_FAIL;
+	}
 	else
 	{
 		for (size_t i = 0; i < finder->second.size(); ++i)
@@ -96,6 +132,7 @@ HRESULT CMultiTexture::Release(const TCHAR *pStateKey) // 해당 states 삭제
 			SAFE_DELETE(finder->second[i]);
 		}
 		finder->second.clear();
+		this->m_MapTexture.erase(finder);
 		return S_OK;
 	}
 }

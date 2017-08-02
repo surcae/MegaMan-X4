@@ -105,5 +105,5 @@ void CRenderMgr::SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
 }
 void CRenderMgr::MultiRender()
 {
-	
+	// ¹Ì¿Ï¼º
 }

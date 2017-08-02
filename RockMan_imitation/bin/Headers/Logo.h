@@ -11,7 +11,7 @@ private:
 private:
 	D3DXVECTOR3 m_vPos = D3DXVECTOR3(0.f, 0.f, 0.f);
 	D3DXVECTOR3 m_vCenter = D3DXVECTOR3(0.f, 0.f, 0.f);
-	D3DXVECTOR3 m_vPosition = D3DXVECTOR3((FLOAT)iWinSizeX / 2.f, (FLOAT)iWinSizeY / 2.f, 0.f);
+	D3DXVECTOR3 m_vPosition = D3DXVECTOR3(0.f, 0.f, 1.f);
 	D3DXMATRIX m_matWorld;
 	const TCHAR *m_LogoObjKey = L"LogoObj";
 private: // Fast Dotting

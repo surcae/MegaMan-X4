@@ -48,7 +48,7 @@ HRESULT CLogo::Initialize() {
 	
 	D3DXMATRIX matTrans;
 	D3DXMATRIX matScale;
-	D3DXMatrixScaling(&matScale, 1.5f, 1.5f, 1.f);
+	D3DXMatrixScaling(&matScale, 2.5f, 2.5f, 1.f);
 	D3DXMatrixTranslation(&matTrans, m_vPos.x, m_vPos.y, m_vPos.z);
 	m_matWorld = matScale * matTrans;
 	

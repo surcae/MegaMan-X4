@@ -6,19 +6,6 @@
 
 #define MESSAGESIZE 128
 
-void CTextureMgr::Release(CTexture * pTexture, TEX_TYPE& type)
-{
-	// 해당 텍스쳐에 들어가서 Release()를 해주는 고마운 함수(?)
-	if (type == TEXTYPE_SINGLE)
-	{
-		pTexture->Release();
-	}
-	else
-	{
-		pTexture->Release();
-	}
-}
-
 CTextureMgr::CTextureMgr()
 {
 }
@@ -45,8 +32,6 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 	/* Insert new Texture of new Object */
 	if (iter == m_MapTexture.end())
 	{
-		
-		
 		switch (type) {
 		case TEXTYPE_SINGLE:
 			pTexture = new CSingleTexture();
@@ -56,7 +41,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 			break;
 		}
 
-		if (FAILED(pTexture->InsertTexture(pFileName, type, pObjKey, pStateKey, cnt)))
+		if (FAILED(pTexture->InsertTexture(pFileName, pStateKey, cnt)))
 		{
 			return E_FAIL;
 		}
@@ -120,15 +105,10 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 			// TODO: 멀티텍스쳐의 경우에는 pStateKey의 존재유무에 따라 중복처리 코드가 다르다.
 			// 1. pStateKey가 이미 존재할 경우 에러를 띄우고 종료
 			// 2. pStateKey가 없을 경우 다른 State를 만들기 때문에 새로 만들어주는 코드를 넣어주자.
-			if (((iter->second))->GetTexture(pStateKey) == nullptr) {
-				// 새로 추가
-				iter->second->InsertTexture(pFileName, pStateKey, cnt);
-			}
+			if (dynamic_cast<CMultiTexture*>(iter->second)->SeekStateKey(pStateKey))
+				return E_FAIL; // Error Overapped pStateKey!
 			else
-			{
-				// 이미 pStateKey가 존재시 에러 발생 처리
-				return E_FAIL;
-			}
+				iter->second->InsertTexture(pFileName, pStateKey, cnt);
 			break;
 		}
 	}

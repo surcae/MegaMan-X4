@@ -43,7 +43,6 @@ HRESULT CMainGame::Update(void) {
 HRESULT CMainGame::Render(void) {
 		GET_SINGLE(CDevice)->RenderBegin();
 		GET_SINGLE(CSceneMgr)->Render();
-		// Fade¿ë ·»´õ Ãß°¡
 		GET_SINGLE(CDevice)->RenderEnd();
 	return S_OK;
 }

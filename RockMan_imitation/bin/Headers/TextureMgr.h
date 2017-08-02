@@ -43,7 +43,6 @@ public:
 		}
 		m_MapTexture.clear();
 	}
-	void Release(CTexture *pTexture, TEX_TYPE& type);
 private:
 	CTextureMgr();
 public:
