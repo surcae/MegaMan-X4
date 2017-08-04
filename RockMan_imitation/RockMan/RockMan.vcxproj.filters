@@ -97,6 +97,12 @@
     <Filter Include="3.Manager\RenderMgr">
       <UniqueIdentifier>{716be8bd-c540-4a94-a312-7acf0e7e8828}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3.Manager\TimeMgr">
+      <UniqueIdentifier>{2a8a6fe0-2c71-46c1-919b-c9d48c54bce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.DesignPatterns\Commander">
+      <UniqueIdentifier>{100176e8-c444-46cf-9c36-887659688b03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -195,6 +201,12 @@
     <ClInclude Include="..\bin\Headers\RenderMgr.h">
       <Filter>3.Manager\RenderMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\CollisionMgr.h">
+      <Filter>3.Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\Headers\Command.h">
+      <Filter>96.DesignPatterns\Commander</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -265,6 +277,12 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\RenderMgr.cpp">
       <Filter>3.Manager\RenderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\CollisionMgr.cpp">
+      <Filter>3.Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\Command.cpp">
+      <Filter>96.DesignPatterns\Commander</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "KeyMgr.h"
 
-
 CKeyMgr::CKeyMgr()
 {
 }
@@ -164,8 +163,25 @@ CKeyMgr::~CKeyMgr()
 #pragma endregion
 
 HRESULT CKeyMgr::CreateKeyBoardDevice(HWND _hWnd) {
-	// if( FAILED(_hWnd = DirectInput8Create))
+	if (FAILED(DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION,
+		IID_IDirectInput8, (VOID**)&m_pDI, NULL)))
+		return E_FAIL;
 
+	// Make KeyBoard Object
+	if (FAILED(m_pDI->CreateDevice(GUID_SysKeyboard, 
+		&m_pKeyboard, NULL) ) )
+		return E_FAIL;
+
+	extern const DIDATAFORMAT c_dfDIKeyboard;
+	// Device Data Struct define
+	if (FAILED(m_pKeyboard->SetDataFormat(&c_dfDIKeyboard)))
+		return E_FAIL;
+
+	// 응용 프로그램(내 프로그램)과 시스템간의 상호 작용할 기능(Level) 설정
+	m_pKeyboard->SetCooperativeLevel(g_hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE
+		| DISCL_NOWINKEY);
+
+	m_pKeyboard->Acquire(); // 내 프로그램에서 장치 사용 제어권을 Acquire(가져오다) 하겠다.
 
 	return S_OK;
 }
@@ -175,11 +191,32 @@ void CKeyMgr::FreeDirectInput() {
 void CKeyMgr::OnActivate(WPARAM wParam) {
 
 }
-HRESULT CKeyMgr::ReadData() {
+HRESULT CKeyMgr::ReadData() { // 키 상태에 대한 데이터를 저장하는 메소드
+	HRESULT hr;
+	
+	if (NULL == m_pKeyboard)
+		return S_OK;
+
+	ZeroMemory(m_Keys, sizeof(m_Keys)); // 키 상태 버퍼를 초기화한다.
+	hr = m_pKeyboard->GetDeviceState(sizeof(m_Keys), m_Keys);
+	if (FAILED(hr)) // 가져오기 실패시
+	{
+		hr = m_pKeyboard->Acquire();
+		while (hr == DIERR_INPUTLOST) // 핸들 상태가 인풋이 사라져 있다면
+		{
+			hr = m_pKeyboard->Acquire(); // 제어권은 내가 계속 가져오겠다.
+		}
+		// 잘 가져와지면 S_OK를 리턴해서 사용가능권한을 유저에게 부여한다.
+		return S_OK;
+	}
 	return S_OK;
 }
 BOOL CKeyMgr::KeyDown(BYTE Key) {
-	return TRUE;
+	// 배열에 저장된 값의 최상위 Bit를 체크해서 눌림, 놓임을 판단한다.
+	// 여기서 Key는 DIK_[당신이 입력한 키]가 들어온다.
+	if (m_Keys[Key] & 0x80) // 눌렸으면 눌렸다고 리턴
+		return TRUE;
+	return FALSE;
 }
 
 

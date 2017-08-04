@@ -150,6 +150,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\bin\Headers\BigShip.h" />
+    <ClInclude Include="..\bin\Headers\CollisionMgr.h" />
+    <ClInclude Include="..\bin\Headers\Command.h" />
     <ClInclude Include="..\bin\Headers\Define.h" />
     <ClInclude Include="..\bin\Headers\Device.h" />
     <ClInclude Include="..\bin\Headers\DynamicObjects.h" />
@@ -185,12 +187,16 @@
     <ClCompile Include="..\bin\Codes\BigShip.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\bin\Codes\CollisionMgr.cpp" />
+    <ClCompile Include="..\bin\Codes\Command.cpp" />
     <ClCompile Include="..\bin\Codes\Device.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\bin\Codes\DynamicObjects.cpp" />
     <ClCompile Include="..\bin\Codes\Field.cpp" />
-    <ClCompile Include="..\bin\Codes\KeyMgr.cpp" />
+    <ClCompile Include="..\bin\Codes\KeyMgr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\bin\Codes\Logo.cpp" />
     <ClCompile Include="..\bin\Codes\MainGame.cpp" />
     <ClCompile Include="..\bin\Codes\MultiTexture.cpp" />
