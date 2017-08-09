@@ -15,7 +15,3 @@
 
 # tmp
 *.tmp
-
-*.lastcodeanalysissucceeded
-*.exe
-*.pdb
