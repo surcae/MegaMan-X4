@@ -39,10 +39,7 @@ HRESULT CLogo::Initialize() {
 		return E_FAIL;
 	}*/
 	
-
-
 	this->m_pLogoTexInfo = GET_SINGLE(CTextureMgr)->GetTexture(L"Selects");
-	
 	if (!m_pLogoTexInfo)
 		return E_FAIL;
 	
