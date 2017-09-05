@@ -1,8 +1,9 @@
 #pragma once
-#ifndef _STRUCT_H_
-#define _STRUCT_H_
 #include "d3d9.h"
 #include "d3dx9tex.h"
+
+#ifndef _STRUCT_H_
+#define _STRUCT_H_
 
 struct tagObjInfo
 {
@@ -28,4 +29,11 @@ struct tagTexture
 };
 
 typedef tagTexture TEXINFO;
+
+struct tagLogo
+{
+	D3DXMATRIX matWorld;
+	D3DXVECTOR3 vPos;
+	D3DXVECTOR3 vCenter;
+};
 #endif

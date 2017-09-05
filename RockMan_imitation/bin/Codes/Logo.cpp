@@ -4,10 +4,12 @@
 #include "TextureMgr.h"
 #include "KeyMgr.h"
 #include "RenderMgr.h"
+#include "Factory.h"
 
 CLogo::CLogo()
 {
 	D3DXMatrixIdentity(&m_matWorld);
+	ZeroMemory(aryLogoBack, sizeof(aryLogoBack));
 }
 CLogo::~CLogo()
 {
@@ -17,27 +19,33 @@ HRESULT CLogo::Initialize() {
 	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/Select.png",
 		TEXTYPE_SINGLE, L"Selects")))
 	{
-		TEXTURE_ERROR_MSG(BackGround);
+		TEXTURE_ERROR_MSG(L"BackGround");
 		return E_FAIL;
 	}
 	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectRock.png",
 		TEXTYPE_SINGLE, L"SelectRock")))
 	{
-		TEXTURE_ERROR_MSG(SelectRock);
+		TEXTURE_ERROR_MSG(L"SelectRock");
 		return E_FAIL;
 	}
 	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectZero.png",
 		TEXTYPE_SINGLE, L"SelectZero")))
 	{
-		TEXTURE_ERROR_MSG(SelectZero);
+		TEXTURE_ERROR_MSG(L"SelectZero");
 		return E_FAIL;
 	}
-	/*if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectImgRock%d.png",
-		TEXTYPE_MULTI, L"SelectImgR", 3)))
+	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectImgRock%d.png",
+		TEXTYPE_MULTI, L"SelectImgR", L"State_SelectRock", 3)))
 	{
-		TEXTURE_ERROR_MSG(SelectZero);
+		TEXTURE_ERROR_MSG(L"SelectRock");
 		return E_FAIL;
-	}*/
+	}
+	if (FAILED(GET_SINGLE(CTextureMgr)->InsertTexture(L"../Resource/BackGrounds/SelectImgZero%d.png",
+		TEXTYPE_MULTI, L"SelectImgR", L"State_SelectZero", 3)))
+	{
+		TEXTURE_ERROR_MSG(L"SelectZero");
+		return E_FAIL;
+	}
 	
 	this->m_pLogoTexInfo = GET_SINGLE(CTextureMgr)->GetTexture(L"Selects");
 	if (!m_pLogoTexInfo)
@@ -66,7 +74,7 @@ HRESULT CLogo::Progress() {
 	return S_OK; 
 };
 HRESULT CLogo::Render() { 
-	GET_SINGLE(CRenderMgr)->SingleRender(m_pLogoTexInfo, m_matWorld, 
+	pRenderMgr->SingleRender(m_pLogoTexInfo, m_matWorld, 
 		m_vCenter, m_vPosition, E_SINGLE_RENDER_TYPE_STRAIGHT, NULL);
 	return S_OK;
 };

@@ -2,10 +2,13 @@
 #include "MyScene.h"
 #include "Device.h"
 #include "TextureMgr.h"
+#include "RenderMgr.h"
 
 class CLogo : 
 	public CMyScene
 {
+private:
+	tagLogo aryLogoBack[32];
 private:
 	BOOL bSelectCharacter = false;
 private:
@@ -17,6 +20,7 @@ private:
 private: // Fast Dotting
 	const LPD3DXSPRITE m_pMember_Sprite = GET_SINGLE(CDevice)->GetSprite();
 	const TEXINFO *m_pLogoTexInfo;
+	CRenderMgr *pRenderMgr = GET_SINGLE(CRenderMgr);
 	
 public:
 	virtual HRESULT Initialize();

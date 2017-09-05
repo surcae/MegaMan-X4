@@ -24,5 +24,5 @@ static void	DestroyInstance() {					\
 #define GET_SINGLE(type) (*type::GetInstance())
 #define DESTROY_SINGLE(type) (*type::GetInstance())->DestroyInstance())
 #define SAFE_DELETE(type) {if(type) delete type; type = nullptr;}
-#define TEXTURE_ERROR_MSG(type) MessageBox(g_hWnd, L"type Insert Failed!", L"InsertTexture Error", MB_OK)
+#define TEXTURE_ERROR_MSG(type) MessageBox(g_hWnd, type, L"InsertTexture Error", MB_OK)
 #endif

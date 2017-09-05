@@ -24,6 +24,7 @@
 #include <stack>
 #include <d3d9.h>
 #include <d3dx9.h>
+#include "d3dx9tex.h"
 
 // Sounds Files...
 #include <MMSystem.h>
