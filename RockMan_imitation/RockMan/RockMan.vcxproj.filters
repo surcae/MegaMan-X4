@@ -207,6 +207,9 @@
     <ClInclude Include="..\bin\Headers\Command.h">
       <Filter>96.DesignPatterns\Commander</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\TimeMgr.h">
+      <Filter>3.Manager\TimeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -283,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\Command.cpp">
       <Filter>96.DesignPatterns\Commander</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\TimeMgr.cpp">
+      <Filter>3.Manager\TimeMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
