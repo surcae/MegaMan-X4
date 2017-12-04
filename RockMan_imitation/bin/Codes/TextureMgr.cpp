@@ -23,7 +23,7 @@ map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
 }
 
 HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
-	const TCHAR *pObjKey, const TCHAR *pStateKey /*=NULL*/, const int &cnt /*=0*/)
+	const TCHAR *pObjKey, const TCHAR *pStateKey /*=NULL*/, const int &cnt /*=0*/) // cnt == 0 Single, >0 Multi
 {
 	/* Object의 텍스쳐가 하나도 없으면 바로 Insert 진행 */
 	map<const TCHAR*, CTexture*>::iterator iter = m_MapTexture.find(pObjKey);
@@ -48,7 +48,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 		// 커밋 체크
 		m_MapTexture.insert(make_pair(pObjKey, pTexture));
 	}
-	else
+	else // 중복 발견
 	{
 		//if (type == TEXTYPE_SINGLE)
 		//{
@@ -96,6 +96,7 @@ HRESULT CTextureMgr::InsertTexture(const TCHAR *pFileName, const TEX_TYPE type,
 		//	return S_OK;
 		//}
 		//MessageBox(g_hWnd, L"Already inserted files!", L"Overlapped", MB_OK); 
+
 		switch (type) {
 		case TEXTYPE_SINGLE:
 			MessageBox(g_hWnd, L"SingleTexture Overlaped fix your codes...", L"Error!", MB_OK);

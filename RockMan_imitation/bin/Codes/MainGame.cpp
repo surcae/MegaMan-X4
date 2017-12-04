@@ -3,6 +3,7 @@
 #include "Device.h"
 #include "SoundMgr.h"
 #include "SceneMgr.h"
+#include "TimeMgr.h"
 
 HRESULT CMainGame::Initialize(void)
 {
@@ -23,9 +24,6 @@ HRESULT CMainGame::Initialize(void)
 		MessageBox(g_hWnd, L"Scene Initialize Failed!", L"Init Failed", MB_OK);
 		return E_FAIL;
 	}
-
-
-	
 	return S_OK;
 }
 
@@ -37,6 +35,7 @@ CMainGame::~CMainGame()
 	Release();
 }
 HRESULT CMainGame::Update(void) {
+	GET_SINGLE(CTimeMgr)->SetTime();
 	GET_SINGLE(CSceneMgr)->Progress();
 	return S_OK;
 }

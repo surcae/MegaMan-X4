@@ -17,7 +17,6 @@
 
 
 // TODO: reference additional headers your program requires here
-#include "Include.h"
 #include <list>
 #include <vector>
 #include <map>
@@ -25,6 +24,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "d3dx9tex.h"
+#include "Include.h"
 
 // Sounds Files...
 #include <MMSystem.h>

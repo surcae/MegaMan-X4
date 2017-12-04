@@ -84,7 +84,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -164,6 +164,7 @@
     <ClInclude Include="..\bin\Headers\Macro.h" />
     <ClInclude Include="..\bin\Headers\MainGame.h" />
     <ClInclude Include="..\bin\Headers\MultiTexture.h" />
+    <ClInclude Include="..\bin\Headers\MultiThread.h" />
     <ClInclude Include="..\bin\Headers\MyScene.h" />
     <ClInclude Include="..\bin\Headers\Obj.h" />
     <ClInclude Include="..\bin\Headers\ObjSortMgr.h" />
@@ -186,7 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\bin\Codes\BigShip.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\bin\Codes\CollisionMgr.cpp" />
     <ClCompile Include="..\bin\Codes\Command.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="..\bin\Codes\Logo.cpp" />
     <ClCompile Include="..\bin\Codes\MainGame.cpp" />
     <ClCompile Include="..\bin\Codes\MultiTexture.cpp" />
+    <ClCompile Include="..\bin\Codes\MultiThread.cpp" />
     <ClCompile Include="..\bin\Codes\MyScene.cpp" />
     <ClCompile Include="..\bin\Codes\Obj.cpp" />
     <ClCompile Include="..\bin\Codes\ObjSortMgr.cpp" />

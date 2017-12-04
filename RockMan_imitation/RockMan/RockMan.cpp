@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "RockMan.h"
 #include "MainGame.h"
+#include "TimeMgr.h"
 
 #define MAX_LOADSTRING 100
 	
@@ -50,6 +51,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		MessageBox(g_hWnd, L"MainGame Initialize Failed", L"Error", MB_OK);
 		return 0;
 	}
+
+	// Init Timer
+	GET_SINGLE(CTimeMgr)->InitTimeMgr();
 
 	// Main message loop:
 	while (true)
@@ -148,7 +152,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_COMMAND  - process the application menu
 //  WM_PAINT    - Paint the main window
 //  WM_DESTROY  - post a quit message and return
-//
+//	
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

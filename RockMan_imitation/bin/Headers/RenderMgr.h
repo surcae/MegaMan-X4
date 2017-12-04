@@ -1,6 +1,8 @@
 #pragma once
 #include "Include.h"
 #include "Device.h"
+#include "TimeMgr.h"
+
 /* UTF-Korean */
 /*
 Rendering Helper for each Sprite Mode; Single, Multi
@@ -15,7 +17,7 @@ class CRenderMgr
 {
 	DECLARE_SINGLETON(CRenderMgr)
 private:
-	unsigned int Delta = GetTickCount();
+	//float fDelta = GET_SINGLE(CTimeMgr)->GetTime();
 	const LPD3DXSPRITE& RenderSprite = GET_SINGLE(CDevice)->GetSprite();
 	void EffectsFade(const TEXINFO *rTexInfo, D3DXMATRIX &_matWorld,
 		D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition);
@@ -23,7 +25,7 @@ public:
 	void SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
 		D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition,
 		SINGLE_RENDER_TYPE type, FRAME _frame);
-	void MultiRender();
+	void MultiRender(const TEXINFO *rTexInfo, D3DXMATRIX _matWorld, MULTI_RENDER_TYPE type, int& cnt);
 private:
 	CRenderMgr();
 public:

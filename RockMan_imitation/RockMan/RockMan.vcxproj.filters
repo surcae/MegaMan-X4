@@ -103,6 +103,12 @@
     <Filter Include="96.DesignPatterns\Commander">
       <UniqueIdentifier>{100176e8-c444-46cf-9c36-887659688b03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="96.DesignPatterns\Factory\Child">
+      <UniqueIdentifier>{9ed389e5-3af0-4ab6-9122-c4c279bdf7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="95.Thread">
+      <UniqueIdentifier>{3ac192cf-ec77-445d-aae8-1ca85c547240}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -210,6 +216,9 @@
     <ClInclude Include="..\bin\Headers\TimeMgr.h">
       <Filter>3.Manager\TimeMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\MultiThread.h">
+      <Filter>95.Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -289,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\TimeMgr.cpp">
       <Filter>3.Manager\TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\MultiThread.cpp">
+      <Filter>95.Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

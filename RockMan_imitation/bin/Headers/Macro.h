@@ -1,4 +1,4 @@
-#pragma warning (disable: 4150)
+	#pragma warning (disable: 4150)
 
 #ifndef _MACRO_H_
 #define _MACRO_H_

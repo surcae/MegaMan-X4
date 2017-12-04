@@ -14,6 +14,24 @@ public: // default function
 		pObject->Initialize();
 		return pObject;
 	}
+	
+	// Overload
+	static HRESULT CreateTransform(TRANSFORM* _LogoBack)
+	{
+		if (_LogoBack == nullptr) return E_FAIL;
+		else
+		{
+			// Do Something...
+
+		}
+		return S_OK
+	}
+
+	// Overload 
+	static HRESULT CreateTransform()
+	{
+		return S_OK;
+	}
 public:
 	// after add a function 'CreateMissile()'
 	// static CObj* CreateMissile();
