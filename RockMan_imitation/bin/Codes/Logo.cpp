@@ -133,6 +133,8 @@ HRESULT CLogo::Progress() {
 	// TODO: If you pressed any key, call CSceneMgr that change Stage
 		return S_OK;
 	}
+	
+	return S_OK;
 };
 
 HRESULT CLogo::Render() { 

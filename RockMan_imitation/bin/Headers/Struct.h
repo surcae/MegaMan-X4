@@ -44,7 +44,7 @@ struct tagLogo
 	const TCHAR *pStateKey;
 	LOGO_OBJ myLogoObj;
 
-	TEXINFO* texInfo;
+	const TEXINFO* texInfo;
 };
 
 typedef tagLogo TRANSFORM;
