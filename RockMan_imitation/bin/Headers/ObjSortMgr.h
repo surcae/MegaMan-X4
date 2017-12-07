@@ -8,6 +8,7 @@ private:
 	vector<list<CObj*>> m_ObjList;
 public:
 	HRESULT AddSortedObj(CObj* paramObj);
+	void ProgressObjects();
 	void RenderObjects();
 	void Release();
 public:

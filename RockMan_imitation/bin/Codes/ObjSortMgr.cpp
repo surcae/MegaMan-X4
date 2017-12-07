@@ -9,6 +9,17 @@ HRESULT CObjSortMgr::AddSortedObj(CObj* paramObj)
 	return S_OK;
 }
 
+void CObjSortMgr::ProgressObjects()
+{
+	for (auto& ref : m_ObjList) {
+		for (list<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
+		{
+			(*iter)->Progress();
+		}
+		ref.clear();
+	}
+}
+
 void CObjSortMgr::RenderObjects()
 {
 	for (auto& ref : m_ObjList) {

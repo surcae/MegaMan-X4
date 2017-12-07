@@ -4,6 +4,10 @@ class CBigShip :
 	public CDynamicObjects
 {
 public:
+	HRESULT Initialize();
+	HRESULT Progress();
+	HRESULT Render();
+public:
 	CBigShip();
 	virtual ~CBigShip();
 };

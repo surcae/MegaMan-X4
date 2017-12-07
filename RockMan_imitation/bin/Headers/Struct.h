@@ -20,7 +20,6 @@ struct tagObjInfo
 		vLook(Info.vLook), matWorld(Info.matWorld)
 	{}
 };
-
 typedef tagObjInfo OBJINFO;
 
 struct tagTexture

@@ -4,6 +4,8 @@
 class CField :
 	public CMyScene
 {
+protected:
+	D3DXMATRIX matWorld;
 public:
 	virtual HRESULT Initialize()PURE;
 	virtual HRESULT Progress()PURE;
