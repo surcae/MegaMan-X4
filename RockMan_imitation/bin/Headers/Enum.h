@@ -16,11 +16,14 @@ enum FIELD
 
 enum OBJ_NUM
 {
-	OBJ_NUM_BG,
-	OBJ_NUM_BG2,
-	OBJ_NUM_PLAYER,
-	OBJ_NUM_MONSTER,
-	OBJ_NUM_UI,
+	OBJ_NUM_BG, // 맨 뒤에 움직이는 배
+	OBJ_NUM_BG2, // 그 앞에 움직이는 작은 배
+	OBJ_NUM_BG3, // 고정되어 있는 배
+	OBJ_NUM_BG4, // 장식물
+	OBJ_NUM_WALL, // 벽
+	OBJ_NUM_MONSTER, // 몹
+	OBJ_NUM_PLAYER, // 플레이어
+	OBJ_NUM_UI, //  피통바
 };
 
 enum SOUND_INDEX
@@ -52,7 +55,7 @@ enum MULTI_RENDER_TYPE
 {
 	E_MULTI_RENDER_TYPE_STRAIGHT,	// Render full image
 	E_MULTI_RENDER_TYPE_FLASH,		// Render flash
-	E_MULTI_RENDER_TYPE_FADING,	// Render fading
+	E_MULTI_RENDER_TYPE_FADING,		// Render fading
 };
 
 enum FADE_STATE

@@ -6,7 +6,7 @@ class CObj
 private:
 	OBJ_NUM SortObjNum;
 protected:
-	OBJINFO m_Info;
+	TRANSFORM m_Info;
 public:
 	OBJ_NUM GetSortID() {
 		return this->SortObjNum;
