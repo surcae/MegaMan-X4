@@ -5,9 +5,13 @@
 #include "RenderMgr.h"
 #include "ObjSortMgr.h"
 #include "Factory.h"
+#include "SoundMgr.h"
 
 #include "BigShip.h"
+#include "SBigShip.h"
 #include "SmallShip.h"
+
+#define LOOP 1
 
 CStage_One::CStage_One()
 {
@@ -18,6 +22,15 @@ CStage_One::~CStage_One()
 }
 
 HRESULT CStage_One::Initialize(void) {
+	// Sound Insert
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/bgm.wav")))
+	{
+		return E_FAIL;
+	}
+
+	GET_SINGLE(CSoundMgr)->SetSoundVolume(E_SOUND_THEME, -1000);
+	GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_THEME, LOOP);
+
 	// BackGround Initialize
 	this->pTextureMgr = GET_SINGLE(CTextureMgr);
 
@@ -48,8 +61,9 @@ HRESULT CStage_One::Initialize(void) {
 
 	this->pBGTexture = GET_SINGLE(CTextureMgr)->GetTexture(L"BG");
 	
-	GET_SINGLE(CObjSortMgr)->AddSortedObj( CFactory<CBigShip>::CreateInstance() );
-	GET_SINGLE(CObjSortMgr)->AddSortedObj( CFactory<CSmallShip>::CreateInstance() );
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSBigShip>::CreateInstance() );
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CBigShip>::CreateInstance() );
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSmallShip>::CreateInstance());
 
 
 	// For BackGrounds
@@ -71,13 +85,19 @@ HRESULT CStage_One::Progress(void) {
 }
 HRESULT CStage_One::Render(void) { 
 	GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"BG", NULL, NULL), this->BackMatrix[0], 
-		(D3DXVECTOR3(0, 0, 0)), (D3DXVECTOR3(0,0,0)), E_SINGLE_RENDER_TYPE_STRAIGHT, 0); // 배경
+		(D3DXVECTOR3(0, 0, 0)), (D3DXVECTOR3(0 ,0 ,0)), E_SINGLE_RENDER_TYPE_STRAIGHT, 0); // 배경
 	GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"BG2", NULL, NULL), this->BackMatrix[1],
 		(D3DXVECTOR3(0, 0, 0)), (D3DXVECTOR3(0, 0, 0)), E_SINGLE_RENDER_TYPE_STRAIGHT, 0); // 배경2
-	return S_OK;
-
+	
+	/* 히트박스 렌더링 */
+	/*
+	if(isXXXX)
+	{
+		//TODO: 히트박스 랜더 추가 Rectangle(x,x,x,x,);
+	}
+	
+	*/
 	GET_SINGLE(CObjSortMgr)->RenderObjects();
-
 	return S_OK;
 }
 HRESULT CStage_One::Release(void) { return S_OK; }

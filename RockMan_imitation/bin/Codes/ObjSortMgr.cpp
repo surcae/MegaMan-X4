@@ -2,42 +2,46 @@
 #include "ObjSortMgr.h"
 #include "Obj.h"
 
+void CObjSortMgr::Initialize()
+{
+	this->m_Objvector.resize(20);
+}
+
 HRESULT CObjSortMgr::AddSortedObj(CObj* paramObj)
 {
 	OBJ_NUM Received_ObjNum = paramObj->GetSortID();
-	m_ObjList[Received_ObjNum].push_back(paramObj);
+	m_Objvector[Received_ObjNum].push_back(paramObj);
+	
 	return S_OK;
 }
 
 void CObjSortMgr::ProgressObjects()
 {
-	for (auto& ref : m_ObjList) {
-		for (list<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
+	for (auto& ref : m_Objvector) {
+		for (vector<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
 		{
 			(*iter)->Progress();
 		}
-		ref.clear();
 	}
 }
 
 void CObjSortMgr::RenderObjects()
 {
-	for (auto& ref : m_ObjList) {
-		for (list<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
+	for (auto& ref : m_Objvector) {
+		for (vector<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
 		{
 			(*iter)->Render();
 		}
-		ref.clear();
 	}
 }
 
 void CObjSortMgr::Release()
 {
-	if (!m_ObjList.size())
+	if (!m_Objvector.size())
 		return;
 	
-	for (auto& ref : m_ObjList) {
-		for (list<CObj*>::iterator iter = ref.begin(); iter != ref.end();)
+	for (auto& ref : m_Objvector) {
+		for (vector<CObj*>::iterator iter = ref.begin(); iter != ref.end();)
 		{
 			(*iter)->Release();
 			delete *iter;
@@ -45,12 +49,12 @@ void CObjSortMgr::Release()
 		}
 		ref.clear();
 	}
-	m_ObjList.clear();
+	m_Objvector.clear();
 }
 
 CObjSortMgr::CObjSortMgr()
 {
-	ZeroMemory(&m_ObjList, sizeof(m_ObjList));
+	ZeroMemory(&m_Objvector, sizeof(m_Objvector));
 }
 CObjSortMgr::~CObjSortMgr()
 {

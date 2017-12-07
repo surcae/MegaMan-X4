@@ -54,7 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Init Timer
 	GET_SINGLE(CTimeMgr)->InitTimeMgr();
-
+	DWORD lastTime = GetTickCount();
 	// Main message loop:
 	while (true)
 	{
@@ -70,17 +70,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			MainGame.Update();
-			MainGame.Render();
+			DWORD curTime = GetTickCount();
+			if (curTime - lastTime >= 16) // 30 frame per second
+			{
+				lastTime = lastTime + 16;
+				MainGame.Update();
+				MainGame.Render();
+			}
 		}
-
-		/*
-		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		*/
 	}
 	return (int)msg.wParam;
 }

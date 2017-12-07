@@ -4,9 +4,12 @@
 #include "SoundMgr.h"
 #include "SceneMgr.h"
 #include "TimeMgr.h"
+#include "ObjSortMgr.h"
 
 HRESULT CMainGame::Initialize(void)
 {
+	// Mgr
+	GET_SINGLE(CObjSortMgr)->Initialize();
 	// Device
 	if (FAILED(GET_SINGLE(CDevice)->InitDevice(g_hWnd))) {
 		MessageBox(g_hWnd, L"Device Initialize Failed!", L"Init Failed", MB_OK);

@@ -116,7 +116,5 @@ bool CSoundMgr::SoundPlaying(SOUND_INDEX Index) {
 		return false;
 }
 void CSoundMgr::SetSoundVolume(SOUND_INDEX Index, int Value) {
-	LPLONG _pVolume = nullptr;
-	m_vecSoundBuff[Index]->GetVolume(_pVolume);
-	m_vecSoundBuff[Index]->SetVolume((int)(*_pVolume) + Value);
+	m_vecSoundBuff[Index]->SetVolume(Value);
 }

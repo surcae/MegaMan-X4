@@ -28,7 +28,7 @@ RockMan.cpp
 AppWizard has created the following resources:
 
 RockMan.rc
-    This is a listing of all of the Microsoft Windows resources that the
+    This is a vectoring of all of the Microsoft Windows resources that the
     program uses.  It includes the icons, bitmaps, and cursors that are stored
     in the RES subdirectory.  This file can be directly edited in Microsoft
     Visual C++.

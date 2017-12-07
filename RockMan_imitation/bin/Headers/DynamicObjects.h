@@ -4,6 +4,8 @@
 class CDynamicObjects :
 	public CObj
 {
+protected:
+	float xpos, ypos;
 public:
 	virtual HRESULT Initialize() { return S_OK;  };
 	virtual HRESULT Progress() { return S_OK;  };
