@@ -12,6 +12,9 @@
 #include "SmallShip.h"
 #include "Statue.h"
 #include "Platform.h"
+#include "Wall.h"
+
+#include "Player.h"
 
 #define LOOP 1
 
@@ -76,6 +79,11 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/BackGrounds/Wall.png", TEXTYPE_SINGLE, L"Wall", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
 	#pragma endregion // Can Open!!
 
 	this->pBGTexture = GET_SINGLE(CTextureMgr)->GetTexture(L"BG");
@@ -85,6 +93,7 @@ HRESULT CStage_One::Initialize(void) {
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSmallShip>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CStatue>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlatform>::CreateInstance());
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CWall>::CreateInstance());
 	
 
 	// For BackGrounds

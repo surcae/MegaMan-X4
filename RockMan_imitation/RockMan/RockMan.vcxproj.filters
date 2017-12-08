@@ -240,6 +240,9 @@
     <ClInclude Include="..\bin\Headers\Platform.h">
       <Filter>1.Objects\Static\Maps\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\Wall.h">
+      <Filter>1.Objects\Static\Maps\Wall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -331,6 +334,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\Platform.cpp">
       <Filter>1.Objects\Static\Maps\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\Wall.cpp">
+      <Filter>1.Objects\Static\Maps\Wall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

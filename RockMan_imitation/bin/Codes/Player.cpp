@@ -23,8 +23,11 @@ HRESULT CPlayer::Progress() {
 };
 HRESULT CPlayer::Render() {
 	RECT MyRECT = { 0, 0, 0, 0 };
+
+	/* 히트 박스 그리기
 	HDC hdc = BeginPaint(g_hWnd, NULL);
 	Rectangle(hdc, 10, 10, 10, 10);
+	*/
 	return S_OK;
 };
 
