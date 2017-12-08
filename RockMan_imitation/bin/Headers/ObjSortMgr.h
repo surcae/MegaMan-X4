@@ -7,6 +7,7 @@ class CObjSortMgr
 private:
 	vector<vector<CObj*>> m_Objvector;
 public:
+	D3DXVECTOR3 m_vecScroll = D3DXVECTOR3(300, 0, 0);
 	void Initialize();
 	HRESULT AddSortedObj(CObj* paramObj);
 	void ProgressObjects();

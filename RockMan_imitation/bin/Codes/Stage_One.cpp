@@ -10,6 +10,8 @@
 #include "BigShip.h"
 #include "SBigShip.h"
 #include "SmallShip.h"
+#include "Statue.h"
+#include "Platform.h"
 
 #define LOOP 1
 
@@ -34,6 +36,7 @@ HRESULT CStage_One::Initialize(void) {
 	// BackGround Initialize
 	this->pTextureMgr = GET_SINGLE(CTextureMgr);
 
+    #pragma region TEXTURE INSERT AREA
 	// BG1
 	if (FAILED(pTextureMgr->
 		InsertTexture(L"../Resource/BackGrounds/Logo.png", TEXTYPE_SINGLE, L"BG", NULL, 0)))
@@ -58,13 +61,31 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/BackGrounds/Statue.png", TEXTYPE_SINGLE, L"Statue", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/BackGrounds/Platform.png", TEXTYPE_SINGLE, L"Platform", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/BackGrounds/Platform_long.png", TEXTYPE_SINGLE, L"Platform_long", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	#pragma endregion // Can Open!!
 
 	this->pBGTexture = GET_SINGLE(CTextureMgr)->GetTexture(L"BG");
 	
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSBigShip>::CreateInstance() );
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CBigShip>::CreateInstance() );
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSmallShip>::CreateInstance());
-
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CStatue>::CreateInstance());
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlatform>::CreateInstance());
+	
 
 	// For BackGrounds
 	D3DXMATRIX matScale[2];
@@ -91,7 +112,7 @@ HRESULT CStage_One::Render(void) {
 	
 	/* 히트박스 렌더링 */
 	/*
-	if(isXXXX)
+	if(isXXXX) // 키 입력시 활성화됨
 	{
 		//TODO: 히트박스 랜더 추가 Rectangle(x,x,x,x,);
 	}

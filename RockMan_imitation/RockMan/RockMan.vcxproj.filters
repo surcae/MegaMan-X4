@@ -112,6 +112,15 @@
     <Filter Include="1.Objects\Static\Objects">
       <UniqueIdentifier>{401cc421-1a94-48cb-b31b-36a0f4e7f09d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1.Objects\Static\Maps\Statue">
+      <UniqueIdentifier>{483e5850-47cf-4af9-b03e-cac42fa879a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Objects\Static\Maps\Wall">
+      <UniqueIdentifier>{b359fa58-aa52-4514-b971-f586ac5bb8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Objects\Static\Maps\Platform">
+      <UniqueIdentifier>{92235289-ba54-4a5e-9352-eb6c2df2b278}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -225,6 +234,12 @@
     <ClInclude Include="..\bin\Headers\SBigShip.h">
       <Filter>1.Objects\Static\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\Statue.h">
+      <Filter>1.Objects\Static\Maps\Statue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\Headers\Platform.h">
+      <Filter>1.Objects\Static\Maps\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -310,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\SBigShip.cpp">
       <Filter>1.Objects\Static\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\Statue.cpp">
+      <Filter>1.Objects\Static\Maps\Statue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\Platform.cpp">
+      <Filter>1.Objects\Static\Maps\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

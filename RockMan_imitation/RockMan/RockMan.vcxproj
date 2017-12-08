@@ -168,6 +168,7 @@
     <ClInclude Include="..\bin\Headers\MyScene.h" />
     <ClInclude Include="..\bin\Headers\Obj.h" />
     <ClInclude Include="..\bin\Headers\ObjSortMgr.h" />
+    <ClInclude Include="..\bin\Headers\Platform.h" />
     <ClInclude Include="..\bin\Headers\Player.h" />
     <ClInclude Include="..\bin\Headers\RenderMgr.h" />
     <ClInclude Include="..\bin\Headers\SBigShip.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="..\bin\Headers\SoundMgr.h" />
     <ClInclude Include="..\bin\Headers\Stage_One.h" />
     <ClInclude Include="..\bin\Headers\StaticObjects.h" />
+    <ClInclude Include="..\bin\Headers\Statue.h" />
     <ClInclude Include="..\bin\Headers\stdafx.h" />
     <ClInclude Include="..\bin\Headers\Struct.h" />
     <ClInclude Include="..\bin\Headers\Texture.h" />
@@ -207,6 +209,7 @@
     <ClCompile Include="..\bin\Codes\MyScene.cpp" />
     <ClCompile Include="..\bin\Codes\Obj.cpp" />
     <ClCompile Include="..\bin\Codes\ObjSortMgr.cpp" />
+    <ClCompile Include="..\bin\Codes\Platform.cpp" />
     <ClCompile Include="..\bin\Codes\Player.cpp" />
     <ClCompile Include="..\bin\Codes\RenderMgr.cpp" />
     <ClCompile Include="..\bin\Codes\SBigShip.cpp" />
@@ -216,6 +219,7 @@
     <ClCompile Include="..\bin\Codes\SoundMgr.cpp" />
     <ClCompile Include="..\bin\Codes\Stage_One.cpp" />
     <ClCompile Include="..\bin\Codes\StaticObjects.cpp" />
+    <ClCompile Include="..\bin\Codes\Statue.cpp" />
     <ClCompile Include="..\bin\Codes\Texture.cpp" />
     <ClCompile Include="..\bin\Codes\TextureMgr.cpp" />
     <ClCompile Include="..\bin\Codes\TimeMgr.cpp" />

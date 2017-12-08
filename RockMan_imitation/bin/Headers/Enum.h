@@ -20,6 +20,7 @@ enum OBJ_NUM
 	OBJ_NUM_BG2, // 그 앞에 움직이는 작은 배
 	OBJ_NUM_BG3, // 고정되어 있는 배
 	OBJ_NUM_BG4, // 장식물
+	OBJ_NUM_PLFORM, // 바닥
 	OBJ_NUM_WALL, // 벽
 	OBJ_NUM_MONSTER, // 몹
 	OBJ_NUM_PLAYER, // 플레이어
