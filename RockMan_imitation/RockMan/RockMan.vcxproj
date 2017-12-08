@@ -184,6 +184,7 @@
     <ClInclude Include="..\bin\Headers\Texture.h" />
     <ClInclude Include="..\bin\Headers\TextureMgr.h" />
     <ClInclude Include="..\bin\Headers\TimeMgr.h" />
+    <ClInclude Include="..\bin\Headers\UI.h" />
     <ClInclude Include="..\bin\Headers\Wall.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RockMan.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="..\bin\Codes\Texture.cpp" />
     <ClCompile Include="..\bin\Codes\TextureMgr.cpp" />
     <ClCompile Include="..\bin\Codes\TimeMgr.cpp" />
+    <ClCompile Include="..\bin\Codes\UI.cpp" />
     <ClCompile Include="..\bin\Codes\Wall.cpp" />
     <ClCompile Include="RockMan.cpp" />
     <ClCompile Include="stdafx.cpp" />

@@ -51,6 +51,16 @@ HRESULT CPlatform::Initialize()
 
 HRESULT CPlatform::Progress()
 {
+	D3DXMatrixTranslation(&plat[0].matTrans, 0 + (*m_pvecScroll).x, 510 + (*m_pvecScroll).y, 0);
+	plat[0].matWorld = plat[0].matScale * plat[0].matTrans;
+	D3DXMatrixTranslation(&plat[1].matTrans, 0 + (*m_pvecScroll).x, -48 + (*m_pvecScroll).y, 0);
+	plat[1].matWorld = plat[1].matScale * plat[1].matTrans;
+	
+	// 작은 발판
+	D3DXMatrixTranslation(&plat[2].matTrans, -100 + (*m_pvecScroll).x, 250 + (*m_pvecScroll).y, 0);
+	plat[2].matWorld = plat[2].matScale * plat[2].matTrans;
+	D3DXMatrixTranslation(&plat[3].matTrans, 1500 + (*m_pvecScroll).x, 250 + (*m_pvecScroll).y, 0);
+	plat[3].matWorld = plat[3].matScale * plat[3].matTrans;
 	return S_OK;
 }
 

@@ -5,6 +5,7 @@
 #include "SceneMgr.h"
 #include "TimeMgr.h"
 #include "ObjSortMgr.h"
+#include "KeyMgr.h"
 
 HRESULT CMainGame::Initialize(void)
 {
@@ -27,6 +28,11 @@ HRESULT CMainGame::Initialize(void)
 		MessageBox(g_hWnd, L"Scene Initialize Failed!", L"Init Failed", MB_OK);
 		return E_FAIL;
 	}
+
+	// KeyBoard
+	GET_SINGLE(CKeyMgr)->CreateKeyBoardDevice(g_hWnd);
+
+	
 	return S_OK;
 }
 

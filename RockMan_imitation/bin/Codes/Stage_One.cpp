@@ -13,10 +13,12 @@
 #include "Statue.h"
 #include "Platform.h"
 #include "Wall.h"
+#include "UI.h"
 
 #include "Player.h"
 
 #define LOOP 1
+#define NOLOOP 0
 
 CStage_One::CStage_One()
 {
@@ -32,9 +34,18 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Ready.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Lazer.wav")))
+	{
+		return E_FAIL;
+	}
 
 	GET_SINGLE(CSoundMgr)->SetSoundVolume(E_SOUND_THEME, -1000);
 	GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_THEME, LOOP);
+	GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_READY, NOLOOP);
 
 	// BackGround Initialize
 	this->pTextureMgr = GET_SINGLE(CTextureMgr);
@@ -84,9 +95,41 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Single/Spawn1.png", TEXTYPE_SINGLE, L"Spawn1", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Single/Spawn2.png", TEXTYPE_SINGLE, L"Spawn2", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Single/Spawn3.png", TEXTYPE_SINGLE, L"Spawn3", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Single/Spawn4.png", TEXTYPE_SINGLE, L"Spawn4", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Single/Spawn5.png", TEXTYPE_SINGLE, L"Spawn5", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/BackGrounds/hpbar.png", TEXTYPE_SINGLE, L"UI", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+
+
 	#pragma endregion // Can Open!!
 
-	this->pBGTexture = GET_SINGLE(CTextureMgr)->GetTexture(L"BG");
+	//this->pBGTexture = GET_SINGLE(CTextureMgr)->GetTexture(L"BG");
 	
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSBigShip>::CreateInstance() );
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CBigShip>::CreateInstance() );
@@ -94,7 +137,10 @@ HRESULT CStage_One::Initialize(void) {
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CStatue>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlatform>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CWall>::CreateInstance());
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CUI>::CreateInstance());
 	
+
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlayer>::CreateInstance());
 
 	// For BackGrounds
 	D3DXMATRIX matScale[2];

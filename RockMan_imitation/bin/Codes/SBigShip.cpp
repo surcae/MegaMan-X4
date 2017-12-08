@@ -23,13 +23,13 @@ HRESULT CSBigShip::Initialize()
 	m_Info.vCenter = D3DXVECTOR3(0, 0, 0);
 	m_Info.vPos = D3DXVECTOR3(0, 0, 0);
 
-
-	
 	return S_OK;
 }
 
 HRESULT CSBigShip::Progress()
 {
+	D3DXMatrixTranslation(&m_Info.matTrans, 300 + (*m_pvecScroll).x, 300 + (*m_pvecScroll).y * 0.5f, 0);
+	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	return S_OK;
 }
 

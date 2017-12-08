@@ -2,6 +2,8 @@
 class CCollisionMgr
 {
 public:
+	void CreateColliBox();
+public:
 	CCollisionMgr();
 	~CCollisionMgr();
 };

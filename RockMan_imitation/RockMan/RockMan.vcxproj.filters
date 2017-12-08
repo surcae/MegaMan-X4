@@ -121,6 +121,9 @@
     <Filter Include="1.Objects\Static\Maps\Platform">
       <UniqueIdentifier>{92235289-ba54-4a5e-9352-eb6c2df2b278}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1.Objects\Static\Maps\UI">
+      <UniqueIdentifier>{10fb3cd0-6feb-4db0-b278-5d5f476ecba8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -243,6 +246,9 @@
     <ClInclude Include="..\bin\Headers\Wall.h">
       <Filter>1.Objects\Static\Maps\Wall</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\UI.h">
+      <Filter>1.Objects\Static\Maps\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -337,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\Wall.cpp">
       <Filter>1.Objects\Static\Maps\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\UI.cpp">
+      <Filter>1.Objects\Static\Maps\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
