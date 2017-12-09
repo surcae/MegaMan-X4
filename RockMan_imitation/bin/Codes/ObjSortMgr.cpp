@@ -5,6 +5,7 @@
 void CObjSortMgr::Initialize()
 {
 	this->m_Objvector.resize(20);
+	this->m_vecScroll = D3DXVECTOR3(-600, 30, 0);
 }
 
 HRESULT CObjSortMgr::AddSortedObj(CObj* paramObj)

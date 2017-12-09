@@ -28,16 +28,16 @@ HRESULT CSmallShip::Progress()
 {
 	x = x - 100 * GET_SINGLE(CTimeMgr)->GetTime();
 	if (x < -300)
-		x = 1600;
+		x = 2000;
 
-	D3DXMatrixTranslation(&m_objInfo[0].matTrans, x, y, 0);
+	D3DXMatrixTranslation(&m_objInfo[0].matTrans, x + (*m_pvecScroll).x, y + (*m_pvecScroll).y * 0.5f, 0);
 	m_objInfo[0].matWorld = m_objInfo[0].matScale * m_objInfo[0].matTrans;
 
 	x2 = x2 + 400 * GET_SINGLE(CTimeMgr)->GetTime();
-	if (x2 > 1600)
+	if (x2 > 2000)
 		x2 = -300;
 
-	D3DXMatrixTranslation(&m_objInfo[1].matTrans, x2, y2, 0);
+	D3DXMatrixTranslation(&m_objInfo[1].matTrans, x2 + (*m_pvecScroll).x, y2 + (*m_pvecScroll).y * 0.5f, 0);
 	m_objInfo[1].matWorld = m_objInfo[1].matScale * m_objInfo[1].matTrans;
 	return S_OK;
 }

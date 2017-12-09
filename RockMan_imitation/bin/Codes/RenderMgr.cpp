@@ -81,22 +81,50 @@ void CRenderMgr::SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
 {
 	//_vPosition->x *= _frame;
 	//_vPosition->y *= _frame;
-	switch (type)
+	if (_frame == NULL)
 	{
-	case E_SINGLE_RENDER_TYPE_STRAIGHT:
-		RenderSprite->SetTransform(&_matWorld);
-		RenderSprite->Draw(rTexInfo->pTexture, NULL,
-			&_vCenter, &_vPosition, D3DCOLOR_ARGB(255, 255, 255, 255));
-		break;
-	case E_SINGLE_RENDER_TYPE_FLASH: // »ß±î»·Â½
-		// ¹Ì¿Ï¼º
-		RenderSprite->SetTransform(&_matWorld);
-		RenderSprite->Draw(rTexInfo->pTexture, NULL,
-			&_vCenter, &_vPosition, D3DCOLOR_ARGB(255, 0, 0, 0));
-		break;
-	case E_SINGLE_RENDER_TYPE_FADING:
-		EffectsFade(rTexInfo, _matWorld, _vCenter, _vPosition);
-		break;
+		switch (type)
+		{
+		case E_SINGLE_RENDER_TYPE_STRAIGHT:
+			RenderSprite->SetTransform(&_matWorld);
+			RenderSprite->Draw(rTexInfo->pTexture, NULL,
+				&_vCenter, &_vPosition, D3DCOLOR_ARGB(255, 255, 255, 255));
+			break;
+		case E_SINGLE_RENDER_TYPE_FLASH: // »ß±î»·Â½
+			// ¹Ì¿Ï¼º
+			RenderSprite->SetTransform(&_matWorld);
+			RenderSprite->Draw(rTexInfo->pTexture, NULL,
+				&_vCenter, &_vPosition, D3DCOLOR_ARGB(255, 0, 0, 0));
+			break;
+		case E_SINGLE_RENDER_TYPE_FADING:
+			EffectsFade(rTexInfo, _matWorld, _vCenter, _vPosition);
+			break;
+		}
+	}
+	else // ½Ì±Û ÅØ½ºÃÄÀÎµ¥ ¿©·¯°³ ÁÂÇ¥ Çü¼ºÀ¸·Î Ãâ·ÂÇÏ°íÀÚ ÇÒ ¶§
+	{
+		RECT tmp = { 0, 22, 10, 32 };
+		tmp.left = 64;
+		tmp.right = 128;
+		tmp.top = 0;
+		tmp.bottom = 64;
+		switch (type)
+		{
+		case E_SINGLE_RENDER_TYPE_STRAIGHT:
+			RenderSprite->SetTransform(&_matWorld);
+			RenderSprite->Draw(rTexInfo->pTexture, &tmp,
+				&D3DXVECTOR3((tmp.right - tmp.left) / 2.f, (tmp.bottom - tmp.top) / 2.f,0), &D3DXVECTOR3(0,0,0), D3DCOLOR_ARGB(255, 255, 255, 255));
+			break;
+		case E_SINGLE_RENDER_TYPE_FLASH: // »ß±î»·Â½
+										 // ¹Ì¿Ï¼º
+			RenderSprite->SetTransform(&_matWorld);
+			RenderSprite->Draw(rTexInfo->pTexture, NULL,
+				&_vCenter, &_vPosition, D3DCOLOR_ARGB(255, 0, 0, 0));
+			break;
+		case E_SINGLE_RENDER_TYPE_FADING:
+			EffectsFade(rTexInfo, _matWorld, _vCenter, _vPosition);
+			break;
+		}
 	}
 }
 void CRenderMgr::MultiRender(const TEXINFO *rTexInfo, D3DXMATRIX _matWorld, MULTI_RENDER_TYPE type, int& cnt) // ¸ÖÆ¼ ½ºÇÁ¶óÀÌÆ®¿ë

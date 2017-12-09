@@ -18,14 +18,14 @@ HRESULT CPlatform::Initialize()
 	this->SetSortID(OBJ_NUM_PLFORM);
 
 	D3DXMatrixScaling(&plat[0].matScale, 2, 1.7f, 1);
-	D3DXMatrixTranslation(&plat[0].matTrans, 0, 510, 0);
+	D3DXMatrixTranslation(&plat[0].matTrans, 0, 450, 0);
 	plat[0].matWorld = plat[0].matScale * plat[0].matTrans;
 
 	plat[0].vCenter = D3DXVECTOR3(0, 0, 0);
 	plat[0].vPos = D3DXVECTOR3(0, 0, 0);
 
 	D3DXMatrixScaling(&plat[1].matScale, 2, 1.7f, 1);
-	D3DXMatrixTranslation(&plat[1].matTrans, 0, -48, 0);
+	D3DXMatrixTranslation(&plat[1].matTrans, 0, -148, 0);
 	plat[1].matWorld = plat[1].matScale * plat[1].matTrans;
 
 	plat[1].vCenter = D3DXVECTOR3(0, 0, 0);
@@ -51,15 +51,15 @@ HRESULT CPlatform::Initialize()
 
 HRESULT CPlatform::Progress()
 {
-	D3DXMatrixTranslation(&plat[0].matTrans, 0 + (*m_pvecScroll).x, 510 + (*m_pvecScroll).y, 0);
+	D3DXMatrixTranslation(&plat[0].matTrans, 0 + (*m_pvecScroll).x, 450 + (*m_pvecScroll).y, 0);
 	plat[0].matWorld = plat[0].matScale * plat[0].matTrans;
-	D3DXMatrixTranslation(&plat[1].matTrans, 0 + (*m_pvecScroll).x, -48 + (*m_pvecScroll).y, 0);
+	D3DXMatrixTranslation(&plat[1].matTrans, 0 + (*m_pvecScroll).x, -148 + (*m_pvecScroll).y, 0);
 	plat[1].matWorld = plat[1].matScale * plat[1].matTrans;
 	
 	// 작은 발판
-	D3DXMatrixTranslation(&plat[2].matTrans, -100 + (*m_pvecScroll).x, 250 + (*m_pvecScroll).y, 0);
+	D3DXMatrixTranslation(&plat[2].matTrans, -100 + (*m_pvecScroll).x, 150 + (*m_pvecScroll).y, 0);
 	plat[2].matWorld = plat[2].matScale * plat[2].matTrans;
-	D3DXMatrixTranslation(&plat[3].matTrans, 1500 + (*m_pvecScroll).x, 250 + (*m_pvecScroll).y, 0);
+	D3DXMatrixTranslation(&plat[3].matTrans, 1300 + (*m_pvecScroll).x, 150 + (*m_pvecScroll).y, 0);
 	plat[3].matWorld = plat[3].matScale * plat[3].matTrans;
 	return S_OK;
 }

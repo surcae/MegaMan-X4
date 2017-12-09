@@ -5,6 +5,9 @@ class CStage_One :
 	public CField
 {
 private:
+	// For BackGrounds
+	D3DXMATRIX matScale[2];
+	D3DXMATRIX matTrans[2];
 	//BackGround:
 	D3DXMATRIX BackMatrix[2];
 	const TEXINFO* pBGTexture = nullptr;

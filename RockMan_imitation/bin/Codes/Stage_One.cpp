@@ -17,6 +17,7 @@
 
 #include "Player.h"
 
+#define KEY_DOWN(code) ((GetAsyncKeyState(code)&0x8000)?1:0)
 #define LOOP 1
 #define NOLOOP 0
 
@@ -142,9 +143,6 @@ HRESULT CStage_One::Initialize(void) {
 
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlayer>::CreateInstance());
 
-	// For BackGrounds
-	D3DXMATRIX matScale[2];
-	D3DXMATRIX matTrans[2];
 	D3DXMatrixTranslation(&matTrans[0], 0, 0, 0);
 	D3DXMatrixTranslation(&matTrans[1], 0, 0, 0);
 	D3DXMatrixScaling(&matScale[0], 1.0f, 1.0f, 1.f);
@@ -156,6 +154,13 @@ HRESULT CStage_One::Initialize(void) {
 	return S_OK;
 }
 HRESULT CStage_One::Progress(void) { 
+	D3DXMatrixTranslation(&matTrans[1], GET_SINGLE(CObjSortMgr)->m_vecScroll.x * 0.1f, GET_SINGLE(CObjSortMgr)->m_vecScroll.y * 0.1f, 0);
+	BackMatrix[1] = matScale[1] * matTrans[1];
+	if (KEY_DOWN('O')) // ½ÃÀÛÅ°
+	{
+		GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_LAZER, NOLOOP);
+		CPlayer::SetSpawn();
+	}
 	GET_SINGLE(CObjSortMgr)->ProgressObjects();
 	return S_OK;
 }
@@ -174,6 +179,8 @@ HRESULT CStage_One::Render(void) {
 	
 	*/
 	GET_SINGLE(CObjSortMgr)->RenderObjects();
+
+
 	return S_OK;
 }
 HRESULT CStage_One::Release(void) { return S_OK; }
