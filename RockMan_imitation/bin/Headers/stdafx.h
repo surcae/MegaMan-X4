@@ -18,7 +18,7 @@
 
 // TODO: reference additional headers your program requires here
 #include <vector>
-#include <vector>
+#include <list>
 #include <map>
 #include <stack>
 #include <d3d9.h>

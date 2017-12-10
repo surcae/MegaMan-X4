@@ -4,41 +4,49 @@
 
 void CObjSortMgr::Initialize()
 {
-	this->m_Objvector.resize(20);
 	this->m_vecScroll = D3DXVECTOR3(-600, 30, 0);
+	for (int i = 0; i < 20; ++i)
+	{
+		list<CObj*> *myList = new list<CObj*>;
+		this->m_Objvector[i] = myList;
+	}
 }
 
 HRESULT CObjSortMgr::AddSortedObj(CObj* paramObj)
 {
 	OBJ_NUM Received_ObjNum = paramObj->GetSortID();
-	m_Objvector[Received_ObjNum].push_back(paramObj);
-	
+	m_Objvector[Received_ObjNum]->push_back(paramObj);
+
 	return S_OK;
 }
 
 void CObjSortMgr::ProgressObjects()
 {
-	for (auto& ref : m_Objvector) {
-		for (vector<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
+	for (int i = 0; i < 20; i++) 
+	{
+		if (!m_Objvector[i]->empty())
 		{
-			(*iter)->Progress();
+			for (list<CObj*>::iterator iter = m_Objvector[i]->begin(); iter != m_Objvector[i]->end(); ++iter)
+				(*iter)->Progress();
 		}
 	}
 }
 
 void CObjSortMgr::RenderObjects()
 {
-	for (auto& ref : m_Objvector) {
-		for (vector<CObj*>::iterator iter = ref.begin(); iter != ref.end(); ++iter)
+	for (int i = 0; i < 20; i++)
+	{
+		if (!m_Objvector[i]->empty())
 		{
-			(*iter)->Render();
+			for (list<CObj*>::iterator iter = m_Objvector[i]->begin(); iter != m_Objvector[i]->end(); ++iter)
+				(*iter)->Render();
 		}
 	}
 }
 
 void CObjSortMgr::Release()
 {
-	if (!m_Objvector.size())
+	/*if (!m_Objvector.size())
 		return;
 	
 	for (auto& ref : m_Objvector) {
@@ -50,7 +58,7 @@ void CObjSortMgr::Release()
 		}
 		ref.clear();
 	}
-	m_Objvector.clear();
+	m_Objvector.clear();*/
 }
 
 CObjSortMgr::CObjSortMgr()

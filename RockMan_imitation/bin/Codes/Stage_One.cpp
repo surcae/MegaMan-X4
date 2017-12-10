@@ -153,7 +153,6 @@ HRESULT CStage_One::Initialize(void) {
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CWall>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CUI>::CreateInstance());
 	
-
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlayer>::CreateInstance());
 
 	D3DXMatrixTranslation(&matTrans[0], 0, 0, 0);
