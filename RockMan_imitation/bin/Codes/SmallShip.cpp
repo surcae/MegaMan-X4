@@ -33,8 +33,9 @@ HRESULT CSmallShip::Progress()
 	D3DXMatrixTranslation(&m_objInfo[0].matTrans, x + (*m_pvecScroll).x, y + (*m_pvecScroll).y * 0.5f, 0);
 	m_objInfo[0].matWorld = m_objInfo[0].matScale * m_objInfo[0].matTrans;
 
-	x2 = x2 + 400 * GET_SINGLE(CTimeMgr)->GetTime();
+	x2 = x2 + 600 * GET_SINGLE(CTimeMgr)->GetTime();
 	if (x2 > 2000)
+
 		x2 = -300;
 
 	D3DXMatrixTranslation(&m_objInfo[1].matTrans, x2 + (*m_pvecScroll).x, y2 + (*m_pvecScroll).y * 0.5f, 0);

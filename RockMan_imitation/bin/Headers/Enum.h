@@ -74,3 +74,11 @@ enum LOGO_OBJ
 	LOGO_ROCKTEXT_5,
 	LOGO_ZEROTEXT_6,
 };
+
+enum STATUS
+{
+	E_STATUS_ATTACKED, // 공격받는상태
+	E_STATUS_IDLE, // 멈춰있는상태
+	E_STATUS_WALK, // 걷는상태
+	E_STATUS_DASH, // 대쉬상태
+};

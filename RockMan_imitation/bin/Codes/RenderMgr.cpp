@@ -77,7 +77,8 @@ void CRenderMgr::EffectsFade(const TEXINFO *rTexInfo, D3DXMATRIX &_matWorld,
 }
 
 void CRenderMgr::SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
-	D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition, SINGLE_RENDER_TYPE type, FRAME _frame)
+	D3DXVECTOR3 &_vCenter, D3DXVECTOR3 &_vPosition, 
+	SINGLE_RENDER_TYPE type, FRAME _frame, RECT* pRect /*=NULL*/, int Width /*= 0*/, int Height /*= 0*/, int curFrame /*=0*/)
 {
 	//_vPosition->x *= _frame;
 	//_vPosition->y *= _frame;
@@ -101,19 +102,39 @@ void CRenderMgr::SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
 			break;
 		}
 	}
-	else // 싱글 텍스쳐인데 여러개 좌표 형성으로 출력하고자 할 때
+	else if(_frame == 1) // 싱글 텍스쳐인데 여러개 좌표 형성으로 출력하고자 할 때
 	{
-		RECT tmp = { 0, 22, 10, 32 };
-		tmp.left = 64;
-		tmp.right = 128;
-		tmp.top = 0;
-		tmp.bottom = 64;
+		RECT* tmp = pRect;
+		switch (type)
+		{
+		case E_SINGLE_RENDER_TYPE_STRAIGHT:
+			RenderSprite->SetTransform(&_matWorld);
+			RenderSprite->Draw(rTexInfo->pTexture, pRect,
+				&D3DXVECTOR3(((*tmp).right - (*tmp).left) / 2.f, ((*tmp).bottom - (*tmp).top),0), &D3DXVECTOR3(0,0,0), D3DCOLOR_ARGB(255, 255, 255, 255));
+			break;
+		case E_SINGLE_RENDER_TYPE_FLASH: // 삐까뻔쩍
+										 // 미완성
+			RenderSprite->SetTransform(&_matWorld);
+			RenderSprite->Draw(rTexInfo->pTexture, NULL,
+				&_vCenter, &_vPosition, D3DCOLOR_ARGB(255, 0, 0, 0));
+			break;
+		case E_SINGLE_RENDER_TYPE_FADING:
+			EffectsFade(rTexInfo, _matWorld, _vCenter, _vPosition);
+			break;
+		}
+	}
+	else if (_frame > 1) // 다수의 프레임 싱글텍스쳐 일시 (크기가 일정할 때만 적용)
+	{
+		RECT tmp = {0 + (curFrame) * Width, 
+					0,
+					(curFrame + 1) * Width,
+					Height};
 		switch (type)
 		{
 		case E_SINGLE_RENDER_TYPE_STRAIGHT:
 			RenderSprite->SetTransform(&_matWorld);
 			RenderSprite->Draw(rTexInfo->pTexture, &tmp,
-				&D3DXVECTOR3((tmp.right - tmp.left) / 2.f, (tmp.bottom - tmp.top) / 2.f,0), &D3DXVECTOR3(0,0,0), D3DCOLOR_ARGB(255, 255, 255, 255));
+				&D3DXVECTOR3((tmp.right - tmp.left) / 2.f, (tmp.bottom - tmp.top), 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 			break;
 		case E_SINGLE_RENDER_TYPE_FLASH: // 삐까뻔쩍
 										 // 미완성
@@ -127,33 +148,26 @@ void CRenderMgr::SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
 		}
 	}
 }
-void CRenderMgr::MultiRender(const TEXINFO *rTexInfo, D3DXMATRIX _matWorld, MULTI_RENDER_TYPE type, int& cnt) // 멀티 스프라이트용
+void CRenderMgr::MultiRender(const TEXINFO *rTexInfo, D3DXMATRIX _matWorld, MULTI_RENDER_TYPE type) // 멀티 스프라이트용
 {
 	// 미완성
 	switch (type)
 	{
 	case E_MULTI_RENDER_TYPE_STRAIGHT:
 	{
-		for (int i = 0; i < cnt; ++i)
-		{
-			RenderSprite->SetTransform(&_matWorld);
-		}
+		RenderSprite->SetTransform(&_matWorld);
+		RenderSprite->Draw(rTexInfo->pTexture, NULL,
+			&D3DXVECTOR3(rTexInfo->ImageInfo.Width / 2.f, rTexInfo->ImageInfo.Height, 0.f), NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	break;
 	case E_MULTI_RENDER_TYPE_FLASH:
 	{
-		for (int i = 0; i < cnt; ++i)
-		{
-			RenderSprite->SetTransform(&_matWorld);
-		}
+		RenderSprite->SetTransform(&_matWorld);
 	}
 	break;
 	case E_MULTI_RENDER_TYPE_FADING:
 	{
-		for (int i = 0; i < cnt; ++i)
-		{
-			RenderSprite->SetTransform(&_matWorld);
-		}
+		RenderSprite->SetTransform(&_matWorld);
 	}
 	break;
 	}

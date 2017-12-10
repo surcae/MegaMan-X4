@@ -127,6 +127,19 @@ HRESULT CStage_One::Initialize(void) {
 		return E_FAIL;
 	}
 
+	// Player!!!!
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Single/IDLE.png", TEXTYPE_SINGLE, L"IDLE", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Walk%d.png", TEXTYPE_MULTI, L"Zero", L"Walk", 14)))
+	{
+		return E_FAIL;
+	}
+
+
 
 	#pragma endregion // Can Open!!
 
@@ -156,7 +169,7 @@ HRESULT CStage_One::Initialize(void) {
 HRESULT CStage_One::Progress(void) { 
 	D3DXMatrixTranslation(&matTrans[1], GET_SINGLE(CObjSortMgr)->m_vecScroll.x * 0.1f, GET_SINGLE(CObjSortMgr)->m_vecScroll.y * 0.1f, 0);
 	BackMatrix[1] = matScale[1] * matTrans[1];
-	if (KEY_DOWN('O')) // 시작키
+	if (KEY_DOWN('O')) // 시작키. 제로 소환
 	{
 		GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_LAZER, NOLOOP);
 		CPlayer::SetSpawn();

@@ -51,7 +51,7 @@ HRESULT CPlatform::Initialize()
 
 HRESULT CPlatform::Progress()
 {
-	D3DXMatrixTranslation(&plat[0].matTrans, 0 + (*m_pvecScroll).x, 450 + (*m_pvecScroll).y, 0);
+	D3DXMatrixTranslation(&plat[0].matTrans, -50 + (*m_pvecScroll).x, 450 + (*m_pvecScroll).y, 0);
 	plat[0].matWorld = plat[0].matScale * plat[0].matTrans;
 	D3DXMatrixTranslation(&plat[1].matTrans, 0 + (*m_pvecScroll).x, -148 + (*m_pvecScroll).y, 0);
 	plat[1].matWorld = plat[1].matScale * plat[1].matTrans;

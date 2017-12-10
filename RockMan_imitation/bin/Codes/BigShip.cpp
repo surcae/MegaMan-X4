@@ -32,7 +32,7 @@ HRESULT CBigShip::Initialize()
 HRESULT CBigShip::Progress()
 {
 	xpos = xpos + 100 * GET_SINGLE(CTimeMgr)->GetTime();
-	if (xpos > 2000)
+	if (xpos > 3000)
 		xpos = -50;
 
 	D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + (*m_pvecScroll).y * 0.5f, 0);
