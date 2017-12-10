@@ -7,7 +7,10 @@
 #include "SoundMgr.h"
 #include "KeyMgr.h"
 
+#pragma warning (disable : 4244)
+
 #define KEY_DOWN(code) ((GetAsyncKeyState(code)&0x8000)?1:0)
+#define KEY_UP(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 0 : 1)
 #define TIME GET_SINGLE(CTimeMgr)->GetTime() 
 #define LOOP 1
 #define NOLOOP 0
@@ -36,11 +39,35 @@ void CPlayer::FrameProcess()
 	case E_STATUS_WALK:
 	{
 		m_fFrameSpeed = 26;
-		FrameMax = 13; // IDLE 5장
+		FrameMax = 13;
+	}
+	break;
+	case E_STATUS_DASH:
+	{
+		m_fFrameSpeed = 26;
+		FrameMax = 6.5;
+	}
+	break;
+	case E_STATUS_DASHEND:
+	{
+		m_fFrameSpeed = 22;
+		FrameMax = 3;
 	}
 	break;
 	}
+	
+	// 특수 프레임 지정하는곳
+	if (eStatus == E_STATUS_DASH)
+	{
+		DASH_FRAME += (m_fFrameSpeed * TIME);
+		if (DASH_FRAME > FrameMax)
+		{
+			DASH_FRAME = FrameMax;
+			return;
+		}
+	}
 
+	// 일반 프레임 지정
 	m_fFrame += (m_fFrameSpeed * TIME);
 	if (m_fFrame > FrameMax)
 		m_fFrame = 0.f;
@@ -48,19 +75,74 @@ void CPlayer::FrameProcess()
 
 void CPlayer::KeyCheck()
 {
-	// 공격시 프레임
+	/* 아무것도 안 눌렀을 때 처리하는곳 */
+	if (eStatus == E_STATUS_DASH && KEY_UP('Z'))
+	{
+		eStatus = E_STATUS_DASHEND;
+		DASH_FRAME = 0.f;
+		return;
+	}
+	else
+	{
+		this->eStatus = E_STATUS_IDLE;
+	}
+	/* 아무것도 안 눌렀을 때 처리하는곳 끝나는 곳*/
 
-// 포지션 바꾸는 포인터 줘서 각각 공격때마다 포지션 다르게 주기
-	this->eStatus = E_STATUS_IDLE;
+	/* 뭔가 눌렀을 때 처리하는곳*/
+	if (KEY_DOWN('Z'))
+	{
+		eStatus = E_STATUS_DASH;
+		if(DASH_FRAME == 0.f)
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_DASH, NOLOOP);
+
+	
+		/*if (!GET_SINGLE(CSoundMgr)->SoundPlaying(E_SOUND_DASH))
+		{
+			GET_SINGLE(CSoundMgr)->SoundStop(E_SOUND_DASH);
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_DASH, NOLOOP);
+		}*/
+		if (Pointer == D_RIGHT)
+		{
+			x += m_fSpeed * 2.5f * TIME;
+			if (400 < x && x < 1200)
+				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * 2.5f * GET_SINGLE(CTimeMgr)->GetTime());
+		}
+		else
+		{
+			x -= m_fSpeed * 2.5f * TIME;
+			if (400 < x && x < 1200)
+				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * 2.5f * GET_SINGLE(CTimeMgr)->GetTime());
+		}
+		return;
+	}
+	/*if (KEY_DOWN(VK_RIGHT) && (KEY_DOWN('Z')) || (KEY_DOWN(VK_LEFT) && (KEY_DOWN('Z') )))
+	{
+		eStatus = E_STATUS_DASH;
+		if (Pointer == D_RIGHT)
+		{
+			x += m_fSpeed * 2 * TIME;
+			if (400 < x && x < 1200)
+				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * 2 * GET_SINGLE(CTimeMgr)->GetTime());
+		}
+		else
+		{
+			x -= m_fSpeed * 2 * TIME;
+			if (400 < x && x < 1200)
+				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * 2 * GET_SINGLE(CTimeMgr)->GetTime());
+		}
+		return;
+	}*/
 
 	if (KEY_DOWN(VK_LEFT))
 	{
+
 		x -= m_fSpeed * TIME;
 		if (400 < x && x < 1200)
 			(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * GET_SINGLE(CTimeMgr)->GetTime());
 		Pointer = D_LEFT;
 		eStatus = E_STATUS_WALK;
 		
+		return;
 	}
 	if (KEY_DOWN(VK_RIGHT))
 	{
@@ -69,15 +151,9 @@ void CPlayer::KeyCheck()
 			(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * GET_SINGLE(CTimeMgr)->GetTime());
 		Pointer = D_RIGHT;
 		eStatus = E_STATUS_WALK;
+
+		return;
 	}
-	/*if (KEY_DOWN(VK_UP))
-	{
-		(GET_SINGLE(CObjSortMgr)->m_vecScroll.y) += (200 * GET_SINGLE(CTimeMgr)->GetTime());
-	}
-	if (KEY_DOWN(VK_DOWN))
-	{
-		(GET_SINGLE(CObjSortMgr)->m_vecScroll.y) -= (200 * GET_SINGLE(CTimeMgr)->GetTime());
-	}*/
 }
 void CPlayer::SpawnRender()
 {
@@ -231,11 +307,9 @@ HRESULT CPlayer::Initialize() {
 	return S_OK;
 };
 HRESULT CPlayer::Progress() {
-	FrameProcess();
-
 	if(isControllActivated)
 		KeyCheck();
-
+	FrameProcess();
 
 	// Player Location Max
 	if (x < 0) x = 0;
@@ -250,7 +324,6 @@ HRESULT CPlayer::Render() {
 		D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.f);
 		D3DXMatrixTranslation(&m_Info.matTrans, x + m_pvecScroll->x, y + m_pvecScroll->y, 0);
 		m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
-		
 	}
 	else
 	{
@@ -259,7 +332,9 @@ HRESULT CPlayer::Render() {
 		m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	}
 
+	////////////////////
 	// 본격 렌더링 시작!!
+	////////////////////
 	if (isStart) // 소환이 끝나면 시작됨
 	{
 		switch (eStatus)
@@ -267,8 +342,7 @@ HRESULT CPlayer::Render() {
 		case E_STATUS_IDLE:
 		{
 			GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"IDLE"),
-				m_Info.matWorld, (D3DXVECTOR3(0,
-					GET_SINGLE(CTextureMgr)->GetTexture(L"IDLE")->ImageInfo.Height, 0.f)), m_Info.vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 5, NULL, 48 * 2, 50 * 2, (int)m_fFrame);
+				m_Info.matWorld, (D3DXVECTOR3(0, GET_SINGLE(CTextureMgr)->GetTexture(L"IDLE")->ImageInfo.Height, 0.f)), m_Info.vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 5, NULL, 48 * 2, 50 * 2, (int)m_fFrame);
 		}
 		break;
 		case E_STATUS_WALK:
@@ -277,15 +351,20 @@ HRESULT CPlayer::Render() {
 				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;
+		case E_STATUS_DASH:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"DashStart", (int)DASH_FRAME),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
-		// 전반적인 캐릭터 렌더링
+		break;
+		case E_STATUS_DASHEND:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"DashEnd", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		}
 	}
-	// 어택용 프레임 변수를 만들까?
-	//RECT MyRECT = { 0, 0, 0, 0 };
-	/* 히트 박스 그리기
-	HDC hdc = BeginPaint(g_hWnd, NULL);
-	Rectangle(hdc, MyRECT.left, MyRECT.top, MyRECT.right, MyRECT.bottom);
-	*/
 	return S_OK;
 };
 

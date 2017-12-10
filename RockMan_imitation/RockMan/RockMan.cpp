@@ -177,6 +177,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
+			/*HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+			CreatePatternBrush(COLORREF())
+			HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
+
+			Rectangle(hdc, 100, 100, 120, 120);
+
+			SelectObject(hdc, oldBrush);
+			DeleteObject(myBrush);*/
             EndPaint(hWnd, &ps);
         }
         break;

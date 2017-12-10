@@ -32,7 +32,7 @@ enum SOUND_INDEX
 	E_SOUND_THEME = 0,
 	E_SOUND_READY,
 	E_SOUND_LAZER,
-	E_SOUND_HOLDING,
+	E_SOUND_DASH,
 	E_SOUND_DAMAGED,
 	E_SOUND_DESTROY,
 };
@@ -81,4 +81,7 @@ enum STATUS
 	E_STATUS_IDLE, // 멈춰있는상태
 	E_STATUS_WALK, // 걷는상태
 	E_STATUS_DASH, // 대쉬상태
+	E_STATUS_DASHEND, // 대쉬끝상태
+	E_STATUS_AIR, // 공중상태
+	E_STATUS_WALL, // 벽에붙은상태
 };

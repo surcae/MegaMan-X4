@@ -6,6 +6,7 @@
 #include "ObjSortMgr.h"
 #include "Factory.h"
 #include "SoundMgr.h"
+#include <math.h>
 
 #include "BigShip.h"
 #include "SBigShip.h"
@@ -29,6 +30,16 @@ CStage_One::~CStage_One()
 	Release();
 }
 
+//enum SOUND_INDEX
+//{
+//	E_SOUND_THEME = 0,
+//	E_SOUND_READY,
+//	E_SOUND_LAZER,
+//	E_SOUND_DASH,
+//	E_SOUND_DAMAGED,
+//	E_SOUND_DESTROY,
+//};
+
 HRESULT CStage_One::Initialize(void) {
 	// Sound Insert
 	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/bgm.wav")))
@@ -40,6 +51,10 @@ HRESULT CStage_One::Initialize(void) {
 		return E_FAIL;
 	}
 	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Lazer.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Dash.wav")))
 	{
 		return E_FAIL;
 	}
@@ -138,6 +153,21 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/DashStart%d.png", TEXTYPE_MULTI, L"Zero", L"DashStart", 7)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/DashEnd%d.png", TEXTYPE_MULTI, L"Zero", L"DashEnd", 4)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Hit%d.png", TEXTYPE_MULTI, L"Zero", L"Hit", 10)))
+	{
+		return E_FAIL;
+	}
 
 
 
@@ -172,6 +202,9 @@ HRESULT CStage_One::Progress(void) {
 	{
 		GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_LAZER, NOLOOP);
 		CPlayer::SetSpawn();
+	}
+	if (KEY_DOWN('P')) // 히트 박스 랜더 On/Off
+	{
 	}
 	GET_SINGLE(CObjSortMgr)->ProgressObjects();
 	return S_OK;

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "RenderMgr.h"
 
+#pragma warning (disable : 4244)
 
 //Global Variables
 extern FADE_STATE FadeState = E_FADE_STATE_IN;
@@ -110,7 +111,7 @@ void CRenderMgr::SingleRender(const TEXINFO *rTexInfo, D3DXMATRIX& _matWorld,
 		case E_SINGLE_RENDER_TYPE_STRAIGHT:
 			RenderSprite->SetTransform(&_matWorld);
 			RenderSprite->Draw(rTexInfo->pTexture, pRect,
-				&D3DXVECTOR3(((*tmp).right - (*tmp).left) / 2.f, ((*tmp).bottom - (*tmp).top),0), &D3DXVECTOR3(0,0,0), D3DCOLOR_ARGB(255, 255, 255, 255));
+				&D3DXVECTOR3(((*tmp).right - (*tmp).left) / 2.f, ((*tmp).bottom - (*tmp).top) / 1.f,0), &D3DXVECTOR3(0,0,0), D3DCOLOR_ARGB(255, 255, 255, 255));
 			break;
 		case E_SINGLE_RENDER_TYPE_FLASH: // »ß±î»·Â½
 										 // ¹Ì¿Ï¼º
