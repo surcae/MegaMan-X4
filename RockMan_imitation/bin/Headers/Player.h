@@ -6,6 +6,8 @@ class CPlayer :
 	public CDynamicObjects
 {
 private:
+	float JumpPowerMax = 10.f;
+	float JumpPowerMin = -10.f;
 	int FrameMax = 0;
 	float ForStartFrame = 1.f;
 	float m_fFrame = 1;

@@ -54,8 +54,12 @@ void CPlayer::FrameProcess()
 		FrameMax = 3;
 	}
 	break;
+	case E_STATUS_JUMPSTART:
+	{
+
 	}
-	
+	break;
+	}
 	// 특수 프레임 지정하는곳
 	if (eStatus == E_STATUS_DASH)
 	{
@@ -108,35 +112,17 @@ void CPlayer::KeyCheck()
 		if (Pointer == D_RIGHT)
 		{
 			x += m_fSpeed * 2.5f * TIME;
-			if (400 < x && x < 1200)
+			if (450 < x && x < 1150)
 				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * 2.5f * GET_SINGLE(CTimeMgr)->GetTime());
 		}
 		else
 		{
 			x -= m_fSpeed * 2.5f * TIME;
-			if (400 < x && x < 1200)
+			if (450 < x && x < 1150)
 				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * 2.5f * GET_SINGLE(CTimeMgr)->GetTime());
 		}
 		return;
 	}
-	/*if (KEY_DOWN(VK_RIGHT) && (KEY_DOWN('Z')) || (KEY_DOWN(VK_LEFT) && (KEY_DOWN('Z') )))
-	{
-		eStatus = E_STATUS_DASH;
-		if (Pointer == D_RIGHT)
-		{
-			x += m_fSpeed * 2 * TIME;
-			if (400 < x && x < 1200)
-				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * 2 * GET_SINGLE(CTimeMgr)->GetTime());
-		}
-		else
-		{
-			x -= m_fSpeed * 2 * TIME;
-			if (400 < x && x < 1200)
-				(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * 2 * GET_SINGLE(CTimeMgr)->GetTime());
-		}
-		return;
-	}*/
-
 	if (KEY_DOWN(VK_LEFT))
 	{
 
@@ -323,22 +309,24 @@ HRESULT CPlayer::Progress() {
 HRESULT CPlayer::Render() {
 	if(isSpawn)
 		SpawnRender();
-	if (Pointer == D_RIGHT)
+
+	// 방향에 따른 Flip 방법 설정
+	if (Pointer == D_RIGHT) // 일반
 	{
 		D3DXMatrixScaling(&m_Info.matScale, 1.0f, 1.0f, 1.f);
 		D3DXMatrixTranslation(&m_Info.matTrans, x + m_pvecScroll->x, y + m_pvecScroll->y, 0);
 		m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	}
-	else
+	else // -x 플립
 	{
 		D3DXMatrixScaling(&m_Info.matScale, -1.0f, 1.0f, 1.f);
 		D3DXMatrixTranslation(&m_Info.matTrans, x + m_pvecScroll->x, y + m_pvecScroll->y, 0);
 		m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	}
 
-	////////////////////
-	// 본격 렌더링 시작!!
-	////////////////////
+	///////////////////////
+	// 본격 렌더링 시작!! //
+	///////////////////////
 	if (isStart) // 소환이 끝나면 시작됨
 	{
 		switch (eStatus)
@@ -367,9 +355,10 @@ HRESULT CPlayer::Render() {
 				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;
-		case E_STATUS_JUMP:
+		case E_STATUS_JUMP: // 아무것도 충돌하고 있지 않으면 공중 상태
 		{
-
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"JumpStart", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;
 		case E_STATUS_DAMAGED:
