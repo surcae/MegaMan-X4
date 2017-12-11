@@ -82,6 +82,13 @@ enum STATUS
 	E_STATUS_WALK, // 걷는상태
 	E_STATUS_DASH, // 대쉬상태
 	E_STATUS_DASHEND, // 대쉬끝상태
-	E_STATUS_AIR, // 공중상태
+	E_STATUS_JUMP, // 점프 혹은 공중에서 떨어질 때 상태
 	E_STATUS_WALL, // 벽에붙은상태
+	E_STATUS_DAMAGED, // 처맞는상태
+};
+
+enum POS_STATION
+{
+	E_POS_STATION_GROUND,
+	E_POS_STATION_AIR,
 };

@@ -155,9 +155,11 @@
     <ClInclude Include="..\bin\Headers\Define.h" />
     <ClInclude Include="..\bin\Headers\Device.h" />
     <ClInclude Include="..\bin\Headers\DynamicObjects.h" />
+    <ClInclude Include="..\bin\Headers\Effect.h" />
     <ClInclude Include="..\bin\Headers\Enum.h" />
     <ClInclude Include="..\bin\Headers\Factory.h" />
     <ClInclude Include="..\bin\Headers\Field.h" />
+    <ClInclude Include="..\bin\Headers\HitBox.h" />
     <ClInclude Include="..\bin\Headers\Include.h" />
     <ClInclude Include="..\bin\Headers\KeyMgr.h" />
     <ClInclude Include="..\bin\Headers\Logo.h" />
@@ -200,7 +202,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\bin\Codes\DynamicObjects.cpp" />
+    <ClCompile Include="..\bin\Codes\Effect.cpp" />
     <ClCompile Include="..\bin\Codes\Field.cpp" />
+    <ClCompile Include="..\bin\Codes\HitBox.cpp" />
     <ClCompile Include="..\bin\Codes\KeyMgr.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>

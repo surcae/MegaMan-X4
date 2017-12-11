@@ -168,6 +168,21 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/JumpStart%d.png", TEXTYPE_MULTI, L"Zero", L"JumpStart", 4)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/JumpOff%d.png", TEXTYPE_MULTI, L"Zero", L"JumpOff", 3)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/JumpDown%d.png", TEXTYPE_MULTI, L"Zero", L"JumpDown", 6)))
+	{
+		return E_FAIL;
+	}
 
 
 
@@ -205,6 +220,7 @@ HRESULT CStage_One::Progress(void) {
 	}
 	if (KEY_DOWN('P')) // 히트 박스 랜더 On/Off
 	{
+		bHitBoxRenderOnOff = !bHitBoxRenderOnOff;
 	}
 	GET_SINGLE(CObjSortMgr)->ProgressObjects();
 	return S_OK;
@@ -216,13 +232,10 @@ HRESULT CStage_One::Render(void) {
 		(D3DXVECTOR3(0, 0, 0)), (D3DXVECTOR3(0, 0, 0)), E_SINGLE_RENDER_TYPE_STRAIGHT, 0); // 배경2
 	
 	/* 히트박스 렌더링 */
-	/*
-	if(isXXXX) // 키 입력시 활성화됨
+	if(bHitBoxRenderOnOff) // 키 입력시 활성화됨
 	{
 		//TODO: 히트박스 랜더 추가 Rectangle(x,x,x,x,);
 	}
-	
-	*/
 	GET_SINGLE(CObjSortMgr)->RenderObjects();
 
 

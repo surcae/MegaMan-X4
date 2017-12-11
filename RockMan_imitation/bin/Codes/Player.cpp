@@ -89,6 +89,10 @@ void CPlayer::KeyCheck()
 	/* 아무것도 안 눌렀을 때 처리하는곳 끝나는 곳*/
 
 	/* 뭔가 눌렀을 때 처리하는곳*/
+	if (KEY_DOWN('X'))
+	{
+		eStatus = E_STATUS_JUMP;
+	}
 	if (KEY_DOWN('Z'))
 	{
 		eStatus = E_STATUS_DASH;
@@ -160,9 +164,9 @@ void CPlayer::SpawnRender()
 	D3DXMatrixTranslation(&m_Info.matTrans, x + m_pvecScroll->x, y + m_pvecScroll->y, 0);
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	y += 15;
-	if (y >= 480)
+	if (y >= MaxYpos)
 	{
-		y = 480;
+		y = MaxYpos;
 		ForStartFrame += (35.f * TIME);
 		if ((int)ForStartFrame / 1 == 1)
 		{
@@ -360,6 +364,17 @@ HRESULT CPlayer::Render() {
 		case E_STATUS_DASHEND:
 		{
 			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"DashEnd", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		case E_STATUS_JUMP:
+		{
+
+		}
+		break;
+		case E_STATUS_DAMAGED:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"Hit", (int)m_fFrame),
 				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;

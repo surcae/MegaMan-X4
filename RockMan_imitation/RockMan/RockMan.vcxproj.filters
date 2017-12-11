@@ -124,6 +124,12 @@
     <Filter Include="1.Objects\Static\Maps\UI">
       <UniqueIdentifier>{10fb3cd0-6feb-4db0-b278-5d5f476ecba8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1.Objects\Static\HitBox">
+      <UniqueIdentifier>{61106c0e-d2d2-43d4-8fe6-94f3f4a78fbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Objects\Static\Effect">
+      <UniqueIdentifier>{4ce44447-5961-4c65-b070-a62633c039c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -249,6 +255,12 @@
     <ClInclude Include="..\bin\Headers\UI.h">
       <Filter>1.Objects\Static\Maps\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\HitBox.h">
+      <Filter>1.Objects\Static\HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\Headers\Effect.h">
+      <Filter>1.Objects\Static\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -346,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\UI.cpp">
       <Filter>1.Objects\Static\Maps\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\HitBox.cpp">
+      <Filter>1.Objects\Static\HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\Effect.cpp">
+      <Filter>1.Objects\Static\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

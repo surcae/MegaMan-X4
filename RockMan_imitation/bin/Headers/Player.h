@@ -19,10 +19,12 @@ private:
 private:
 	CTextureMgr* pTextureMgr = nullptr;
 private:
+	float MaxYpos = 480.f;
 	int Hp = 100;
 	float x, y;
 	float m_fSpeed = 220.f;
 	DIRECTION Pointer = D_RIGHT;
+	POS_STATION bPosStation = E_POS_STATION_GROUND;
 public:
 	void FrameProcess();
 	void KeyCheck();
