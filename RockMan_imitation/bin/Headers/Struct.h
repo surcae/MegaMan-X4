@@ -47,4 +47,11 @@ struct tagLogo
 };
 
 typedef tagLogo TRANSFORM;
+
+struct JUMP_FRAME
+{
+	float Jump_Start_Frame = 0.f;
+	float Jump_Off_Frame = 0.f;
+	float Jump_Down_Frame= 0.f;
+};
 #endif

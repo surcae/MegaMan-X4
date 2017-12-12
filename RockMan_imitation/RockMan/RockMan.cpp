@@ -7,7 +7,6 @@
 #include "TimeMgr.h"
 
 #define MAX_LOADSTRING 100
-	
 // Global Variables:
 HWND g_hWnd;									// external global variable
 // Global Variables:
@@ -77,6 +76,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				MainGame.Update();
 				MainGame.Render();
 			}
+			InvalidateRect(g_hWnd, NULL, FALSE);
 		}
 	}
 	return (int)msg.wParam;
@@ -176,15 +176,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-			/*HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
-			CreatePatternBrush(COLORREF())
-			HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
-
-			Rectangle(hdc, 100, 100, 120, 120);
-
-			SelectObject(hdc, oldBrush);
-			DeleteObject(myBrush);*/
+			SelectObject(hdc, GetStockObject(NULL_BRUSH));
+			Rectangle(hdc, -10, 530, 1500, 600);
+			Rectangle(hdc, 800, 100, 1000, 270);
+			Rectangle(hdc, -10, 170, 300, 240);
             EndPaint(hWnd, &ps);
         }
         break;

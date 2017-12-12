@@ -6,13 +6,15 @@ class CPlayer :
 	public CDynamicObjects
 {
 private:
-	float JumpPowerMax = 10.f;
-	float JumpPowerMin = -10.f;
+	double Angle = 0.f;
+private:
+	float JumpPower = 12.f;
 	int FrameMax = 0;
 	float ForStartFrame = 1.f;
 	float m_fFrame = 1;
 	float m_fFrameSpeed = 5;
 	float DASH_FRAME = 0;
+	JUMP_FRAME m_JumpFrame;
 	STATUS eStatus = E_STATUS_IDLE;
 	bool isStart = false;
 	static bool isSpawn;

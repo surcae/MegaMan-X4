@@ -16,8 +16,8 @@ HRESULT CSBigShip::Initialize()
 {
 	// Insert Ship TGA
 	this->SetSortID(OBJ_NUM_BG3);
-	D3DXMatrixScaling(&m_Info.matScale, 3, 3, 1);
-	D3DXMatrixTranslation(&m_Info.matTrans, 300, 300, 0);
+	D3DXMatrixScaling(&m_Info.matScale, 4.5, 4.5, 1);
+	D3DXMatrixTranslation(&m_Info.matTrans, 200, 150, 0);
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 
 	m_Info.vCenter = D3DXVECTOR3(0, 0, 0);
@@ -28,7 +28,7 @@ HRESULT CSBigShip::Initialize()
 
 HRESULT CSBigShip::Progress()
 {
-	D3DXMatrixTranslation(&m_Info.matTrans, 300 + (*m_pvecScroll).x, 300 + (*m_pvecScroll).y * 0.5f, 0);
+	D3DXMatrixTranslation(&m_Info.matTrans, 200 + (*m_pvecScroll).x, 150 + (*m_pvecScroll).y * 0.5f, 0);
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	return S_OK;
 }

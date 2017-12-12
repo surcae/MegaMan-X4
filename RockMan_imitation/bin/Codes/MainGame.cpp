@@ -49,10 +49,10 @@ HRESULT CMainGame::Update(void) {
 	return S_OK;
 }
 HRESULT CMainGame::Render(void) {
-	InvalidateRect(g_hWnd, NULL, FALSE);
 		GET_SINGLE(CDevice)->RenderBegin();
 		GET_SINGLE(CSceneMgr)->Render();
 		GET_SINGLE(CDevice)->RenderEnd();	
+		
 	return S_OK;
 }
 

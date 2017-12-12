@@ -6,6 +6,7 @@
 #include "ObjSortMgr.h"
 #include "Factory.h"
 #include "SoundMgr.h"
+#include "CollisionMgr.h"
 #include <math.h>
 
 #include "BigShip.h"
@@ -30,16 +31,6 @@ CStage_One::~CStage_One()
 	Release();
 }
 
-//enum SOUND_INDEX
-//{
-//	E_SOUND_THEME = 0,
-//	E_SOUND_READY,
-//	E_SOUND_LAZER,
-//	E_SOUND_DASH,
-//	E_SOUND_DAMAGED,
-//	E_SOUND_DESTROY,
-//};
-
 HRESULT CStage_One::Initialize(void) {
 	// Sound Insert
 	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/bgm.wav")))
@@ -55,6 +46,10 @@ HRESULT CStage_One::Initialize(void) {
 		return E_FAIL;
 	}
 	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Dash.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Jump.wav")))
 	{
 		return E_FAIL;
 	}
@@ -179,7 +174,7 @@ HRESULT CStage_One::Initialize(void) {
 		return E_FAIL;
 	}
 	if (FAILED(pTextureMgr->
-		InsertTexture(L"../Resource/Texture/Multi/JumpDown%d.png", TEXTYPE_MULTI, L"Zero", L"JumpDown", 6)))
+		InsertTexture(L"../Resource/Texture/Multi/JumpDown%d.png", TEXTYPE_MULTI, L"Zero", L"JumpDown", 4)))
 	{
 		return E_FAIL;
 	}
@@ -232,13 +227,11 @@ HRESULT CStage_One::Render(void) {
 		(D3DXVECTOR3(0, 0, 0)), (D3DXVECTOR3(0, 0, 0)), E_SINGLE_RENDER_TYPE_STRAIGHT, 0); // 배경2
 	
 	/* 히트박스 렌더링 */
-	if(bHitBoxRenderOnOff) // 키 입력시 활성화됨
-	{
-		//TODO: 히트박스 랜더 추가 Rectangle(x,x,x,x,);
-	}
 	GET_SINGLE(CObjSortMgr)->RenderObjects();
-
-
+	if (bHitBoxRenderOnOff) // 키 입력시 활성화됨
+	{
+		GET_SINGLE(CCollisionMgr)->RenderCollision();
+	}
 	return S_OK;
 }
 HRESULT CStage_One::Release(void) { return S_OK; }

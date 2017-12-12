@@ -5,7 +5,7 @@ class CStage_One :
 	public CField
 {
 private:
-	bool bHitBoxRenderOnOff = false;
+	bool bHitBoxRenderOnOff = true;
 private:
 	// For BackGrounds
 	D3DXMATRIX matScale[2];
