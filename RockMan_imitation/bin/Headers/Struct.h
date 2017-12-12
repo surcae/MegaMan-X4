@@ -54,4 +54,9 @@ struct JUMP_FRAME
 	float Jump_Off_Frame = 0.f;
 	float Jump_Down_Frame= 0.f;
 };
+
+struct myRECT
+{
+	FLOAT left, top, right, bottom;
+};
 #endif

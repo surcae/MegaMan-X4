@@ -18,6 +18,7 @@
 #include "UI.h"
 
 #include "Player.h"
+#include "Monster.h"
 
 #define KEY_DOWN(code) ((GetAsyncKeyState(code)&0x8000)?1:0)
 #define LOOP 1
@@ -29,6 +30,13 @@ CStage_One::CStage_One()
 CStage_One::~CStage_One()
 {
 	Release();
+}
+
+void CStage_One::CreateMonster()
+{
+	CMonster* pCreatedMop = new CMonster();
+	pCreatedMop->Initialize();
+	this->m_vecMonster->push_back(pCreatedMop);
 }
 
 HRESULT CStage_One::Initialize(void) {
@@ -50,6 +58,10 @@ HRESULT CStage_One::Initialize(void) {
 		return E_FAIL;
 	}
 	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Jump.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Plat.wav")))
 	{
 		return E_FAIL;
 	}
@@ -134,7 +146,7 @@ HRESULT CStage_One::Initialize(void) {
 	if (FAILED(pTextureMgr->
 		InsertTexture(L"../Resource/BackGrounds/hpbar.png", TEXTYPE_SINGLE, L"UI", NULL, NULL)))
 	{
-		return E_FAIL;
+	return E_FAIL;
 	}
 
 	// Player!!!!
@@ -178,22 +190,39 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Attach%d.png", TEXTYPE_MULTI, L"Zero", L"Attach", 1)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Mop%d.png", TEXTYPE_MULTI, L"Mop", L"Mops", 10)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/boom%d.png", TEXTYPE_MULTI, L"Boom", L"boom", 5)))
+	{
+		return E_FAIL;
+	}
 
 
 
-	#pragma endregion // Can Open!!
+#pragma endregion // Can Open!!
 
 	//this->pBGTexture = GET_SINGLE(CTextureMgr)->GetTexture(L"BG");
-	
-	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSBigShip>::CreateInstance() );
-	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CBigShip>::CreateInstance() );
+
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSBigShip>::CreateInstance());
+	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CBigShip>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CSmallShip>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CStatue>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlatform>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CWall>::CreateInstance());
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CUI>::CreateInstance());
-	
+
 	GET_SINGLE(CObjSortMgr)->AddSortedObj(CFactory<CPlayer>::CreateInstance());
+
+
 
 	D3DXMatrixTranslation(&matTrans[0], 0, 0, 0);
 	D3DXMatrixTranslation(&matTrans[1], 0, 0, 0);
@@ -203,9 +232,20 @@ HRESULT CStage_One::Initialize(void) {
 	BackMatrix[0] = matScale[0] * matTrans[0];
 	BackMatrix[1] = matScale[1] * matTrans[1];
 
+	GET_SINGLE(CCollisionMgr)->SetPointer(this->m_vecMonster);
+
 	return S_OK;
 }
-HRESULT CStage_One::Progress(void) { 
+HRESULT CStage_One::Progress(void) {
+	if (MopCreate)
+	{
+		DWORD curTime = GetTickCount();
+		if (Time - curTime >= 4000)
+		{
+			Time += 4000;
+			CreateMonster();
+		}
+	}
 	D3DXMatrixTranslation(&matTrans[1], GET_SINGLE(CObjSortMgr)->m_vecScroll.x * 0.1f, GET_SINGLE(CObjSortMgr)->m_vecScroll.y * 0.1f, 0);
 	BackMatrix[1] = matScale[1] * matTrans[1];
 	if (KEY_DOWN('O')) // 시작키. 제로 소환
@@ -213,11 +253,16 @@ HRESULT CStage_One::Progress(void) {
 		GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_LAZER, NOLOOP);
 		CPlayer::SetSpawn();
 	}
-	if (KEY_DOWN('P')) // 히트 박스 랜더 On/Off
+	if (KEY_DOWN('P')) // 시작키. 제로 소환
 	{
-		bHitBoxRenderOnOff = !bHitBoxRenderOnOff;
+		MopCreate = true;
+		Time = GetTickCount();
 	}
 	GET_SINGLE(CObjSortMgr)->ProgressObjects();
+	for (vector<CMonster*>::iterator it = m_vecMonster->begin(); it != m_vecMonster->end(); it++)
+	{
+		(*it)->Progress();
+	}
 	return S_OK;
 }
 HRESULT CStage_One::Render(void) { 
@@ -228,9 +273,9 @@ HRESULT CStage_One::Render(void) {
 	
 	/* 히트박스 렌더링 */
 	GET_SINGLE(CObjSortMgr)->RenderObjects();
-	if (bHitBoxRenderOnOff) // 키 입력시 활성화됨
+	for (vector<CMonster*>::iterator it = m_vecMonster->begin(); it != m_vecMonster->end(); it++)
 	{
-		GET_SINGLE(CCollisionMgr)->RenderCollision();
+		(*it)->Render();
 	}
 	return S_OK;
 }

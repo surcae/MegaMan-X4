@@ -12,8 +12,8 @@
 
 #define PI 3.1415926535897
 
-#define KEY_DOWN(code) ((GetAsyncKeyState(code)&0x8000)?1:0)
-#define KEY_UP(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 0 : 1)
+#define KEY_DOWN(code) ((GetAsyncKeyState(code)&0x8001)?1:0)
+#define KEY_UP(vk_code) ((GetAsyncKeyState(vk_code) & 0x8001) ? 0 : 1)
 #define TIME GET_SINGLE(CTimeMgr)->GetTime() 
 #define LOOP 1
 #define NOLOOP 0
@@ -172,10 +172,17 @@ void CPlayer::SpawnRender()
 }
 void CPlayer::KeyCheck()
 {
+	bool isKey = false;
 	if (y >= MaxYpos)
 	{
 		this->bPosStation = E_POS_STATION_GROUND;
 		this->m_JumpFrame.Jump_Down_Frame = 0;
+		if (Played == false)
+		{
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_PLAT, NOLOOP);
+			Ground = false;
+			Played = true;
+		}
 		Angle = 0;
 	}
 	else
@@ -194,13 +201,20 @@ void CPlayer::KeyCheck()
 		eStatus = E_STATUS_JUMPOFF;
 		m_JumpFrame.Jump_Start_Frame = 0;
 		Angle = 180;
+		Ground = false;
+		Played = false;
 		return;
+	}
+
+	if (eStatus == E_STATUS_JUMPDOWN)
+	{
+		isKey = true;
 	}
 
 	if (bPosStation == E_POS_STATION_AIR && eStatus != E_STATUS_JUMPSTART)
 	{
 		eStatus = E_STATUS_JUMPDOWN;
-		m_JumpFrame.Jump_Off_Frame = 0;
+		m_JumpFrame.Jump_Down_Frame = 0;
 	}
 
 	
@@ -219,12 +233,12 @@ void CPlayer::KeyCheck()
 			Angle += 0.1;
 			m_JumpFrame.Jump_Start_Frame = 0.f;
 			this->m_fFrame = 0;
+			Played = false;
 			return;
 		}
 
 		if (KEY_DOWN('Z'))
 		{
-			this->m_fFrame = 0;
 			eStatus = E_STATUS_DASH;
 			if (Pointer == D_RIGHT)
 			{
@@ -264,20 +278,19 @@ void CPlayer::KeyCheck()
 	}
 
 	// Air 공중 상태
+
 	if (KEY_DOWN('X') && (eStatus == E_STATUS_JUMPSTART)) // x 꾹 누르고 있으면 버그있음
 	{
-		eStatus = E_STATUS_JUMPSTART;
 		this->y -= (JumpPower * cos(Angle * (PI / 180) * 3));
 		m_pvecScroll->y += (m_fSpeed * 1.5 * TIME);
 		if (m_pvecScroll->y > 120)
 			m_pvecScroll->y = 120;
-		Angle += 0.1;
-		if (Angle >= 180)
+		Angle += 0.1; Ground = false;
+		if (Angle >= 90)
 		{
 			eStatus = E_STATUS_JUMPDOWN;
 		}
 	}
-
 	if (KEY_DOWN(VK_LEFT))
 	{
 		x -= m_fSpeed * TIME;
@@ -401,13 +414,14 @@ HRESULT CPlayer::Initialize() {
 	return S_OK;
 };
 HRESULT CPlayer::Progress() {
-	// 이 줄에서 콜리젼 매니져 호출
+	GET_SINGLE(CCollisionMgr)->CollisionCheck(this);
 	if (y > MaxYpos) y = MaxYpos; // 콜리전 완성되면 지움
 	if (Angle != 0) // 라디안 
 	{
 		Angle += (60 * TIME);
 		if (Angle >= 90)
 		{
+			eStatus = E_STATUS_JUMPDOWN;
 			y = y - (JumpPower * (cos(Angle * (PI / 180))));
 			m_pvecScroll->y -= (m_fSpeed * 1.5 * TIME);
 			if (m_pvecScroll->y < -50)

@@ -1,30 +1,43 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
+#include "Player.h"
 
+#define PLX pPlayer->GetPos().x
+#define PLY pPlayer->GetPos().y
 
-void CCollisionMgr::RenderCollision()
+#define HW 40
+#define HH 40
+
+void CCollisionMgr::CollisionCheck(CPlayer* pPlayer)
 {
-	// 호출되면 히트 박스를 생성시킴.
-	RECT hitBox[4];
+	D3DXVECTOR3 *PlayerScroll = pPlayer->GetScroll();
+	myRECT hitBox[3];
 	hitBox[0] = {
-		-10, 430, 1500, 600
+		-10, 480, 1500, 650
 	}; // 가장 아래 발판
 	hitBox[1] = {
-		
-	};
-	hitBox[2] = {
-		-10, 100, 300, 270
-	};
-	hitBox[3] = {
-		800, 100, 1000, 270
-	};
+		-10 + PlayerScroll->x, -20 + PlayerScroll->y, 1500 + PlayerScroll->x, 30 + PlayerScroll->y
+	}; // 위 발판 
+	hitBox[2] = { 
+		620 + PlayerScroll->x, -140 + PlayerScroll->y, 844 + PlayerScroll->x, 250 + PlayerScroll->y
+	}; // 벽 94 98
+	
+	if (PLX + HW < hitBox[0].right && hitBox[0].left < PLX - HW
+		&& PLY + HH > hitBox[0].bottom && hitBox[0].top > PLY - HH)
+	{
+		hitBox[1].left = 0;
+		return;
+	}
+}
+
+void CCollisionMgr::AttackandMop(RECT src)
+{
+	
 }
 
 CCollisionMgr::CCollisionMgr()
 {
 }
-
-
 CCollisionMgr::~CCollisionMgr()
 {
 }

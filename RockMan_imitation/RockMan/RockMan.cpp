@@ -5,6 +5,7 @@
 #include "RockMan.h"
 #include "MainGame.h"
 #include "TimeMgr.h"
+#include "Player.h"
 
 #define MAX_LOADSTRING 100
 // Global Variables:
@@ -177,9 +178,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
 			SelectObject(hdc, GetStockObject(NULL_BRUSH));
-			Rectangle(hdc, -10, 530, 1500, 600);
-			Rectangle(hdc, 800, 100, 1000, 270);
-			Rectangle(hdc, -10, 170, 300, 240);
             EndPaint(hWnd, &ps);
         }
         break;

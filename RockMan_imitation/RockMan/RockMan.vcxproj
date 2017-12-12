@@ -165,6 +165,7 @@
     <ClInclude Include="..\bin\Headers\Logo.h" />
     <ClInclude Include="..\bin\Headers\Macro.h" />
     <ClInclude Include="..\bin\Headers\MainGame.h" />
+    <ClInclude Include="..\bin\Headers\Monster.h" />
     <ClInclude Include="..\bin\Headers\MultiTexture.h" />
     <ClInclude Include="..\bin\Headers\MultiThread.h" />
     <ClInclude Include="..\bin\Headers\MyScene.h" />
@@ -210,6 +211,7 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\Logo.cpp" />
     <ClCompile Include="..\bin\Codes\MainGame.cpp" />
+    <ClCompile Include="..\bin\Codes\Monster.cpp" />
     <ClCompile Include="..\bin\Codes\MultiTexture.cpp" />
     <ClCompile Include="..\bin\Codes\MultiThread.cpp" />
     <ClCompile Include="..\bin\Codes\MyScene.cpp" />

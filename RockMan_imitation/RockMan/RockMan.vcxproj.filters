@@ -130,6 +130,9 @@
     <Filter Include="1.Objects\Static\Effect">
       <UniqueIdentifier>{4ce44447-5961-4c65-b070-a62633c039c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1.Objects\Dynamic\Monster">
+      <UniqueIdentifier>{9844aad5-7fa7-449c-85be-daaa21074cae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -261,6 +264,9 @@
     <ClInclude Include="..\bin\Headers\Effect.h">
       <Filter>1.Objects\Static\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\bin\Headers\Monster.h">
+      <Filter>1.Objects\Dynamic\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RockMan.cpp">
@@ -364,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\Codes\Effect.cpp">
       <Filter>1.Objects\Static\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\Codes\Monster.cpp">
+      <Filter>1.Objects\Dynamic\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

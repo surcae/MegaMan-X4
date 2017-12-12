@@ -55,11 +55,11 @@ HRESULT CWall::Progress()
 
 HRESULT CWall::Render()
 {
-	for (int i = 0; i < 3; i++)
+	/*for (int i = 0; i < 3; i++)
 	{
 
 		GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Wall"),
 			plat[i].matWorld, plat[i].vCenter, plat[i].vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 0);
-	}	
+	}*/	
 	return S_OK;
 }

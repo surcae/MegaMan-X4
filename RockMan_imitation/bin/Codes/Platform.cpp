@@ -66,18 +66,10 @@ HRESULT CPlatform::Progress()
 
 HRESULT CPlatform::Render()
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (i <= 1) 
-		{
-			GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Platform_long"),
-				plat[i].matWorld, plat[i].vCenter, plat[i].vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 0);
-		}
-		else
-		{
-			GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Platform"),
-				plat[i].matWorld, plat[i].vCenter, plat[i].vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 0);
-		}
-	}	
+	GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Platform_long"),
+		plat[0].matWorld, plat[0].vCenter, plat[0].vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 0);
+	GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Platform_long"),
+		plat[1].matWorld, plat[1].vCenter, plat[1].vPos, E_SINGLE_RENDER_TYPE_STRAIGHT, 0);
+
 	return S_OK;
 }

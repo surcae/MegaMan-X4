@@ -5,9 +5,13 @@ class CTextureMgr;
 class CPlayer :
 	public CDynamicObjects
 {
+	DECLARE_SINGLETON(CPlayer)
 private:
+	myRECT rct;
 	double Angle = 0.f;
 private:
+	bool Played = false;
+	bool Ground = true;
 	float JumpPower = 12.f;
 	int FrameMax = 0;
 	float ForStartFrame = 1.f;
@@ -33,11 +37,20 @@ public:
 	void FrameProcess();
 	void KeyCheck();
 public:
+public:
 	virtual HRESULT Initialize();
 	virtual HRESULT Progress(); // Updates
 	virtual HRESULT Render();
 	virtual HRESULT Release();
 public:
+	D3DXVECTOR3* GetScroll()
+	{
+		return this->m_pvecScroll;
+	}
+	D3DXVECTOR3 GetPos()
+	{
+		return D3DXVECTOR3(this->x, this->y, 0);
+	}
 	void SpawnRender();
 	static void SetSpawn() {
 		isSpawn = true;
