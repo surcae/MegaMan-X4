@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Player.h"
+#include "Monster.h"
+#include "SoundMgr.h"
 
 #define PLX pPlayer->GetPos().x
 #define PLY pPlayer->GetPos().y
@@ -32,7 +34,17 @@ void CCollisionMgr::CollisionCheck(CPlayer* pPlayer)
 
 void CCollisionMgr::AttackandMop(RECT src)
 {
-	
+	for (vector<CMonster*>::iterator it = (*pVector).begin(); it != (*pVector).end(); ++it)
+	{
+		
+		RECT tmp;
+		RECT dest = {(LONG)(*it)->GetXPos() - 30, (LONG)(*it)->GetXPos() - 30, (LONG)(*it)->GetXPos() + 30, (LONG)(*it)->GetXPos() + 30 };
+		if (IntersectRect(&tmp, &src, &dest))
+		{
+			(*it)->isHit = true;
+			
+		}
+	}
 }
 
 CCollisionMgr::CCollisionMgr()

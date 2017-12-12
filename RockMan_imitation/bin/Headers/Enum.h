@@ -35,6 +35,11 @@ enum SOUND_INDEX
 	E_SOUND_DASH,
 	E_SOUND_JUMP,
 	E_SOUND_PLAT,
+	E_SOUND_A1,
+	E_SOUND_A2,
+	E_SOUND_A3,
+	E_SOUND_SWORD,
+	E_SOUND_BOMB,
 	E_SOUND_DAMAGED,
 	E_SOUND_DESTROY,
 };
@@ -89,6 +94,9 @@ enum STATUS
 	E_STATUS_JUMPDOWN, // 떨어지기 시작 (발판에서 떨어지거나 공중 점프력이 -가 되기 시작)
 	E_STATUS_WALL, // 벽에붙은상태
 	E_STATUS_DAMAGED, // 처맞는상태
+	E_STATUS_A1,
+	E_STATUS_A2,
+	E_STATUS_A3,
 };
 
 enum POS_STATION // 충돌 검사에서 유용하게 사용됨

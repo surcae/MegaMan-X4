@@ -12,7 +12,7 @@ private:
 private:
 	bool Played = false;
 	bool Ground = true;
-	float JumpPower = 12.f;
+	float JumpPower = 14.f;
 	int FrameMax = 0;
 	float ForStartFrame = 1.f;
 	float m_fFrame = 1;
@@ -31,6 +31,7 @@ private:
 	int Hp = 100;
 	float x, y;
 	float m_fSpeed = 220.f;
+	float m_fHighSpeed = 220.f * 2.5f;
 	DIRECTION Pointer = D_RIGHT;
 	POS_STATION bPosStation = E_POS_STATION_GROUND;
 public:

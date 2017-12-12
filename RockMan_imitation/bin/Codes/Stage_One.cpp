@@ -65,6 +65,28 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/A1.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/A2.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/A3.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Sword.wav")))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Bomb.wav")))
+	{
+		return E_FAIL;
+	}
+
+
 
 	GET_SINGLE(CSoundMgr)->SetSoundVolume(E_SOUND_THEME, -1000);
 	GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_THEME, LOOP);
@@ -206,6 +228,23 @@ HRESULT CStage_One::Initialize(void) {
 		return E_FAIL;
 	}
 
+	// 공격모션
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Attack_M1_%d.png", TEXTYPE_MULTI, L"Zero", L"A1", 7)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Attack_M2_%d.png", TEXTYPE_MULTI, L"Zero", L"A2", 7)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Attack_M3_%d.png", TEXTYPE_MULTI, L"Zero", L"A3", 11)))
+	{
+		return E_FAIL;
+	}
+
 
 
 #pragma endregion // Can Open!!
@@ -240,9 +279,9 @@ HRESULT CStage_One::Progress(void) {
 	if (MopCreate)
 	{
 		DWORD curTime = GetTickCount();
-		if (Time - curTime >= 4000)
+		if (Time - curTime >= 3000)
 		{
-			Time += 4000;
+			Time += 3000;
 			CreateMonster();
 		}
 	}
@@ -253,7 +292,7 @@ HRESULT CStage_One::Progress(void) {
 		GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_LAZER, NOLOOP);
 		CPlayer::SetSpawn();
 	}
-	if (KEY_DOWN('P')) // 시작키. 제로 소환
+	if (KEY_DOWN('P')) // 시작키. 몹 소환
 	{
 		MopCreate = true;
 		Time = GetTickCount();

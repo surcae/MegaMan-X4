@@ -172,6 +172,9 @@ void CPlayer::SpawnRender()
 }
 void CPlayer::KeyCheck()
 {
+	if (eStatus == E_STATUS_A1 || eStatus == E_STATUS_A2 || eStatus == E_STATUS_A3)
+		return;
+	m_fSpeed = 220;
 	bool isKey = false;
 	if (y >= MaxYpos)
 	{
@@ -225,6 +228,19 @@ void CPlayer::KeyCheck()
 	// 충돌상태(지형 및 벽)
 	if (this->bPosStation == E_POS_STATION_GROUND || this->bPosStation == E_POS_ATTACH_WALL)
 	{
+		if (KEY_DOWN('Z') && KEY_DOWN('X'))
+		{
+			m_fSpeed = m_fHighSpeed;
+		}
+
+		if (KEY_DOWN('C'))
+		{
+			eStatus = E_STATUS_A1;
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_A1, NOLOOP);
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_SWORD, NOLOOP);
+			return;
+		}
+
 		if (KEY_DOWN('X')) // 처음 눌렀을 때
 		{
 			eStatus = E_STATUS_JUMPSTART;
@@ -242,13 +258,13 @@ void CPlayer::KeyCheck()
 			eStatus = E_STATUS_DASH;
 			if (Pointer == D_RIGHT)
 			{
-				x += m_fSpeed * 2.5f * TIME;
+				x += m_fHighSpeed * TIME;
 				if (400 < x && x < 1200)
 					(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * 2.5f * GET_SINGLE(CTimeMgr)->GetTime());
 			}
 			else
 			{
-				x -= m_fSpeed * 2.5f * TIME;
+				x -= m_fHighSpeed * TIME;
 				if (400 < x && x < 1200)
 					(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * 2.5f * GET_SINGLE(CTimeMgr)->GetTime());
 			}
@@ -308,6 +324,11 @@ void CPlayer::KeyCheck()
 
 	// 어디서나 발동
 	
+
+	if (KEY_DOWN('C'))
+	{
+
+	}
 
 	if (bPosStation == E_POS_STATION_GROUND)
 		eStatus = E_STATUS_IDLE;
@@ -397,6 +418,120 @@ void CPlayer::FrameProcess()
 			m_JumpFrame.Jump_Down_Frame = 1;
 			return;
 		}
+	}
+
+	if (eStatus == E_STATUS_A1)
+	{
+		m_fFrame += (26 * TIME);
+		if (m_fFrame > 7)
+		{
+			m_fFrame = 0.f;
+			eStatus = E_STATUS_IDLE;
+		}
+		else if ((int)m_fFrame >= 3)
+		{
+			LONG rockon = x + 50;
+			LONG rockon_ = x - 50;
+
+			RECT rct = { rockon - 30, rockon - 30, rockon + 30, rockon + 30};
+			RECT rct2 = { rockon_ - 30, rockon_ - 30, rockon_ + 30, rockon_ + 30};
+			if (Pointer == D_LEFT)
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
+			}
+			else
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct);
+			}
+		}
+		
+		if ((int)m_fFrame == 6)
+		{
+			if (KEY_DOWN('C'))
+			{
+				m_fFrame = 0.f;
+				eStatus = E_STATUS_A2;
+			}
+		}
+
+		return;
+	}
+
+	if (eStatus == E_STATUS_A2)
+	{
+		m_fFrame += (26 * TIME);
+		if (m_fFrame > 7)
+		{
+			m_fFrame = 0.f;
+			eStatus = E_STATUS_IDLE;
+			return;
+		}
+		else if ((int)m_fFrame >= 4)
+		{
+			LONG rockon = x + 50;
+			LONG rockon_ = x - 50;
+
+			RECT rct = { rockon - 30, rockon - 30, rockon + 30, rockon + 30 };
+			RECT rct2 = { rockon_ - 30, rockon_ - 30, rockon_ + 30, rockon_ + 30 };
+			if (Pointer == D_LEFT)
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
+			}
+			else
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct);
+			}
+		}
+		
+		if ((int)m_fFrame == 0)
+		{
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_A2, NOLOOP);
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_SWORD, NOLOOP);
+		}
+
+		if ((int)m_fFrame == 6)
+		{
+			if (KEY_DOWN('C'))
+			{
+				m_fFrame = 0.f;
+				eStatus = E_STATUS_A3;
+			}
+		}
+		return;
+	}
+
+	if (eStatus == E_STATUS_A3)
+	{
+		m_fFrame += (32 * TIME);
+		if (m_fFrame > 11)
+		{
+			m_fFrame = 0.f;
+			eStatus = E_STATUS_IDLE;
+			return;
+		}
+		else if ((int)m_fFrame >= 3 || (int)m_fFrame <= 7)
+		{
+			LONG rockon = x + 50;
+			LONG rockon_ = x - 50;
+
+			RECT rct = { rockon - 50, rockon - 50, rockon + 50, rockon + 50 };
+			RECT rct2 = { rockon_ - 50, rockon_ - 50, rockon_ + 50, rockon_ + 50 };
+			if (Pointer == D_LEFT)
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
+			}
+			else
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct);
+			}
+		}
+		
+		if((int)m_fFrame == 0)
+		{
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_A3, NOLOOP);
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_SWORD, NOLOOP);
+		}
+		return;
 	}
 
 	// 일반 프레임 지정
@@ -513,6 +648,24 @@ HRESULT CPlayer::Render() {
 		case E_STATUS_DAMAGED:
 		{
 			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"Hit", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		case E_STATUS_A1:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"A1", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		case E_STATUS_A2:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"A2", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		case E_STATUS_A3:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"A3", (int)m_fFrame),
 				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;
