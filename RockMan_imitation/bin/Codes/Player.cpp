@@ -172,7 +172,18 @@ void CPlayer::SpawnRender()
 }
 void CPlayer::KeyCheck()
 {
-	if (eStatus == E_STATUS_A1 || eStatus == E_STATUS_A2 || eStatus == E_STATUS_A3 || eStatus == E_STATUS_FIREATTACK)
+	// x를 누르면 y축 값만 추가시켜는게 맞는거 같다. 상태를 변경하면 이렇게 안됨...
+	if (eStatus == E_STATUS_JUMPSTART || eStatus == E_STATUS_JUMPDOWN)
+	{
+		if (KEY_DOWN('C'))
+		{
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_SWORD, NOLOOP);
+			eStatus = E_STATUS_JUMPATTACK;
+			Angle = 120;
+			return;
+		}
+	}
+	if (eStatus == E_STATUS_A1 || eStatus == E_STATUS_A2 || eStatus == E_STATUS_A3 || eStatus == E_STATUS_FIREATTACK || eStatus == E_STATUS_JUMPATTACK)
 		return;
 
 	m_fSpeed = 220;
@@ -202,9 +213,9 @@ void CPlayer::KeyCheck()
 	
 	if (eStatus == E_STATUS_JUMPSTART && KEY_UP('X'))
 	{
-		eStatus = E_STATUS_JUMPOFF;
-		m_JumpFrame.Jump_Start_Frame = 0;
-		Angle = 180;
+		eStatus = E_STATUS_JUMPDOWN;
+		m_JumpFrame.Jump_Start_Frame = 0; m_JumpFrame.Jump_Down_Frame = 0;
+		Angle = 90;
 		Ground = false;
 		Played = false;
 		return;
@@ -218,7 +229,6 @@ void CPlayer::KeyCheck()
 	if (bPosStation == E_POS_STATION_AIR && eStatus != E_STATUS_JUMPSTART)
 	{
 		eStatus = E_STATUS_JUMPDOWN;
-		m_JumpFrame.Jump_Down_Frame = 0;
 	}
 
 	
@@ -232,12 +242,18 @@ void CPlayer::KeyCheck()
 	// 충돌상태(지형 및 벽)
 	if (this->bPosStation == E_POS_STATION_GROUND || this->bPosStation == E_POS_ATTACH_WALL)
 	{
+		if (KEY_UP('Z'))
+		{
+			DASH_FRAME = 0;
+		}
+
 		if (KEY_DOWN('Z') && KEY_DOWN('X'))
 		{
 			m_fSpeed = m_fHighSpeed;
 		}
 		if (KEY_DOWN('V'))
 		{
+			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_FIRE, NOLOOP);
 			eStatus = E_STATUS_FIREATTACK;
 			bPosStation = E_POS_STATION_AIR;
 			return;
@@ -245,6 +261,7 @@ void CPlayer::KeyCheck()
 
 		if (KEY_DOWN('C'))
 		{
+			m_fFrame = 0;
 			eStatus = E_STATUS_A1;
 			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_A1, NOLOOP);
 			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_SWORD, NOLOOP);
@@ -302,19 +319,18 @@ void CPlayer::KeyCheck()
 			return;
 		}
 	}
-
+	if (Angle >= 90)
+	{
+		eStatus = E_STATUS_JUMPDOWN;
+	}
 	// Air 공중 상태
 	if (KEY_DOWN('X') && (eStatus == E_STATUS_JUMPSTART)) // x 꾹 누르고 있으면 버그있음
 	{
 		this->y -= (JumpPower * cos(Angle * (PI / 180) * 2));
-		m_pvecScroll->y += (m_fSpeed * 1.5 * TIME);
-		if (m_pvecScroll->y > 120)
-			m_pvecScroll->y = 120;
-		Angle += 0.1; Ground = false;
-		if (Angle >= 90)
-		{
-			eStatus = E_STATUS_JUMPDOWN;
-		}
+		m_pvecScroll->y += (m_fSpeed * TIME);
+		if (m_pvecScroll->y > 80)
+			m_pvecScroll->y = 80;
+		/*Angle += 0.1;*/ Ground = false;
 	}
 	if (KEY_DOWN(VK_LEFT))
 	{
@@ -333,7 +349,9 @@ void CPlayer::KeyCheck()
 
 	// 어디서나 발동
 	if (bPosStation == E_POS_STATION_GROUND)
+	{
 		eStatus = E_STATUS_IDLE;
+	}
 }
 
 
@@ -376,11 +394,11 @@ void CPlayer::FrameProcess()
 		FrameMax = 2;
 	}
 	break;
-	case E_STATUS_JUMPDOWN:
+	/*case E_STATUS_JUMPDOWN:
 	{
 		m_fFrameSpeed = 24;
-		FrameMax = 4;
-	}
+		FrameMax = 5;
+	}*/
 	break;
 	}
 
@@ -414,19 +432,74 @@ void CPlayer::FrameProcess()
 	}
 	if (eStatus == E_STATUS_JUMPDOWN)
 	{
-		m_JumpFrame.Jump_Down_Frame += (30 * TIME);
-		if (m_JumpFrame.Jump_Down_Frame > FrameMax)
+		m_JumpFrame.Jump_Down_Frame += (24 * TIME);
+		if (m_JumpFrame.Jump_Down_Frame > 4)
 		{
-			m_JumpFrame.Jump_Down_Frame = 2;
+			m_JumpFrame.Jump_Down_Frame = 1;
 			return;
 		}
 	}
 
+	if (eStatus == E_STATUS_JUMPATTACK)
+	{
+		if (Pointer == D_LEFT) 
+		{
+
+			if (KEY_DOWN(VK_LEFT))
+			{
+				x -= m_fSpeed * TIME;
+				if (400 < x && x < 1200)
+					(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) += (m_fSpeed * GET_SINGLE(CTimeMgr)->GetTime());
+				Pointer = D_LEFT;
+			}
+		}
+		else
+		{
+			if (KEY_DOWN(VK_RIGHT))
+			{
+				x += m_fSpeed * TIME;
+				if (400 < x && x < 1200)
+					(GET_SINGLE(CObjSortMgr)->m_vecScroll.x) -= (m_fSpeed * GET_SINGLE(CTimeMgr)->GetTime());
+				Pointer = D_RIGHT;
+			}
+
+		}
+
+		m_fFrame += (30.5 * TIME);
+		if (m_fFrame > 7)
+		{
+			m_fFrame = 0.f;
+			eStatus = E_STATUS_JUMPDOWN;
+			m_JumpFrame.Jump_Down_Frame = 1;
+			Angle = 170;
+			return;
+		}
+		
+		if ((int)m_fFrame >= 2 && (int)m_fFrame <= 4)
+		{
+			LONG rockon = x + 50;
+			LONG rockon_ = x - 50; LONG rockony = y;
+
+			RECT rct = { rockon - 30, rockony - 30, rockon + 30, rockony + 30 };
+			RECT rct2 = { rockon_ - 30, rockony - 30, rockon_ + 30, rockony + 30 };
+			if (Pointer == D_LEFT)
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
+			}
+			else
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct);
+			}
+		}
+		return;
+	}
+
 	if (eStatus == E_STATUS_FIREATTACK)
 	{
-		m_fFrame += (26 * TIME);
+		m_fFrame += (20 * TIME);
 		y -= 700 * TIME;
-		if (m_fFrame > 9)
+		Angle = 0;
+		if ((int)m_fFrame > 9)
 		{
 			m_fFrame = 0.f;
 			eStatus = E_STATUS_JUMPDOWN;
@@ -434,13 +507,14 @@ void CPlayer::FrameProcess()
 			Angle = 90;
 			return;
 		}
-		else if ((int)m_fFrame >= 3)
+		
+		if ((int)m_fFrame >= 3)
 		{
-			LONG rockon = x + 50;
+			LONG rockon = x + 50; LONG rockony = y;
 			LONG rockon_ = x - 50;
 
-			RECT rct = { rockon - 30, rockon - 60, rockon + 30, rockon + 30 };
-			RECT rct2 = { rockon_ - 30, rockon_ - 60, rockon_ + 30, rockon_ + 30 };
+			RECT rct = { rockon - 50, rockony - 40, rockon + 60, rockony + 30 };
+			RECT rct2 = { rockon_ - 50, rockony - 40, rockon_ + 60, rockony + 30 };
 			if (Pointer == D_LEFT)
 			{
 				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
@@ -455,7 +529,7 @@ void CPlayer::FrameProcess()
 
 	if (eStatus == E_STATUS_A1)
 	{
-		m_fFrame += (26 * TIME);
+		m_fFrame += (28.5 * TIME);
 		if (m_fFrame > 7)
 		{
 			m_fFrame = 0.f;
@@ -464,10 +538,10 @@ void CPlayer::FrameProcess()
 		else if ((int)m_fFrame >= 3)
 		{
 			LONG rockon = x + 50;
-			LONG rockon_ = x - 50;
+			LONG rockon_ = x - 50; LONG rockony = y;
 
-			RECT rct = { rockon - 30, rockon - 30, rockon + 30, rockon + 30};
-			RECT rct2 = { rockon_ - 30, rockon_ - 30, rockon_ + 30, rockon_ + 30};
+			RECT rct = { rockon - 25, rockony - 5, rockon + 25, rockony + 5};
+			RECT rct2 = { rockon_ - 25, rockony - 5, rockon_ + 25, rockony + 5};
 			if (Pointer == D_LEFT)
 			{
 				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
@@ -502,10 +576,10 @@ void CPlayer::FrameProcess()
 		else if ((int)m_fFrame >= 4)
 		{
 			LONG rockon = x + 50;
-			LONG rockon_ = x - 50;
+			LONG rockon_ = x - 50; LONG rockony = y;
 
-			RECT rct = { rockon - 30, rockon - 30, rockon + 30, rockon + 30 };
-			RECT rct2 = { rockon_ - 30, rockon_ - 30, rockon_ + 30, rockon_ + 30 };
+			RECT rct = { rockon - 25, rockony - 5, rockon + 25, rockony + 5 };
+			RECT rct2 = { rockon_ - 25, rockony - 5, rockon_ + 25, rockony + 5 };
 			if (Pointer == D_LEFT)
 			{
 				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
@@ -545,10 +619,10 @@ void CPlayer::FrameProcess()
 		else if ((int)m_fFrame >= 3 || (int)m_fFrame <= 7)
 		{
 			LONG rockon = x + 50;
-			LONG rockon_ = x - 50;
+			LONG rockon_ = x - 50; LONG rockony = y;
 
-			RECT rct = { rockon - 50, rockon - 50, rockon + 50, rockon + 50 };
-			RECT rct2 = { rockon_ - 50, rockon_ - 50, rockon_ + 50, rockon_ + 50 };
+			RECT rct = { rockon - 50, rockony , rockon + 50, rockony + 5 };
+			RECT rct2 = { rockon_ - 50, rockony - 5, rockon_ + 50, rockony + 5 };
 			if (Pointer == D_LEFT)
 			{
 				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
@@ -586,14 +660,15 @@ HRESULT CPlayer::Progress() {
 	if (y > MaxYpos) y = MaxYpos; // 콜리전 완성되면 지움
 	if (Angle != 0) // 라디안 
 	{
-		Angle += (40 * TIME);
+		Angle += (100 * TIME);
 		if (Angle >= 90)
 		{
-			eStatus = E_STATUS_JUMPDOWN;
-			y = y - (JumpPower * (cos(Angle * (PI / 180))));
-			m_pvecScroll->y -= (m_fSpeed * 1.5 * TIME);
-			if (m_pvecScroll->y < -50)
-				m_pvecScroll->y = -50;
+			if(eStatus != E_STATUS_JUMPATTACK)
+				eStatus = E_STATUS_JUMPDOWN;
+			y = y - (JumpPower * (cos(Angle * (PI / 180))) * 1.3);
+			m_pvecScroll->y -= (m_fSpeed  * TIME);
+			if (m_pvecScroll->y < 0)
+				m_pvecScroll->y = 0;
 			if (Angle >= 180)
 				Angle = 180;
 		}
@@ -705,6 +780,12 @@ HRESULT CPlayer::Render() {
 		case E_STATUS_FIREATTACK:
 		{
 			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"Fire", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		case E_STATUS_JUMPATTACK:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"JA", (int)m_fFrame),
 				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;

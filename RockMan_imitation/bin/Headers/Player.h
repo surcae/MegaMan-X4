@@ -12,10 +12,11 @@ private:
 private:
 	bool Played = false;
 	bool Ground = true;
-	float JumpPower = 14.f;
+	float JumpPower = 17.f;
 	int FrameMax = 0;
 	float ForStartFrame = 1.f;
-	float m_fFrame = 1;
+	float dashFrame = 0;
+	float m_fFrame = 0;
 	float m_fFrameSpeed = 5;
 	float DASH_FRAME = 0;
 	JUMP_FRAME m_JumpFrame;

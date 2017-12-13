@@ -28,7 +28,7 @@ HRESULT CSBigShip::Initialize()
 
 HRESULT CSBigShip::Progress()
 {
-	D3DXMatrixTranslation(&m_Info.matTrans, 200 + (*m_pvecScroll).x, 150 + (*m_pvecScroll).y * 0.5f, 0);
+	D3DXMatrixTranslation(&m_Info.matTrans, 200 + (*m_pvecScroll).x, 100 + (*m_pvecScroll).y * 0.5f, 0);
 	m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 	return S_OK;
 }

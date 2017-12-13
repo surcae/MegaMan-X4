@@ -38,7 +38,7 @@ void CCollisionMgr::AttackandMop(RECT src)
 	{
 		
 		RECT tmp;
-		RECT dest = {(LONG)(*it)->GetXPos() - 30, (LONG)(*it)->GetXPos() - 30, (LONG)(*it)->GetXPos() + 30, (LONG)(*it)->GetXPos() + 30 };
+		RECT dest = {(LONG)(*it)->GetXPos() - 30, (LONG)(*it)->GetYPos() - 30, (LONG)(*it)->GetXPos() + 30, (LONG)(*it)->GetYPos() + 30};
 		if (IntersectRect(&tmp, &src, &dest))
 		{
 			(*it)->isHit = true;

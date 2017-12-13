@@ -85,6 +85,10 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(GET_SINGLE(CSoundMgr)->LoadWave(L"../Resource/Sound/Fire.wav")))
+	{
+		return E_FAIL;
+	}
 
 
 
@@ -217,8 +221,15 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+
+	// Έχ
 	if (FAILED(pTextureMgr->
 		InsertTexture(L"../Resource/Texture/Multi/Mop%d.png", TEXTYPE_MULTI, L"Mop", L"Mops", 10)))
+	{
+		return E_FAIL;
+	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/Mop2_%d.png", TEXTYPE_MULTI, L"Mop", L"Mops2", 3)))
 	{
 		return E_FAIL;
 	}
@@ -249,6 +260,12 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/JA%d.png", TEXTYPE_MULTI, L"Zero", L"JA", 8)))
+	{
+		return E_FAIL;
+	}
+
 
 	// Dash Effect
 	if (FAILED(pTextureMgr->
@@ -290,9 +307,9 @@ HRESULT CStage_One::Progress(void) {
 	if (MopCreate)
 	{
 		DWORD curTime = GetTickCount();
-		if (Time - curTime >= 3000)
+		if (Time - curTime >= 2000)
 		{
-			Time += 3000;
+			Time += 2000;
 			CreateMonster();
 		}
 	}

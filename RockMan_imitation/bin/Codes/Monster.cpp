@@ -30,7 +30,28 @@ HRESULT CMonster::Initialize()
 		bRight = true;
 	}
 
-	ypos = 480;
+	int j = rand() % 15;
+	if (j < 7)
+	{
+		isFlyer = false;
+	}
+	else
+	{
+		isFlyer = true;
+	}
+
+	if (!isFlyer)
+	{
+		ypos = 480;
+		speed = 80;
+		fMax = 10;
+	}
+	else
+	{
+		speed = rand() % 100 + 200;
+		ypos += (200 + ((rand() % 40) - 20));
+		fMax = 3;
+	}
 
 	D3DXMatrixScaling(&m_Info.matScale, 1, 1, 1);
 	D3DXMatrixTranslation(&m_Info.matTrans, xpos, ypos, 0);
@@ -47,11 +68,11 @@ HRESULT CMonster::Progress()
 	{
 		if (bLeft)
 		{
-			xpos += 50 * TIME;
+			xpos += speed * TIME;
 		}
 		else if (bRight)
 		{
-			xpos -= 50 * TIME;
+			xpos -= speed * TIME;
 		}
 	}
 	if (isHit)
@@ -61,7 +82,7 @@ HRESULT CMonster::Progress()
 			GET_SINGLE(CSoundMgr)->SoundPlay(E_SOUND_BOMB, 0);
 			Sound = true;
 		}
-		boomFrame += (14 * TIME);
+		boomFrame += (10 * TIME);
 		if (boomFrame > 5)
 		{
 			Activated = false;
@@ -69,7 +90,7 @@ HRESULT CMonster::Progress()
 		return S_OK;
 	}
 	m_Frame += (28 * TIME);
-	if (m_Frame > 10)
+	if (m_Frame > fMax)
 		m_Frame = 0.f;
 	return S_OK;
 }
@@ -80,7 +101,7 @@ HRESULT CMonster::Render()
 	{
 		if (isHit)
 		{
-			D3DXMatrixScaling(&m_Info.matScale, 2, 2, 1);
+			D3DXMatrixScaling(&m_Info.matScale, 3, 3, 1);
 			D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
 			m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
 			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Boom", L"boom", (int)boomFrame),
@@ -89,19 +110,41 @@ HRESULT CMonster::Render()
 		}
 		if (bLeft)
 		{
-			D3DXMatrixScaling(&m_Info.matScale, -1, 1, 1);
-			D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
-			m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
-			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Mop", L"Mops", (int)m_Frame),
-				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+			if (!isFlyer)
+			{
+				D3DXMatrixScaling(&m_Info.matScale, -1.2, 1.2, 1);
+				D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
+				m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
+				GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Mop", L"Mops", (int)m_Frame),
+					m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+			}
+			else
+			{
+				D3DXMatrixScaling(&m_Info.matScale, 1.2, 1.2, 1);
+				D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
+				m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
+				GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Mop", L"Mops2", (int)m_Frame),
+					m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+			}
 		}
 		else if (bRight)
 		{
-			D3DXMatrixScaling(&m_Info.matScale, 1, 1, 1);
-			D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
-			m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
-			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Mop", L"Mops", (int)m_Frame),
-				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+			if (!isFlyer)
+			{
+				D3DXMatrixScaling(&m_Info.matScale, 1.2, 1.2, 1);
+				D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
+				m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
+				GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Mop", L"Mops", (int)m_Frame),
+					m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+			}
+			else
+			{
+				D3DXMatrixScaling(&m_Info.matScale, -1.2, 1.2, 1);
+				D3DXMatrixTranslation(&m_Info.matTrans, xpos + (*m_pvecScroll).x, ypos + m_pvecScroll->y, 0);
+				m_Info.matWorld = m_Info.matScale * m_Info.matTrans;
+				GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Mop", L"Mops2", (int)m_Frame),
+					m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+			}
 		}
 	}
 	return S_OK;

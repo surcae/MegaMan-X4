@@ -4,6 +4,9 @@ class CMonster :
 	public CDynamicObjects
 {
 public:
+	int fMax = 0;
+	int speed = 0;
+	bool isFlyer = false;
 	bool Activated = true;
 	float boomFrame = 0;
 	bool isHit = false;

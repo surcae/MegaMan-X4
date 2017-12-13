@@ -40,7 +40,7 @@ struct tagLogo
 	D3DXVECTOR3 vPos;
 	D3DXVECTOR3 vCenter;
 	const TCHAR *pObjName;
-	const TCHAR *pStateKey;
+	const TCHAR *pStateKey;	
 	LOGO_OBJ myLogoObj;
 
 	const TEXINFO* texInfo;
