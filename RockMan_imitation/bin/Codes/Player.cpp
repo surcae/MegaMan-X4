@@ -529,7 +529,7 @@ void CPlayer::FrameProcess()
 
 	if (eStatus == E_STATUS_A1)
 	{
-		m_fFrame += (28.5 * TIME);
+		m_fFrame += (34 * TIME);
 		if (m_fFrame > 7)
 		{
 			m_fFrame = 0.f;
@@ -566,7 +566,7 @@ void CPlayer::FrameProcess()
 
 	if (eStatus == E_STATUS_A2)
 	{
-		m_fFrame += (26 * TIME);
+		m_fFrame += (34 * TIME);
 		if (m_fFrame > 7)
 		{
 			m_fFrame = 0.f;
@@ -609,7 +609,7 @@ void CPlayer::FrameProcess()
 
 	if (eStatus == E_STATUS_A3)
 	{
-		m_fFrame += (32 * TIME);
+		m_fFrame += (35 * TIME);
 		if (m_fFrame > 11)
 		{
 			m_fFrame = 0.f;

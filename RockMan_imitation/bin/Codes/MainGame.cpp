@@ -24,7 +24,7 @@ HRESULT CMainGame::Initialize(void)
 	}
 
 	// Logo Scene
-	if (FAILED(GET_SINGLE(CSceneMgr)->InitScene(STAGE_ONE))) {
+	if (FAILED(GET_SINGLE(CSceneMgr)->InitScene(STAGE_LOGO))) {
 		MessageBox(g_hWnd, L"Scene Initialize Failed!", L"Init Failed", MB_OK);
 		return E_FAIL;
 	}

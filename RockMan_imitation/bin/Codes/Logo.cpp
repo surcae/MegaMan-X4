@@ -5,6 +5,7 @@
 #include "KeyMgr.h"
 #include "RenderMgr.h"
 #include "Factory.h"
+#include "SceneMgr.h"
 
 CLogo::CLogo()
 {
@@ -127,8 +128,7 @@ HRESULT CLogo::Progress() {
 
 	if (GetAsyncKeyState(VK_RETURN))
 	{
-		// Before change my stage, first you need to call Release();
-		// TODO: Change Stage
+		//GET_SINGLE(CSceneMgr)->InitScene(STAGE_ONE);
 
 	// TODO: If you pressed any key, call CSceneMgr that change Stage
 		return S_OK;
