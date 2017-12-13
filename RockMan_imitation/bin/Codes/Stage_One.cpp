@@ -244,7 +244,18 @@ HRESULT CStage_One::Initialize(void) {
 	{
 		return E_FAIL;
 	}
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Texture/Multi/AF%d.png", TEXTYPE_MULTI, L"Zero", L"Fire", 10)))
+	{
+		return E_FAIL;
+	}
 
+	// Dash Effect
+	if (FAILED(pTextureMgr->
+		InsertTexture(L"../Resource/Effect/dash.png", TEXTYPE_SINGLE, L"DashEffect", NULL, NULL)))
+	{
+		return E_FAIL;
+	}
 
 
 #pragma endregion // Can Open!!
@@ -310,7 +321,7 @@ HRESULT CStage_One::Render(void) {
 	GET_SINGLE(CRenderMgr)->SingleRender(GET_SINGLE(CTextureMgr)->GetTexture(L"BG2", NULL, NULL), this->BackMatrix[1],
 		(D3DXVECTOR3(0, 0, 0)), (D3DXVECTOR3(0, 0, 0)), E_SINGLE_RENDER_TYPE_STRAIGHT, 0); // 배경2
 	
-	/* 히트박스 렌더링 */
+	/* 히트박스 렌더링 */ /* 몬스터 렌더링 */
 	GET_SINGLE(CObjSortMgr)->RenderObjects();
 	for (vector<CMonster*>::iterator it = m_vecMonster->begin(); it != m_vecMonster->end(); it++)
 	{

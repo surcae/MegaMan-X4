@@ -172,8 +172,9 @@ void CPlayer::SpawnRender()
 }
 void CPlayer::KeyCheck()
 {
-	if (eStatus == E_STATUS_A1 || eStatus == E_STATUS_A2 || eStatus == E_STATUS_A3)
+	if (eStatus == E_STATUS_A1 || eStatus == E_STATUS_A2 || eStatus == E_STATUS_A3 || eStatus == E_STATUS_FIREATTACK)
 		return;
+
 	m_fSpeed = 220;
 	bool isKey = false;
 	if (y >= MaxYpos)
@@ -221,7 +222,10 @@ void CPlayer::KeyCheck()
 	}
 
 	
-	
+	if (KEY_DOWN('Z') && KEY_DOWN('X'))
+	{
+		m_fSpeed = m_fHighSpeed;
+	}
 	/* 아무것도 안 눌렀을 때 처리하는곳 끝나는 곳*/
 
 	/* 뭔가 눌렀을 때 처리하는곳*/
@@ -231,6 +235,12 @@ void CPlayer::KeyCheck()
 		if (KEY_DOWN('Z') && KEY_DOWN('X'))
 		{
 			m_fSpeed = m_fHighSpeed;
+		}
+		if (KEY_DOWN('V'))
+		{
+			eStatus = E_STATUS_FIREATTACK;
+			bPosStation = E_POS_STATION_AIR;
+			return;
 		}
 
 		if (KEY_DOWN('C'))
@@ -294,10 +304,9 @@ void CPlayer::KeyCheck()
 	}
 
 	// Air 공중 상태
-
 	if (KEY_DOWN('X') && (eStatus == E_STATUS_JUMPSTART)) // x 꾹 누르고 있으면 버그있음
 	{
-		this->y -= (JumpPower * cos(Angle * (PI / 180) * 3));
+		this->y -= (JumpPower * cos(Angle * (PI / 180) * 2));
 		m_pvecScroll->y += (m_fSpeed * 1.5 * TIME);
 		if (m_pvecScroll->y > 120)
 			m_pvecScroll->y = 120;
@@ -323,13 +332,6 @@ void CPlayer::KeyCheck()
 	}
 
 	// 어디서나 발동
-	
-
-	if (KEY_DOWN('C'))
-	{
-
-	}
-
 	if (bPosStation == E_POS_STATION_GROUND)
 		eStatus = E_STATUS_IDLE;
 }
@@ -412,12 +414,43 @@ void CPlayer::FrameProcess()
 	}
 	if (eStatus == E_STATUS_JUMPDOWN)
 	{
-		m_JumpFrame.Jump_Down_Frame += (m_fFrameSpeed * TIME);
+		m_JumpFrame.Jump_Down_Frame += (30 * TIME);
 		if (m_JumpFrame.Jump_Down_Frame > FrameMax)
 		{
-			m_JumpFrame.Jump_Down_Frame = 1;
+			m_JumpFrame.Jump_Down_Frame = 2;
 			return;
 		}
+	}
+
+	if (eStatus == E_STATUS_FIREATTACK)
+	{
+		m_fFrame += (26 * TIME);
+		y -= 700 * TIME;
+		if (m_fFrame > 9)
+		{
+			m_fFrame = 0.f;
+			eStatus = E_STATUS_JUMPDOWN;
+			this->m_JumpFrame.Jump_Down_Frame = 0;
+			Angle = 90;
+			return;
+		}
+		else if ((int)m_fFrame >= 3)
+		{
+			LONG rockon = x + 50;
+			LONG rockon_ = x - 50;
+
+			RECT rct = { rockon - 30, rockon - 60, rockon + 30, rockon + 30 };
+			RECT rct2 = { rockon_ - 30, rockon_ - 60, rockon_ + 30, rockon_ + 30 };
+			if (Pointer == D_LEFT)
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct2);
+			}
+			else
+			{
+				GET_SINGLE(CCollisionMgr)->AttackandMop(rct);
+			}
+		}
+		return;
 	}
 
 	if (eStatus == E_STATUS_A1)
@@ -553,7 +586,7 @@ HRESULT CPlayer::Progress() {
 	if (y > MaxYpos) y = MaxYpos; // 콜리전 완성되면 지움
 	if (Angle != 0) // 라디안 
 	{
-		Angle += (60 * TIME);
+		Angle += (40 * TIME);
 		if (Angle >= 90)
 		{
 			eStatus = E_STATUS_JUMPDOWN;
@@ -561,8 +594,8 @@ HRESULT CPlayer::Progress() {
 			m_pvecScroll->y -= (m_fSpeed * 1.5 * TIME);
 			if (m_pvecScroll->y < -50)
 				m_pvecScroll->y = -50;
-			if (Angle >= 360)
-				Angle = 360;
+			if (Angle >= 180)
+				Angle = 180;
 		}
 	} // 중력 적용값
 	if(isControllActivated)
@@ -666,6 +699,12 @@ HRESULT CPlayer::Render() {
 		case E_STATUS_A3:
 		{
 			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"A3", (int)m_fFrame),
+				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
+		}
+		break;
+		case E_STATUS_FIREATTACK:
+		{
+			GET_SINGLE(CRenderMgr)->MultiRender(GET_SINGLE(CTextureMgr)->GetTexture(L"Zero", L"Fire", (int)m_fFrame),
 				m_Info.matWorld, E_MULTI_RENDER_TYPE_STRAIGHT);
 		}
 		break;

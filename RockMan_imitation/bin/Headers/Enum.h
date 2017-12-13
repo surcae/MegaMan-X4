@@ -97,6 +97,7 @@ enum STATUS
 	E_STATUS_A1,
 	E_STATUS_A2,
 	E_STATUS_A3,
+	E_STATUS_FIREATTACK,
 };
 
 enum POS_STATION // 충돌 검사에서 유용하게 사용됨
